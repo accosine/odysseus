@@ -1,0 +1,41 @@
+{
+  "name": "nausicaa",
+  "version": "0.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {
+    "common-tags": "^1.4.0",
+    "marksy": "^5.0.0",
+    "moment": "^2.18.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "styletron-react": "^2.5.8",
+    "styletron-server": "^2.5.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-react-app": "^2.0.0",
+    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1"
+  },
+  "scripts": {
+    "prepare": "rm -rf dist/ && babel src -d dist",
+    "test": "echo \"lol\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "accosine",
+  "contributors": [
+    "Simon Bugert <simon.bugert@gmail.com>",
+    "Duncan Kolba <duncankolba@gmail.com>"
+  ],
+  "license": "BSD-2-Clause"
+}
