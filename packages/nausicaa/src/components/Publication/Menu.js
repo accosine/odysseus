@@ -38,7 +38,7 @@ const A = styled('a', {
   padding: 'inherit',
 });
 
-const Menu = ({ styletron, config: { categories } }) => {
+const Menu = ({ styletron, config: { collections } }) => {
   const menuLogo = injectStyle(styletron, {
     height: '19vw',
     width: '35vw',
@@ -60,10 +60,10 @@ const Menu = ({ styletron, config: { categories } }) => {
             <A href="/">Start</A>
           </Li>
           <hr />
-          {Object.keys(categories).map((category, index) =>
+          {Object.keys(collections).map((collection, index) =>
             <Li key={index}>
-              <A href={`/${categories[category]}`}>
-                {category}
+              <A href={`/${collections[collection]}`}>
+                {collection}
               </A>
             </Li>
           )}

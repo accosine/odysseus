@@ -1,7 +1,7 @@
 import Shortcode from './shortcode-parser';
 import { oneLine } from 'common-tags';
 import addSizeSuffix from './addSizeSuffix';
-import { injectStyle } from 'styletron-utils';
+// import { injectStyle } from 'styletron-utils';
 
 const storageurl = process.env.REACT_APP_FIREBASE_STORAGE_URL;
 const storagesuffix = process.env.REACT_APP_FIREBASE_STORAGE_SUFFIX;
@@ -184,18 +184,27 @@ const shortcodes = {
               height=${params.height || 281}
               layout="responsive">
             </amp-vimeo></div>`,
-  youtube: (str, params, { styletron }) => {
-    const classes = injectStyle(styletron, {
-      border: '1px solid red',
-      borderRadius: '100%',
-    });
-    return oneLine`<div><amp-youtube class="${classes}"
+  youtube: (str, params) => {
+    return oneLine`<div><amp-youtube
               data-videoid="${params.videoid || ''}"
               width=${params.width || 480}
               height=${params.height || 270}
               layout="responsive">
             </amp-youtube></div>`;
   },
+  // EXAMPLE: styling with classes
+  // youtube: (str, params, { styletron }) => {
+  //   const classes = injectStyle(styletron, {
+  //     border: '1px solid red',
+  //     borderRadius: '100%',
+  //   });
+  //   return oneLine`<div><amp-youtube class="${classes}"
+  //             data-videoid="${params.videoid || ''}"
+  //             width=${params.width || 480}
+  //             height=${params.height || 270}
+  //             layout="responsive">
+  //           </amp-youtube></div>`;
+  // },
 };
 
 for (let s in shortcodes) {

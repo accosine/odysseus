@@ -3,7 +3,7 @@ import { styled } from 'styletron-react';
 import withTheme from '../../util/withTheme';
 
 const P = withTheme(
-  styled('p', ({ context: { category }, theme }) => ({
+  styled('p', ({ context: { collection }, theme }) => ({
     margin: '4vw 6vw 4vw 6vw',
     color: '#333',
     ':first-of-type:first-letter': {
@@ -13,7 +13,7 @@ const P = withTheme(
       paddingTop: '4px',
       paddingRight: '8px',
       paddingLeft: '3px',
-      color: theme[category].color,
+      color: theme[collection].color,
     },
     '@media screen and (min-width: 1024px)': {
       fontSize: '18px',
@@ -33,13 +33,13 @@ const H2 = withTheme(
 );
 
 const Block = withTheme(
-  styled('blockquote', ({ category, theme }) => ({
+  styled('blockquote', ({ collection, theme }) => ({
     color: 'white',
     border: '3vw solid white',
     paddingTop: '4vw',
     margin: 0,
     padding: 0,
-    backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${theme[category]
+    backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${theme[collection]
       .verlauf})`,
     boxShadow: 'inset 0 0 30vw rgb(255, 255, 255)',
     '@media screen and (min-width: 1024px)': {
@@ -88,8 +88,8 @@ const BlockP = withTheme(
   }))
 );
 
-const Blockquote = ({ context: { category }, children }) => (
-  <Block category={category}>
+const Blockquote = ({ context: { collection }, children }) => (
+  <Block collection={collection}>
     <BlockP>{children[1].props.children}</BlockP>
   </Block>
 );

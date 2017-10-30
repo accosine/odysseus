@@ -2,7 +2,7 @@
 module.exports.nausikamint = '#92EFE5';
 module.exports.nausikabubblesolid = 'rgba(255,255,255,0.7)';
 
-/* CATEGORY COLORS*/
+/* COLLECTION COLORS*/
 module.exports.fernsehblau = '#4DA1CB';
 module.exports.fernsehblausubline = '#00A7FF';
 module.exports.fernsehverlauf = '#00ADFF, #FF6500';

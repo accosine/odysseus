@@ -8,7 +8,6 @@ const Container = styled('div', {
   justifyContent: 'space-around',
   margin: '5vw 0vw 5vw 0vw',
   position: 'relative',
-  top: '-15vw',
   '@media screen and (min-width: 1024px)': {
     top: '0vw',
     justifyContent: 'center',
@@ -75,13 +74,13 @@ const SocialIconText = withTheme(
 export default ({
   slug,
   title,
-  category,
-  config: { categories, protocol, domain, organization },
+  collection,
+  config: { collections, protocol, domain, organization },
 }) => (
   <Container>
     <Link
-      href={`https://facebook.com/sharer/sharer.php?u=${protocol}://${domain}/${categories[
-        category
+      href={`https://facebook.com/sharer/sharer.php?u=${protocol}://${domain}/${collections[
+        collection
       ]}/${slug}&title=${encodeURIComponent(title)}`}
       target="_blank"
       rel="noopener noreferrer"
@@ -94,8 +93,8 @@ export default ({
       </Facebook>
     </Link>
     <Link
-      href={`whatsapp://send?text=${protocol}://${domain}/${categories[
-        category
+      href={`whatsapp://send?text=${protocol}://${domain}/${collections[
+        collection
       ]}/${slug} ${encodeURIComponent(title)}`}
       data-action="share/whatsapp/share"
       target="_blank"
@@ -109,8 +108,8 @@ export default ({
       </Whatsapp>
     </Link>
     <Link
-      href={`https://twitter.com/intent/tweet?url=${protocol}://${domain}/${categories[
-        category
+      href={`https://twitter.com/intent/tweet?url=${protocol}://${domain}/${collections[
+        collection
       ]}/${slug}&text=${encodeURIComponent(title)}&via=${organization.name}`}
       target="_blank"
       rel="noopener noreferrer"

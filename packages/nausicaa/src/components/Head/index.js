@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 
 import HeadPagination from './HeadPagination';
 import SocialmediaMeta from './SocialmediaMeta';
@@ -11,14 +10,11 @@ import StylesCustom from './StylesCustom';
 import Favicons from './Favicons';
 import AmpScript from '../AmpScript';
 
-const formatDate = (date, format, locale) =>
-  moment(date)
-    .locale(locale)
-    .format(format);
+import formatDate from '../../util/formatDate';
 
-// TODO: stop using dangerouslySetInnerHTML when React 16 supports custom HTML
-// attributes (amp-custom, amp-boilerplate, custom-element, ...
+
 export default ({
+  frontmatter,
   frontmatter: {
     title,
     date,
@@ -52,13 +48,13 @@ export default ({
         href={`${config.protocol}://${config.domain}/${path}/`}
       />
     ) : null}
-    {layout === 'category' ? (
+    {layout === 'collection' ? (
       <link
         rel="canonical"
         href={`${config.protocol}://${config.domain}/${path}/`}
       />
     ) : null}
-    {layout === 'category' ? <HeadPagination /> : null}
+    {layout === 'collection' ? <HeadPagination /> : null}
     {layout === 'basic' ? (
       <link
         rel="canonical"
@@ -80,7 +76,7 @@ export default ({
       config={config}
       frontmatter={{ title, picture, layout, description }}
     />
-    <Schema /> {/* TODO */}
+    <Schema {...frontmatter} config={config} />
     <SchemaSitename config={config} />
     <Font />
     <Favicons config={config} />

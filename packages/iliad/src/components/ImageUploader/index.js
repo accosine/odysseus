@@ -87,7 +87,7 @@ class ImageUploader extends Component {
     // TODO: conveniece function which adds file extension
     // TODO: write file name and file tags to firebase
     const storageRef = STORAGE.ref();
-    const uploadTasks = files.map(file => {
+    files.map(file => {
       // Get a key for a new image
       var newImageKey = REFS['images'].push().key;
       console.log(newImageKey);

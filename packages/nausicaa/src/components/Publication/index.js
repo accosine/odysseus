@@ -39,7 +39,7 @@ const Publication = ({
   config,
   frontmatter: {
     date,
-    collection: category,
+    collection,
     attribution,
     author,
     picture,
@@ -59,7 +59,7 @@ const Publication = ({
     <Main id="main" role="main">
       <Hero
         config={config}
-        category={category}
+        collection={collection}
         picture={picture}
         author={author}
         alt={alt}
@@ -71,7 +71,7 @@ const Publication = ({
       <Sharebuttons
         slug={slug}
         title={title}
-        category={category}
+        collection={collection}
         config={config}
       />
       <AdContainer
@@ -84,7 +84,7 @@ const Publication = ({
       <Sharebuttons
         slug={slug}
         title={title}
-        category={category}
+        collection={collection}
         config={config}
       />
     </Main>

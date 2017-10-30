@@ -44,7 +44,7 @@ export default ({
         ],
         always,
       ];
-    case 'category':
+    case 'collection':
       return [
         [
           <meta name="twitter:card" content="summary" />,

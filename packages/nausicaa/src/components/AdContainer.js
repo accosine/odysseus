@@ -6,7 +6,6 @@ const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   position: 'relative',
-  top: '-15vw',
   '@media screen and (min-width: 1024px)': {
     top: 0,
   },

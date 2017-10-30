@@ -20,7 +20,7 @@ const compile = marksy({
 
 const Layout = ({ styles, body, frontmatter, ampScripts, config }) => [
   <Head
-    path={`${config.categories[frontmatter.collection]}/${frontmatter.slug}`}
+    path={`${config.collections[frontmatter.collection]}/${frontmatter.slug}`}
     frontmatter={frontmatter}
     config={config}
     styles={styles}
@@ -35,7 +35,7 @@ module.exports = function render(article, frontmatter, config) {
   const { tree: articleTree } = compile(
     text,
     { sanitize: false },
-    { category: frontmatter.collection }
+    { collection: frontmatter.collection }
   );
 
   const ampScripts = getAmpScripts(usedShortcodes);

@@ -13,7 +13,6 @@ const styleSheet = {
   },
 };
 
-//TODO: Remove 'ACTIONS', pass direct access to function via props
 class Dresser extends Component {
   render() {
     const { classes, onDrawerClose } = this.props;

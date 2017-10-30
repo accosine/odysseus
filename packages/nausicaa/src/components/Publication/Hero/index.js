@@ -18,7 +18,6 @@ const PictureAttribution = styled('figcaption', {
   position: 'absolute',
   right: '1vw',
   textShadow: '1px 1px black',
-  top: 0,
   '@media screen and (min-width: 1024px)': {
     fontSize: '10px',
     margin: '1vw 0vw',
@@ -30,11 +29,11 @@ const Container = styled('div', {
   padding: '10px',
   width: '87vw',
   position: 'relative',
-  top: '-15vw',
+  marginTop: '-15vw',
   background: 'white',
   lineHeight: 1,
   '@media screen and (min-width: 1024px)': {
-    top: 0,
+    marginTop: 0,
     width: 'inherit',
   },
 });
@@ -51,9 +50,9 @@ const Time = withTheme(
 );
 
 const Breadcrumbs = withTheme(
-  styled('p', ({ theme, category }) => ({
+  styled('p', ({ theme, collection }) => ({
     marginBottom: '5vw',
-    color: theme[category].color,
+    color: theme[collection].color,
     '@media screen and (min-width: 1024px)': {
       marginBottom: '2vw',
     },
@@ -61,8 +60,8 @@ const Breadcrumbs = withTheme(
 );
 
 const A = withTheme(
-  styled('a', ({ theme, category }) => ({
-    color: theme[category].color,
+  styled('a', ({ theme, collection }) => ({
+    color: theme[collection].color,
   }))
 );
 
@@ -105,8 +104,8 @@ const Headline = withTheme(
 );
 
 const Subline = withTheme(
-  styled('h2', ({ theme, category }) => ({
-    backgroundColor: theme[category].subline,
+  styled('h2', ({ theme, collection }) => ({
+    backgroundColor: theme[collection].subline,
     fontSize: '5vw',
     color: 'white',
     padding: '2vw',
@@ -121,7 +120,7 @@ const Subline = withTheme(
 export default ({
   config,
   picture,
-  category,
+  collection,
   date,
   headline,
   subline,
@@ -154,20 +153,20 @@ export default ({
     <PictureAttribution>{attribution}</PictureAttribution>
   </Picture>,
   <Container>
-    <Breadcrumbs category={category}>
-      <A category={category} href="/">
+    <Breadcrumbs collection={collection}>
+      <A collection={collection} href="/">
         Start
       </A>
       {' > '}
-      <A category={category} href={`/${config.categories[category]}/`}>
-        {category}
+      <A collection={collection} href={`/${config.collections[collection]}/`}>
+        {collection}
       </A>
     </Breadcrumbs>
     <Time dateTime={formatDate(date, 'YYYY-MM-DD', 'en')}>
       {formatDate(date, 'DD. MMMM YYYY', 'de')}
     </Time>
     <Headline>{headline}</Headline>
-    <Subline category={category}>{subline}</Subline>
+    <Subline collection={collection}>{subline}</Subline>
     <Author>
       <AuthorPicture
         width={4}

@@ -47,7 +47,7 @@ module.exports = {
         avatar: 'jondoe.jpg',
       },
     },
-    categories: {
+    collections: {
       Musik: 'musik',
     },
     layouts: {

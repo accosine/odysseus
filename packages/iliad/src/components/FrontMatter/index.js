@@ -58,7 +58,7 @@ const FrontMatter = props => (
     </FormControl>
     <FrontMatterTextfield id="description" {...props} />
     <FormControl margin="normal">
-      <InputLabel htmlFor="category">category</InputLabel>
+      <InputLabel htmlFor="collection">collection</InputLabel>
       <Select
         value={props.collection}
         onChange={event => props.onChange({ collection: event.target.value })}
@@ -67,9 +67,9 @@ const FrontMatter = props => (
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {Object.keys(config.categories).map(category => (
-          <MenuItem key={category} value={category}>
-            {category}
+        {Object.keys(config.collections).map(collection => (
+          <MenuItem key={collection} value={collection}>
+            {collection}
           </MenuItem>
         ))}
       </Select>
@@ -114,9 +114,9 @@ const FrontMatter = props => (
     <FrontMatterTextfield id="attribution" {...props} />
     <FrontMatterTextfield id="alt" {...props} />
     <FrontMatterTextfield id="slug" {...props} />
-    {props.type === 'rezension' ? (
+    {props.type === 'review' ? (
       <ReviewFrontMatter {...props} />
-    ) : props.type === 'rezept' ? (
+    ) : props.type === 'recipe' ? (
       <RecipeFrontMatter {...props} />
     ) : props.type === 'video' ? (
       <VideoFrontMatter {...props} />
