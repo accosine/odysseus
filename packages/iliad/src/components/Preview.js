@@ -72,7 +72,7 @@ class Preview extends Component {
       try {
         preview = theme(text, frontmatter, config);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         preview = '';
       }
       this.setState({ preview });

@@ -31,7 +31,7 @@ const Layout = ({ styles, body, frontmatter, ampScripts, config }) => [
 
 module.exports = function render(article, frontmatter, config) {
   const styletron = new Styletron({ prefix: '_' });
-  const { text, usedShortcodes } = shortcodes(article, styletron);
+  const { text, usedShortcodes } = shortcodes(article, styletron, config);
   const { tree: articleTree } = compile(
     text,
     { sanitize: false },
