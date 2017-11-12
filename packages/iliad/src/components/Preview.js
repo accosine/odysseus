@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 import FullscreenIcon from 'material-ui-icons/Fullscreen';
 import FullscreenExitIcon from 'material-ui-icons/FullscreenExit';
-import theme from 'nausicaa';
+import Theme from '../theme';
 import config from '../config.js';
 
 import DevicePreview from './DevicePreview';
@@ -35,6 +35,7 @@ class Preview extends Component {
 
   componentDidMount() {
     this.updatePreview();
+    this.theme = Theme(config);
   }
 
   componentDidUpdate() {
@@ -68,13 +69,7 @@ class Preview extends Component {
 
     this.renderTimeout = setTimeout(() => {
       const { text, ...frontmatter } = this.props;
-      let preview;
-      try {
-        preview = theme(text, frontmatter, config);
-      } catch (error) {
-        console.error(error);
-        preview = '';
-      }
+      const preview = text && frontmatter ? this.theme(text, frontmatter) : '';
       this.setState({ preview });
     }, this.props.renderDelay);
   };

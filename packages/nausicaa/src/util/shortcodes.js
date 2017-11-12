@@ -3,7 +3,7 @@ import { oneLine } from 'common-tags';
 import addSizeSuffix from './addSizeSuffix';
 // import { injectStyle } from 'styletron-utils';
 
-export default (text, styletron, config) => {
+export default config => {
   const storageurl = config.media;
   const storagesuffix = config.mediasuffix;
 
@@ -212,5 +212,5 @@ export default (text, styletron, config) => {
     Shortcode.add(s, shortcodes[s]);
   }
 
-  return Shortcode.parse(text, { styletron });
+  return (text, styletron) => Shortcode.parse(text, { styletron });
 };
