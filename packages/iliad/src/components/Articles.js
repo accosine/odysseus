@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import connectFirebase from '../util/connect-firebase';
@@ -16,24 +17,27 @@ const styleSheet = {
 };
 
 class Articles extends Component {
-  state = { articles: '' };
+  state = { articles: [], loading: true };
 
   componentDidMount() {
-    const { firebase: { CONNECT, DATABASE, REFS, ACTIONS } } = this.props;
-    CONNECT('articles', DATABASE, REFS, ACTIONS);
-    // Add database change listener for each reference in the refs object
-    this.props.firebase.REFS['articles'].on('value', snapshot => {
-      this.setState({ articles: snapshot.val() });
-    });
+    this.firestoreUnsubscribe = this.props.firebase.firestore
+      .collection('articles')
+      .onSnapshot(snapshot => {
+        this.setState({
+          articles: snapshot.docs.map(article => article.data()),
+          loading: false,
+        });
+      });
   }
 
   componentWillUnmount() {
-    // Remove all database change listeners
-    this.props.firebase.REFS['articles'].off();
+    // Remove database change listener
+    this.firestoreUnsubscribe();
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes } = this.props;
+    const { loading, articles } = this.state;
 
     return (
       <div>
@@ -48,13 +52,19 @@ class Articles extends Component {
               justify={'center'}
               spacing={16}
             >
-              {Object.keys(this.state.articles).map((key, index) => (
-                <Paper key={key} className={classes.articlecard} elevation={4}>
-                  <Link to={`/editor/${key}`}>
-                    {this.state.articles[key].title}
-                  </Link>
-                </Paper>
-              ))}
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                articles.map(({ slug, title }) => (
+                  <Paper
+                    key={slug}
+                    className={classes.articlecard}
+                    elevation={4}
+                  >
+                    <Link to={`/editor/${slug}`}>{title}</Link>
+                  </Paper>
+                ))
+              )}
             </Grid>
           </Grid>
         </Grid>

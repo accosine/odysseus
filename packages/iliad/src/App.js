@@ -90,12 +90,9 @@ App.propTypes = {
   onDrawerToggle: PropTypes.func.isRequired,
   onDrawerClose: PropTypes.func.isRequired,
   firebase: PropTypes.shape({
-    ACTIONS: PropTypes.object.isRequired,
     AUTH: PropTypes.object.isRequired,
     Authenticate: PropTypes.func.isRequired,
-    CONNECT: PropTypes.func.isRequired,
-    DATABASE: PropTypes.object.isRequired,
-    REFS: PropTypes.object.isRequired,
+    firestore: PropTypes.object.isRequired,
     STORAGE: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.func.isRequired,
   }).isRequired,

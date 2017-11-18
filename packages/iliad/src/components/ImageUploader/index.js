@@ -33,22 +33,7 @@ class ImageUploader extends Component {
       droppedFiles: [],
       upload: 0,
       isUploading: false,
-      images: '',
     };
-  }
-
-  componentDidMount() {
-    const { firebase: { CONNECT, DATABASE, ACTIONS, REFS } } = this.props;
-    // Add database change listener for each reference in the refs object
-    CONNECT('images', DATABASE, REFS, ACTIONS);
-    REFS['images'].on('value', snapshot => {
-      this.setState({ images: snapshot.val() });
-    });
-  }
-
-  componentWillUnmount() {
-    // Remove all database change listeners
-    this.props.firebase.REFS['images'].off();
   }
 
   uploadFiles = files => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 import 'typeface-roboto';
 import App from './App';
 import firebaseconfig from './config';
@@ -8,18 +9,11 @@ import './index.css';
 import ThemeProvider from './util/ThemeProvider';
 import FirebaseProvider from './util/FirebaseProvider';
 
+
 firebase.initializeApp(firebaseconfig);
-const REFS = {};
-const ACTIONS = {};
 const PROVIDER = new firebase.auth.FacebookAuthProvider();
 const AUTH = firebase.auth();
-const DATABASE = firebase.database();
-const STORAGE = firebase.storage();
-const CONNECT = (string, DATABASE, REFS, ACTIONS) => {
-  REFS[string] = DATABASE.ref(`${string}/`);
-  ACTIONS['push' + string] = data =>
-    REFS[string].push(data, response => response);
-};
+
 const STORAGEKEY = 'KEY_FOR_LOCAL_STORAGE';
 
 function isAuthenticated() {
@@ -28,15 +22,15 @@ function isAuthenticated() {
 
 function Authenticate(event) {
   AUTH.signInWithRedirect(PROVIDER)
-    .then(function(result) {
+    .then(result => {
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var token = result.credential.accessToken;
+      const token = result.credential.accessToken;
       console.log('Token: ' + token);
       // The signed-in user info.
-      var user = result.user;
+      const user = result.user;
       console.log(user);
     })
-    .catch(function(error) {
+    .catch(error => {
       // Handle Errors here.
       console.log(error);
       // ...
@@ -44,14 +38,11 @@ function Authenticate(event) {
 }
 
 const firebaseApi = {
-  ACTIONS,
   AUTH,
   Authenticate,
-  CONNECT,
-  DATABASE,
-  REFS,
+  firestore: firebase.firestore(),
   isAuthenticated,
-  STORAGE,
+  STORAGE: firebase.storage(),
 };
 
 class Main extends Component {

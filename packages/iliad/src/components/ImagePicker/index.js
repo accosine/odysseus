@@ -42,22 +42,27 @@ const styleSheet = theme => ({
 
 class ImagePicker extends Component {
   state = {
-    images: {},
+    images: [],
     selected: [],
   };
 
   componentDidMount() {
-    const { firebase: { CONNECT, DATABASE, REFS, ACTIONS } } = this.props;
-    CONNECT('images', DATABASE, REFS, ACTIONS);
-    // Add database change listener for each reference in the refs object
-    REFS['images'].on('value', snapshot => {
-      this.setState({ images: snapshot.val() || {} });
-    });
+    this.firestoreUnsubscribe = this.props.firebase.firestore
+      .collection('images')
+      .onSnapshot(snapshot => {
+        this.setState({
+          images: snapshot.docs.reduce(
+            (obj, doc) => { obj[doc.id] = doc.data(); return obj},
+            {}
+          ),
+        });
+      });
+    // Object.keys(imagesDump).map(key => this.props.firebase.firestore.collection('images').add(imagesDump[key]))
   }
 
   componentWillUnmount() {
-    // Remove all database change listeners
-    this.props.firebase.REFS['images'].off();
+    // Remove database change listener
+    this.firestoreUnsubscribe();
   }
 
   addSelection = key => {
@@ -76,6 +81,7 @@ class ImagePicker extends Component {
       multiple,
       ...rest
     } = this.props;
+    const { images } = this.state;
 
     return (
       <div className={classes.container}>
@@ -87,14 +93,14 @@ class ImagePicker extends Component {
         ) : (
           ''
         )}
-        {Object.keys(this.state.images).length ? (
-          Object.keys(this.state.images).map((key, index) => (
-            <div key={key}>
+        {Object.keys(images).length ? (
+          Object.keys(images).map(id => (
+            <div key={id}>
               <ImageCard
                 disabled={!multiple && this.state.selected.length >= 1}
                 addSelection={this.addSelection}
-                image={this.state.images[key]}
-                reference={key}
+                image={images[id]}
+                reference={id}
                 {...rest}
               />
             </div>
