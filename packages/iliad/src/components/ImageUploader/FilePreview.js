@@ -6,6 +6,8 @@ import { CircularProgress } from 'material-ui/Progress';
 import Input from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
 
+import ChipInput from '../FrontMatter/ChipInput';
+
 const styleSheet = theme => ({
   root: {
     padding: theme.spacing.unit * 1,
@@ -37,9 +39,11 @@ const styleSheet = theme => ({
   },
 });
 
+// TODO: make all inputs controlled components and don't mutate files
 class FilePreview extends Component {
   state = {
     loaded: false,
+    tags: [],
   };
 
   componentDidMount() {
@@ -52,7 +56,7 @@ class FilePreview extends Component {
 
   render() {
     const { classes, file } = this.props;
-    const { loaded } = this.state;
+    const { tags, loaded } = this.state;
 
     return (
       <div className={classes.root}>
@@ -90,7 +94,14 @@ class FilePreview extends Component {
                 placeholder="Alt Text"
                 className={classes.input}
               />
-              <Input placeholder="Tags" className={classes.input} />
+              <ChipInput
+                id="Tags"
+                onChange={tags => {
+                  this.setState({ tags });
+                  file.tags = tags;
+                }}
+                chipData={tags}
+              />
             </CardContent>
           </div>
           <div className={classes.cover}>

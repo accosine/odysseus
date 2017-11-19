@@ -116,12 +116,10 @@ class SplitScreen extends Component {
   }
 
   onEdit = (text, caretPosition) => {
-    console.log('onEdit');
     this.setState({ content: text, caretPosition });
   };
 
   onCaretPosition = caretPosition => {
-    console.log('onCaret');
     this.setState({ caretPosition });
   };
 
@@ -137,16 +135,20 @@ class SplitScreen extends Component {
       loading,
       ...article
     } = this.state;
+    const { history, firebase: { firestore } } = this.props;
     this.setState(
       {
         isSaving: true,
       },
       () => {
-        this.props.firebase.firestore
+        firestore
           .collection('articles')
           .doc(article.slug)
           .set(article)
-          .then(() => this.setState({ isSaving: false }));
+          .then(() => {
+            this.setState({ isSaving: false });
+            history.replace(`/editor/${article.slug}`);
+          });
       }
     );
   };
@@ -163,7 +165,7 @@ class SplitScreen extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, match: { params: { slug } } } = this.props;
     const {
       frontmatterExpanded,
       caretPosition,
@@ -189,6 +191,7 @@ class SplitScreen extends Component {
               <Typography type="headline">Frontmatter</Typography>
               <FrontMatter
                 {...frontmatter}
+                disableSlug={!!slug}
                 onChange={change => this.setState(change)}
               />
             </Collapse>

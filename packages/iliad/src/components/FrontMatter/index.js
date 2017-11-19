@@ -29,7 +29,7 @@ const styleSheet = theme => ({
 
 // TODO: add date and date modified to frontmatter
 
-const FrontMatter = props => (
+const FrontMatter = ({ itemtype, disableSlug, ...props }) => (
   <div className={props.classes.container}>
     <FrontMatterImagePicker
       onInsert={selected => {
@@ -113,9 +113,9 @@ const FrontMatter = props => (
     <FrontMatterTextfield id="picture" {...props} />
     <FrontMatterTextfield id="attribution" {...props} />
     <FrontMatterTextfield id="alt" {...props} />
-    <FrontMatterTextfield id="slug" {...props} />
+    <FrontMatterTextfield disabled={disableSlug} id="slug" {...props} />
     {props.type === 'review' ? (
-      <ReviewFrontMatter {...props} />
+      <ReviewFrontMatter {...props} itemtype={itemtype} />
     ) : props.type === 'recipe' ? (
       <RecipeFrontMatter {...props} />
     ) : props.type === 'video' ? (
@@ -137,6 +137,7 @@ FrontMatter.propTypes = {
   attribution: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
+  disableSlug: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

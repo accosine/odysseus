@@ -12,6 +12,7 @@ export default ({
   ...props
 }) => (
   <TextField
+    {...props}
     className={classes.textField}
     id={id}
     label={id}

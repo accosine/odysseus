@@ -5,11 +5,11 @@ import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import FrontMatterTextfield from './FrontMatterTextfield';
 
-export default props => [
+export default ({ itemtype, ...props }) => [
   <FormControl key="1" margin="normal">
     <InputLabel htmlFor="itemtype">type</InputLabel>
     <Select
-      value={props.itemtype}
+      value={itemtype}
       onChange={event => props.onChange({ itemtype: event.target.value })}
       input={<Input id="itemtype" />}
     >

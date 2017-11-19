@@ -9,19 +9,19 @@ import './index.css';
 import ThemeProvider from './util/ThemeProvider';
 import FirebaseProvider from './util/FirebaseProvider';
 
-
 firebase.initializeApp(firebaseconfig);
-const PROVIDER = new firebase.auth.FacebookAuthProvider();
-const AUTH = firebase.auth();
+const provider = new firebase.auth.FacebookAuthProvider();
+const auth = firebase.auth();
 
 const STORAGEKEY = 'KEY_FOR_LOCAL_STORAGE';
 
 function isAuthenticated() {
-  return !!AUTH.currentUser || !!localStorage.getItem(STORAGEKEY);
+  return !!auth.currentUser || !!localStorage.getItem(STORAGEKEY);
 }
 
-function Authenticate(event) {
-  AUTH.signInWithRedirect(PROVIDER)
+function authenticate(event) {
+  auth
+    .signInWithRedirect(provider)
     .then(result => {
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const token = result.credential.accessToken;
@@ -38,11 +38,11 @@ function Authenticate(event) {
 }
 
 const firebaseApi = {
-  AUTH,
-  Authenticate,
+  auth,
+  authenticate,
   firestore: firebase.firestore(),
   isAuthenticated,
-  STORAGE: firebase.storage(),
+  storage: firebase.storage(),
 };
 
 class Main extends Component {
@@ -55,7 +55,7 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    AUTH.onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
         // console.log(user);

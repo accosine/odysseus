@@ -16,7 +16,7 @@ const styleSheet = {
 };
 
 const Login = props => {
-  const { classes, firebase: { isAuthenticated, Authenticate }, user } = props;
+  const { classes, firebase: { isAuthenticated, authenticate }, user } = props;
   const authed = isAuthenticated();
 
   if (authed) {
@@ -26,7 +26,7 @@ const Login = props => {
       </div>
     );
   } else {
-    return <Button onClick={event => Authenticate()}>Login</Button>;
+    return <Button onClick={event => authenticate()}>Login</Button>;
   }
 };
 

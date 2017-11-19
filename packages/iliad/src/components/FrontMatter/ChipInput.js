@@ -58,7 +58,6 @@ export default class ChipInput extends Component {
 
   handleChipAdd = () => {
     this.props.onChange([...this.props.chipData, this.state.text]);
-    console.log('new chips', [...this.props.chipData, this.state.text]);
     this.setState({ text: '' });
   };
 

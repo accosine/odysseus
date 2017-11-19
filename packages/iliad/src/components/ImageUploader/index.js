@@ -37,7 +37,7 @@ class ImageUploader extends Component {
   }
 
   uploadFiles = files => {
-    const { firebase: { DATABASE, REFS, STORAGE } } = this.props;
+    const { firebase: { firestore, storage } } = this.props;
     this.setState({ isUploading: true });
     const timestamp = Date.now();
     const incrementUpload = cb =>
@@ -46,12 +46,6 @@ class ImageUploader extends Component {
       if (this.state.upload === arrlength) {
         this.props.switchTab(null, tabnumber);
       }
-    };
-    const writeNewImage = (imageData, newImageKey) => {
-      var updates = {};
-      updates['/images/' + newImageKey] = imageData;
-
-      return DATABASE.ref().update(updates);
     };
     const fileext = type => {
       let extension;
@@ -69,34 +63,31 @@ class ImageUploader extends Component {
       }
       return extension;
     };
-    // TODO: conveniece function which adds file extension
-    // TODO: write file name and file tags to firebase
-    const storageRef = STORAGE.ref();
+    const storageRef = storage.ref();
+
     files.map(file => {
-      // Get a key for a new image
-      var newImageKey = REFS['images'].push().key;
-      console.log(newImageKey);
+      // Get a ref for a new image
+      var newImageRef = firestore.collection('images').doc();
 
       return storageRef
         .child(`${file.newname}` + timestamp + fileext(file.type))
-        .put(file, { customMetadata: { dbkey: newImageKey } })
+        .put(file, { customMetadata: { dbkey: newImageRef.id } })
         .then(function(snapshot) {
           incrementUpload(() => {
             switchTabIfReady(1, files.length);
           });
-          writeNewImage(
-            {
-              name: file.newname + timestamp + fileext(file.type),
-              attribution: file.newattribution,
-              caption: file.newcaption,
-              alt: file.newalttext,
-              width: file.width,
-              height: file.height,
-            },
-            newImageKey
-          );
-          console.log(snapshot);
-          console.log('Uploaded an image!');
+          newImageRef.set({
+            name: file.newname + timestamp + fileext(file.type),
+            attribution: file.newattribution,
+            caption: file.newcaption,
+            alt: file.newalttext,
+            width: file.width,
+            height: file.height,
+            tags: file.tags.reduce(
+              (tags, tag) => ({ ...tags, [tag]: true }),
+              {}
+            ),
+          });
         })
         .catch(console.log);
     });
