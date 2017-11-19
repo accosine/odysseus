@@ -1,8 +1,4 @@
-export default {
-  /* NAUSICAA */
-  nausikamint: '#92EFE5',
-  nausikabubblesolid: 'rgba(255,255,255,0.7)',
-
+const collections = {
   /* COLLECTION COLORS*/
   Fernsehen: {
     color: '#4DA1CB',
@@ -86,6 +82,13 @@ export default {
     subline: '#332828',
     transparent: 'rgba(51, 40, 40, 0.7)',
   },
+};
+
+const theme = {
+  /* NAUSICAA */
+  nausikamint: '#92EFE5',
+  nausikabubblesolid: 'rgba(255,255,255,0.7)',
+
   /* KONTRASTE */
   mausgrau: '#585252',
   hellgrau: '#C1C1C1',
@@ -106,4 +109,19 @@ export default {
 
   /* VARIABLEN */
   drehungverlauf: '135deg',
+
+  collection: collection => {
+    if (collections[collection]) {
+      return collections[collection];
+    } else {
+      return {
+        color: '#4DA1CB',
+        subline: '#00A7FF',
+        verlauf: '#00ADFF, #FF6500',
+        transparent: 'rgba(0, 167, 255, 0.5)',
+      };
+    }
+  },
 };
+
+export default theme;

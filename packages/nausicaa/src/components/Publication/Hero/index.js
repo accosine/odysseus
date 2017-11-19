@@ -52,7 +52,7 @@ const Time = withTheme(
 const Breadcrumbs = withTheme(
   styled('p', ({ theme, collection }) => ({
     marginBottom: '5vw',
-    color: theme[collection].color,
+    color: theme.collection(collection).color,
     '@media screen and (min-width: 1024px)': {
       marginBottom: '2vw',
     },
@@ -61,7 +61,7 @@ const Breadcrumbs = withTheme(
 
 const A = withTheme(
   styled('a', ({ theme, collection }) => ({
-    color: theme[collection].color,
+    color: theme.collection(collection).color,
   }))
 );
 
@@ -105,7 +105,7 @@ const Headline = withTheme(
 
 const Subline = withTheme(
   styled('h2', ({ theme, collection }) => ({
-    backgroundColor: theme[collection].subline,
+    backgroundColor: theme.collection(collection).subline,
     fontSize: '5vw',
     color: 'white',
     padding: '2vw',

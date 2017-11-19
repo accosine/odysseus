@@ -13,7 +13,7 @@ const P = withTheme(
       paddingTop: '4px',
       paddingRight: '8px',
       paddingLeft: '3px',
-      color: theme[collection].color,
+      color: theme.collection(collection).color,
     },
     '@media screen and (min-width: 1024px)': {
       fontSize: '18px',
@@ -39,8 +39,9 @@ const Block = withTheme(
     paddingTop: '4vw',
     margin: 0,
     padding: 0,
-    backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${theme[collection]
-      .verlauf})`,
+    backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${theme.collection(
+      collection
+    ).verlauf})`,
     boxShadow: 'inset 0 0 30vw rgb(255, 255, 255)',
     '@media screen and (min-width: 1024px)': {
       border: '1vw solid #fff',
