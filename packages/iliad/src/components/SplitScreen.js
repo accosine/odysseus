@@ -102,26 +102,10 @@ class SplitScreen extends Component {
         .onSnapshot(snapshot =>
           this.setState({
             loading: false,
-            ...snapshot.data(),
+            ...(snapshot.exists ? snapshot.data() : {}),
           })
         );
     }
-    // const { firebase, match } = this.props;
-    // if (match.params.slug) {
-    //   firebase.CONNECT(
-    //     `articles/${match.params.slug}`,
-    //     firebase.DATABASE,
-    //     firebase.REFS,
-    //     firebase.ACTIONS
-    //   );
-    //   firebase.REFS[
-    //     `articles/${this.props.match.params.slug}`
-    //   ].on('value', snapshot =>
-    //     this.setState({
-    //       ...snapshot.val(),
-    //     })
-    //   );
-    // }
   }
 
   componentWillUnmount() {
