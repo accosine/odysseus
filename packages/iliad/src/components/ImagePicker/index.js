@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui/Progress';
+
 import ImageCard from './ImageCard';
 import CarouselSettings from './CarouselSettings';
 import { withStyles } from 'material-ui/styles';
@@ -44,6 +46,7 @@ class ImagePicker extends Component {
   state = {
     images: [],
     selected: [],
+    loading: true,
   };
 
   componentDidMount() {
@@ -51,8 +54,9 @@ class ImagePicker extends Component {
       .collection('images')
       .onSnapshot(snapshot => {
         this.setState({
+          loading: false,
           images: snapshot.docs.reduce(
-            (obj, doc) => { obj[doc.id] = doc.data(); return obj},
+            (obj, doc) => ({ ...obj, [doc.id]: doc.data() }),
             {}
           ),
         });
@@ -81,7 +85,7 @@ class ImagePicker extends Component {
       multiple,
       ...rest
     } = this.props;
-    const { images } = this.state;
+    const { loading, images } = this.state;
 
     return (
       <div className={classes.container}>
@@ -90,10 +94,11 @@ class ImagePicker extends Component {
             onCarouselSettings={onCarouselSettings}
             carouselSettings={carouselSettings}
           />
-        ) : (
-          ''
-        )}
-        {Object.keys(images).length ? (
+        ) : null}
+
+        {loading ? (
+          <CircularProgress />
+        ) : Object.keys(images).length ? (
           Object.keys(images).map(id => (
             <div key={id}>
               <ImageCard
