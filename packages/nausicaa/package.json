@@ -28,18 +28,14 @@
     "jest": "^21.2.1"
   },
   "scripts": {
-    "prepare": "rm -rf dist/ && babel src -d dist",
+    "prepare": "babel src -d dist",
     "test": "jest"
   },
   "jest": {
     "rootDir": "src/",
-    "testPathIgnorePatterns": [
-      "/__tests__/fixtures/"
-    ]
+    "testPathIgnorePatterns": ["/__tests__/fixtures/"]
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "author": "accosine",
   "contributors": [
     "Simon Bugert <simon.bugert@gmail.com>",
