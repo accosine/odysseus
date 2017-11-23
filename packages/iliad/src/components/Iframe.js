@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
 const styleSheet = {
@@ -11,6 +12,9 @@ const styleSheet = {
     height: '100%',
     border: 0,
     background: 'white',
+  },
+  hidden: {
+    visibility: 'hidden',
   },
 };
 
@@ -40,8 +44,12 @@ class Iframe extends Component {
 
   updateIframe = () => {
     const iframe = this.createIframe();
-    this.container.innerHTML = '';
     this.container.appendChild(iframe);
+
+    iframe.className = classnames(
+      this.props.classes.iframe,
+      this.props.classes.hidden
+    );
 
     const iframeDocument = iframe.contentDocument;
     iframeDocument.open();
@@ -52,6 +60,8 @@ class Iframe extends Component {
       this.setState({ scrollY: event.target.scrollingElement.scrollTop })
     );
     iframe.contentWindow.onload = () => {
+      this.container.removeChild(this.container.firstChild);
+      iframe.className = classnames(this.props.classes.iframe);
       iframe.contentWindow.scrollTo(0, this.state.scrollY);
     };
   };
