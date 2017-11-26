@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
-const helloWorld =  require('./helloworld');
-const imageWorker =  require('./imageworker');
+const imageWorker = require('./imageworker');
+const monolith = require('./monolith');
 
-exports.helloWorld = functions.https.onRequest(helloWorld);
 exports.imageWorker = functions.storage.object().onChange(imageWorker);
+exports.monolith = functions.https.onRequest(monolith.app);
