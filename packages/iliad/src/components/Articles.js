@@ -20,6 +20,7 @@ class Articles extends Component {
   state = { articles: [], loading: true };
 
   componentDidMount() {
+    // TODO: use select() to get only slug and title
     this.firestoreUnsubscribe = this.props.firebase.firestore
       .collection('articles')
       .onSnapshot(snapshot => {
