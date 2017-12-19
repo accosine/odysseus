@@ -12,8 +12,7 @@ import AmpScript from '../AmpScript';
 
 import formatDate from '../../util/formatDate';
 
-
-export default ({
+const Head = ({
   frontmatter,
   frontmatter: {
     title,
@@ -28,6 +27,8 @@ export default ({
     layout,
     lightbox,
     description,
+    slug,
+    pagination,
   },
   styles,
   body,
@@ -38,27 +39,37 @@ export default ({
   <head>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <title>{title}</title>
+    <title>{title || collection}</title>
     {layout === 'start' ? (
       <link rel="canonical" href={`${config.protocol}://${config.domain}`} />
     ) : null}
     {layout === 'publication' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${path}/`}
+        href={`${config.protocol}://${config.domain}/${
+          config.collections[collection]
+        }/${slug}`}
       />
     ) : null}
     {layout === 'collection' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${path}/`}
+        href={`${config.protocol}://${config.domain}/${
+          config.collections[collection]
+        }${pagination.currentPage > 1 ? '/' + pagination.currentPage : ''}`}
       />
     ) : null}
-    {layout === 'collection' ? <HeadPagination /> : null}
+    {layout === 'portal' ? (
+      <HeadPagination
+        pagination={pagination}
+        collection={collection}
+        config={config}
+      />
+    ) : null}
     {layout === 'basic' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${path}/`}
+        href={`${config.protocol}://${config.domain}/${path}`}
       />
     ) : null}
     <meta
@@ -76,7 +87,9 @@ export default ({
       config={config}
       frontmatter={{ title, picture, layout, description }}
     />
-    <Schema {...frontmatter} config={config} />
+    {layout === 'publicatin' ? (
+      <Schema {...frontmatter} config={config} />
+    ) : null}
     <SchemaSitename config={config} />
     <Font />
     <Favicons config={config} />
@@ -91,3 +104,9 @@ export default ({
     <StylesCustom styles={styles} />
   </head>
 );
+
+Head.defaultProps = {
+  ampScripts: [],
+};
+
+export default Head;

@@ -33,9 +33,13 @@
   },
   "jest": {
     "rootDir": "src/",
-    "testPathIgnorePatterns": ["/__tests__/fixtures/"]
+    "testPathIgnorePatterns": [
+      "/__tests__/fixtures/"
+    ]
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "author": "accosine",
   "contributors": [
     "Simon Bugert <simon.bugert@gmail.com>",

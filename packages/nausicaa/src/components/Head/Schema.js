@@ -48,9 +48,9 @@ export default ({
 }) => {
   let schema = {
     '@context': 'http://schema.org/',
-    mainEntityOfPage: `${protocol}://${domain}/${collections[
-      collection
-    ]}/${slug}/`,
+    mainEntityOfPage: `${protocol}://${domain}/${
+      collections[collection]
+    }/${slug}/`,
     description: description,
     datePublished: formatDate(date, 'YYYY-MM-DD', 'de'),
     author: {
@@ -130,6 +130,7 @@ export default ({
       };
       break;
     default:
+      return null;
   }
 
   const breadcrumbs = {

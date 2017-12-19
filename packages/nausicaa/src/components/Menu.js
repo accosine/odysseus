@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectStyle } from 'styletron-utils';
 import { styled } from 'styletron-react';
-import AmpComponent from '../AmpComponent';
+import AmpComponent from './AmpComponent';
 
 const Sidebar = styled(AmpComponent('amp-sidebar'), {
   fontFamily: 'Roboto, sans-serif',

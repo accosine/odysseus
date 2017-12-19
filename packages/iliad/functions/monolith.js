@@ -40,14 +40,16 @@ const paginationHandler = collectionName => (req, res) => {
           const articles = documentSnapshots.docs.map(article =>
             article.data()
           );
-          res.send({
-            pagination: {
-              currentPage: parseInt(page, 10),
-              pagerSize,
-              articleCount: emptySelectSnapshot.docs.length,
-            },
-            articles,
-          });
+          res.send(
+            theme.portal(articles, {
+              collection: collectionName,
+              pagination: {
+                currentPage: parseInt(page, 10),
+                pagerSize,
+                articleCount: emptySelectSnapshot.docs.length,
+              },
+            })
+          );
         })
     )
     .catch(err => {
@@ -74,7 +76,7 @@ Object.keys(collections).forEach(collectionName => {
           if (article.collection !== collectionName) {
             return res.status(404).send('Article Not Found');
           }
-          res.send(theme(article.content, article));
+          res.send(theme.article(article.content, article));
         } else {
           res.send('No such document!');
         }

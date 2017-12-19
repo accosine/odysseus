@@ -3,12 +3,12 @@ import addSizeSuffix from '../../util/addSizeSuffix';
 export default ({
   config,
   path,
-  frontmatter: { title, description, layout, picture },
+  frontmatter: { title, description, layout, picture, collection },
 }) => {
   const always = [
     <meta name="twitter:site" content={'@' + config.vanityurl} />,
-    <meta name="twitter:title" content={title} />,
-    <meta property="og:title" content={title} />,
+    <meta name="twitter:title" content={title || collection} />,
+    <meta property="og:title" content={title || collection} />,
     <meta property="og:locale" content="de_DE" />,
     <meta property="og:site_name" content={config.organization.name} />,
   ];
@@ -44,14 +44,15 @@ export default ({
         ],
         always,
       ];
-    case 'collection':
+    case 'portal':
       return [
         [
           <meta name="twitter:card" content="summary" />,
           <meta
             name="twitter:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
           <meta
             name="twitter:description"
@@ -69,8 +70,9 @@ export default ({
           />,
           <meta
             property="og:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
         ],
         always,
@@ -81,8 +83,9 @@ export default ({
           <meta name="twitter:card" content="summary" />,
           <meta
             name="twitter:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
           <meta
             name="twitter:description"
@@ -100,8 +103,9 @@ export default ({
           />,
           <meta
             property="og:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
         ],
         always,
@@ -112,8 +116,9 @@ export default ({
           <meta name="twitter:card" content="summary" />,
           <meta
             name="twitter:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
           <meta
             name="twitter:description"
@@ -131,12 +136,14 @@ export default ({
           />,
           <meta
             property="og:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
         ],
         always,
       ];
     default:
+      return null;
   }
 };

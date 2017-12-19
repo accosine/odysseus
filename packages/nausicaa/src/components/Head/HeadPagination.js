@@ -1,18 +1,25 @@
 import React from 'react';
 
-export default ({ pagination, config }) => (
+export default ({
+  pagination: { currentPage, pagerSize, articleCount },
+  collection,
+  config,
+}) => (
   <div>
-    {pagination.previous.path ? (
+    {currentPage > 1 ? (
       <link
         rel="prev"
-        href={`${config.protocol}://${config.domain}/${pagination.previous
-          .path}/`}
+        href={`${config.protocol}://${config.domain}/${
+          config.collections[collection]
+        }${currentPage - 1 > 1 ? '/' + currentPage - 1 : ''}`}
       />
     ) : null}
-    {pagination.next.path ? (
+    {currentPage < Math.ceil(articleCount / pagerSize) ? (
       <link
         rel="next"
-        href={`${config.protocol}://${config.domain}/${pagination.next.path}/`}
+        href={`${config.protocol}://${config.domain}/${
+          config.collections[collection]
+        }/${currentPage + 1}`}
       />
     ) : null}
   </div>

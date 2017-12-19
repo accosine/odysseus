@@ -5,10 +5,8 @@ import { styled } from 'styletron-react';
 import Analytics from '../Analytics';
 import SvgSpritemap from '../SvgSpritemap';
 import Header from '../Header';
-import Sharebuttons from './Sharebuttons';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import Hero from './Hero';
 import AdContainer from '../AdContainer';
 
 const Container = styled('div', {
@@ -29,27 +27,11 @@ const Main = styled('main', {
   },
 });
 
-const Article = styled('article', {
-  position: 'relative',
-});
-
-const Publication = ({
-  children,
+const Portal = ({
   styletron,
+  articles,
   config,
-  frontmatter: {
-    date,
-    collection,
-    attribution,
-    author,
-    picture,
-    alt,
-    headline,
-    subline,
-    lightbox,
-    slug,
-    title,
-  },
+  frontmatter: { collection, pagination },
 }) => [
   <Menu styletron={styletron} config={config} />,
   <Analytics accountId={config.googleanalytics} />,
@@ -57,44 +39,41 @@ const Publication = ({
     <SvgSpritemap styletron={styletron} />
     <Header styletron={styletron} />
     <Main id="main" role="main">
-      <Hero
-        config={config}
-        collection={collection}
-        picture={picture}
-        author={author}
-        alt={alt}
-        attribution={attribution}
-        headline={headline}
-        subline={subline}
-        date={date}
-      />
-      <Sharebuttons
-        slug={slug}
-        title={title}
-        collection={collection}
-        config={config}
-      />
       <AdContainer
         adnetwork={config.ads.adnetwork}
         adslot={config.ads.adslot}
       />
-      <Article>
-        {children}
-      </Article>
-      <Sharebuttons
-        slug={slug}
-        title={title}
-        collection={collection}
-        config={config}
-      />
+      <div>
+        {JSON.stringify(articles)}
+        {/* {articles.map(({ picture, slug, headline }) => ( */}
+        {/*   <div> */}
+        {/*     {headline}: {slug} */}
+        {/*   </div> */}
+        {/* ))} */}
+      </div>
     </Main>
     <aside />
     <Footer config={config} />
-    {lightbox ? <amp-image-lightbox id="lightbox1" layout="nodisplay" /> : null}
   </Container>,
 ];
 
-Publication.propTypes = {
-  children: PropTypes.node.isRequired,
+Portal.propTypes = {
+  config: PropTypes.object.isRequired,
+  articles: PropTypes.arrayOf(
+    PropTypes.shape({
+      picture: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+      headline: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  frontmatter: PropTypes.shape({
+    collection: PropTypes.string.isRequired,
+    pagination: PropTypes.shape({
+      currentPage: PropTypes.number.isRequired,
+      pagerSize: PropTypes.number.isRequired,
+      articleCount: PropTypes.number.isRequired,
+    }),
+  }).isRequired,
 };
-export default Publication;
+
+export default Portal;

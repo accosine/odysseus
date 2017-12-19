@@ -26,3 +26,4 @@ setup/import/
 setup/import-images/
 src/config.json
 .runtimeconfig.json
+firebase-debug.log
