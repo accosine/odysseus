@@ -107,7 +107,7 @@ export default ({ config }) => [
     dangerouslySetInnerHTML={{
       __html: oneLine`
     nausika nutzt Cookies in deinem Browser. Wir speichern darin allerlei Daten
-    - aber keine Sorge, nichts Wildes. Mehr langweiLiges bla bla über Cookies
+    - aber keine Sorge, nichts Wildes. Mehr langweiliges bla bla über Cookies
     kannst du <a href="/datenschutz/">hier lesen...</a>
     <button on="tap:amp-user-notification1.dismiss">
       Cookies finde ich ganz ok

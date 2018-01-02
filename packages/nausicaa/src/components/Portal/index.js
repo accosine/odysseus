@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from 'styletron-react';
 
+// import Listing from './Listing';
+import Pager from './Pager';
+
 import Analytics from '../Analytics';
 import SvgSpritemap from '../SvgSpritemap';
 import Header from '../Header';
@@ -43,14 +46,14 @@ const Portal = ({
         adnetwork={config.ads.adnetwork}
         adslot={config.ads.adslot}
       />
-      <div>
-        {JSON.stringify(articles)}
-        {/* {articles.map(({ picture, slug, headline }) => ( */}
-        {/*   <div> */}
-        {/*     {headline}: {slug} */}
-        {/*   </div> */}
-        {/* ))} */}
-      </div>
+      {/* <Listing /> */}
+      <Pager
+        currentPage={pagination.currentPage}
+        pagerSize={pagination.pagerSize}
+        articleCount={pagination.articleCount}
+        collection={collection}
+        config={config}
+      />
     </Main>
     <aside />
     <Footer config={config} />
