@@ -1,5 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { styled } from 'styletron-react';
+import withTheme from '../../util/withTheme';
+
+const Container = withTheme(
+  styled('div', ({ theme }) => ({
+    color: theme.mausgrau,
+    display: 'block',
+    fontWeight: 500,
+    fontSize: '10vw',
+    margin: '10vw 5vw 5vw 5vw',
+    padding: '1.5vw',
+    textAlign: 'center',
+    textDecoration: 'none',
+    '@media screen and (min-width: 1024px)': {
+      margin: '0vw 0vw 0vw 0vw',
+      padding: '1.5vw',
+      fontSize: '3vw',
+    },
+  }))
+);
+
+const ButtonActive = withTheme(
+  styled('a', ({ theme }) => ({
+    margin: '2vw',
+    textDecoration: 'none',
+    color: theme.dunkelgrau,
+    '@media screen and (min-width: 1024px)': {
+      margin: '2vw',
+    },
+  }))
+);
+
+const ButtonInactive = withTheme(
+  styled('a', ({ theme }) => ({
+    margin: '2vw',
+    textDecoration: 'none',
+    color: theme.hellgrau,
+    '@media screen and (min-width: 1024px)': {
+      margin: '2vw',
+    },
+  }))
+);
 
 const Pager = ({
   currentPage,
@@ -8,57 +50,47 @@ const Pager = ({
   collection,
   config,
 }) => (
-  <div class="pagination--container">
+  <Container>
     {currentPage === 1 ? (
-      <span class="pagination--button pagination--button--inactive">
-        |{'<'}
-      </span>
+      <ButtonInactive>|{'<'}</ButtonInactive>
     ) : (
-      <a
-        class="pagination--button pagination--button--active"
-        href={'/' + config.collections[collection]}
-      >
+      <ButtonActive href={'/' + config.collections[collection]}>
         |{'<'}
-      </a>
+      </ButtonActive>
     )}
     {currentPage > 1 ? (
-      <a
-        class="pagination--button pagination--button--active"
+      <ButtonActive
         href={`/${config.collections[collection]}${
           currentPage - 1 > 1 ? '/' + (currentPage - 1) : ''
         }`}
       >
         {'<'}
-      </a>
+      </ButtonActive>
     ) : (
-      <span class="pagination--button pagination--button--inactive">{'<'}</span>
+      <ButtonInactive>|{'<'}</ButtonInactive>
     )}
     {currentPage} von {Math.ceil(articleCount / pagerSize)}
     {currentPage < Math.ceil(articleCount / pagerSize) ? (
-      <a
-        class="pagination--button pagination--button--active"
+      <ButtonActive
         href={`/${config.collections[collection]}/${currentPage + 1}`}
       >
         {'>'}
-      </a>
+      </ButtonActive>
     ) : (
-      <span class="pagination--button pagination--button--inactive">{'>'}</span>
+      <ButtonInactive>{'>'}</ButtonInactive>
     )}
     {currentPage === Math.ceil(articleCount / pagerSize) ? (
-      <span class="pagination--button pagination--button--inactive">
-        {'>'}|
-      </span>
+      <ButtonInactive>{'>'}|</ButtonInactive>
     ) : (
-      <a
-        class="pagination--button pagination--button--active"
+      <ButtonActive
         href={`/${config.collections[collection]}/${Math.ceil(
           articleCount / pagerSize
         )}`}
       >
         {'>'}|
-      </a>
+      </ButtonActive>
     )}
-  </div>
+  </Container>
 );
 
 Pager.propTypes = {
