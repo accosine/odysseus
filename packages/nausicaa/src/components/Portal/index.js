@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from 'styletron-react';
 
-// import Listing from './Listing';
+import Listing from './Listing';
 import Pager from './Pager';
 
 import Analytics from '../Analytics';
@@ -46,7 +46,7 @@ const Portal = ({
         adnetwork={config.ads.adnetwork}
         adslot={config.ads.adslot}
       />
-      {/* <Listing /> */}
+      <Listing articles={articles} collection={collection} config={config} />
       <Pager
         currentPage={pagination.currentPage}
         pagerSize={pagination.pagerSize}

@@ -1,34 +1,56 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { oneLine } from 'common-tags';
 
-const Listing = props => null;
-//   (
-//       <h1 class="category--headline category--headline--{{tolowercase category}}">{{category}}</h1>
-//       <div class="category--container">
-//         {{#each pagination.files }}
-//         <section>
-//           <a href="/{{this.path}}/">
-//             <div class="article--container article--container--{{tolowercase ../category}}">
-//               <figure>
-//                 <amp-img
-//                 class="article--cover{{#if @first}} first-art{{/if}}"
-//                 width=4
-//                 height=3
-//                 src="/{{../config.media}}/m-{{this.picture}}"
-//                 alt="{{this.alt}}"
-//                 attribution="{{this.attribution}}"
-//                 layout="responsive">
-//                 </amp-img>
-//                 <figcaption class="article--teaser--caption">{{this.attribution}}</figcaption>
-//               </figure>
-//               <h2 class="article--headline">{{this.headline}}</h2>
-//               <h3 class="article--subline">{{this.subline}}</h3>
-//             </div>
-//           </a>
-//         </section>
-//         {{/each}}
-//       </div>
-// );
+import AmpComponent from '../AmpComponent';
+import addSizeSuffix from '../../util/addSizeSuffix';
+const AmpImg = AmpComponent('amp-img');
+
+const Listing = ({ articles, collection, config }) => (
+  <Fragment>
+    <h1 class="category--headline category--headline--{{tolowercase category}}">
+      {collection}
+    </h1>
+    <div class="category--container">
+      {articles.map(
+        ({ picture, attribution, alt, slug, headline, subline }) => (
+          <section key={slug}>
+            <a href={`/${collection}/${slug}`}>
+              <div class="article--container article--container--{{tolowercase ../category}}">
+                <figure>
+                  <AmpImg
+                    class="article--cover{{#if @first}} first-art{{/if}}"
+                    width={4}
+                    height={3}
+                    src={`${config.media}${picture}${
+                      config.images.small.suffix
+                    }${config.mediasuffix}`}
+                    srcset={oneLine`${config.media}${addSizeSuffix(
+                      picture,
+                      config.images.medium.suffix
+                    )}${config.mediasuffix} ${config.images.medium.size},
+                  ${config.media}${addSizeSuffix(
+                      picture,
+                      config.images.small.suffix
+                    )}${config.mediasuffix} ${config.images.small.size}`}
+                    alt={alt}
+                    attribution={attribution}
+                    layout="responsive"
+                  />
+                  <figcaption class="article--teaser--caption">
+                    {attribution}
+                  </figcaption>
+                </figure>
+                <h2 class="article--headline">{headline}</h2>
+                <h3 class="article--subline">{subline}</h3>
+              </div>
+            </a>
+          </section>
+        )
+      )}
+    </div>
+  </Fragment>
+);
 
 Listing.defaultProps = {};
 

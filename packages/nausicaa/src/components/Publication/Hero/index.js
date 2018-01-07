@@ -144,7 +144,7 @@ export default ({
       )}${config.mediasuffix} ${config.images.medium.size},
                   ${config.media}${addSizeSuffix(
         picture,
-        config.images.medium.suffix
+        config.images.small.suffix
       )}${config.mediasuffix} ${config.images.small.size}`}
       alt={alt}
       attribution={attribution}

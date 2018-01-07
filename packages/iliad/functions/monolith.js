@@ -30,7 +30,7 @@ const paginationHandler = collectionName => (req, res) => {
     .get()
     .then(emptySelectSnapshot =>
       articles
-        .select('slug', 'headline', 'picture')
+        .select('slug', 'headline', 'subline', 'picture', 'attribution', 'alt')
         .orderBy('slug')
         .where('collection', '==', collectionName)
         .offset((page - 1) * pagerSize)
