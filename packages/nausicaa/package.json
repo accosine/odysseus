@@ -5,12 +5,12 @@
   "main": "dist/index.js",
   "dependencies": {
     "common-tags": "^1.4.0",
-    "marksy": "^5.0.0",
+    "marksy": "^6.0.3",
     "moment": "^2.18.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "styletron-react": "^2.5.8",
-    "styletron-server": "^2.5.7"
+    "styletron-react": "^3.0.3",
+    "styletron-server": "^3.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
