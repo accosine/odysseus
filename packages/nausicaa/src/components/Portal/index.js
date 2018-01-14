@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from 'styletron-react';
 
@@ -35,30 +35,32 @@ const Portal = ({
   articles,
   config,
   frontmatter: { collection, pagination },
-}) => [
-  <Menu styletron={styletron} config={config} />,
-  <Analytics accountId={config.googleanalytics} />,
-  <Container>
-    <SvgSpritemap styletron={styletron} />
-    <Header styletron={styletron} />
-    <Main id="main" role="main">
-      <AdContainer
-        adnetwork={config.ads.adnetwork}
-        adslot={config.ads.adslot}
-      />
-      <Listing articles={articles} collection={collection} config={config} />
-      <Pager
-        currentPage={pagination.currentPage}
-        pagerSize={pagination.pagerSize}
-        articleCount={pagination.articleCount}
-        collection={collection}
-        config={config}
-      />
-    </Main>
-    <aside />
-    <Footer config={config} />
-  </Container>,
-];
+}) => (
+  <Fragment>
+    <Menu styletron={styletron} config={config} />
+    <Analytics accountId={config.googleanalytics} />
+    <Container>
+      <SvgSpritemap styletron={styletron} />
+      <Header styletron={styletron} />
+      <Main id="main" role="main">
+        <AdContainer
+          adnetwork={config.ads.adnetwork}
+          adslot={config.ads.adslot}
+        />
+        <Listing articles={articles} collection={collection} config={config} />
+        <Pager
+          currentPage={pagination.currentPage}
+          pagerSize={pagination.pagerSize}
+          articleCount={pagination.articleCount}
+          collection={collection}
+          config={config}
+        />
+      </Main>
+      <aside />
+      <Footer config={config} />
+    </Container>
+  </Fragment>
+);
 
 Portal.propTypes = {
   config: PropTypes.object.isRequired,
