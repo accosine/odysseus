@@ -22,9 +22,10 @@ const Listing = ({ articles, collection, config }) => (
                     class="article--cover{{#if @first}} first-art{{/if}}"
                     width={4}
                     height={3}
-                    src={`${config.media}${picture}${
-                      config.images.small.suffix
-                    }${config.mediasuffix}`}
+                    src={oneLine`${config.media}${addSizeSuffix(
+                      picture,
+                      config.images.medium.suffix
+                    )}${config.mediasuffix}`}
                     srcset={oneLine`${config.media}${addSizeSuffix(
                       picture,
                       config.images.medium.suffix

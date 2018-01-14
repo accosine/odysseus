@@ -132,8 +132,10 @@ export default ({
     <AmpImg
       width={4}
       height={3}
-      src={`${config.media}${picture}${config.images.small
-        .suffix}${config.mediasuffix}`}
+      src={oneLine`${config.media}${addSizeSuffix(
+        picture,
+        config.images.small.suffix
+      )}${config.mediasuffix}`}
       srcset={oneLine`${config.media}${addSizeSuffix(
         picture,
         config.images.large.suffix
@@ -171,8 +173,9 @@ export default ({
       <AuthorPicture
         width={4}
         height={4}
-        src={`${config.media}${config.authors[author]
-          .avatar}${config.mediasuffix}`}
+        src={`${config.media}${config.authors[author].avatar}${
+          config.mediasuffix
+        }`}
         alt={alt}
         attribution={attribution}
         layout="responsive"
