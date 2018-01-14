@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { styled } from 'styletron-react';
 import { oneLine } from 'common-tags';
 
@@ -54,58 +54,59 @@ const A = styled('a', {
   color: '#585252',
 });
 
-export default ({ config }) => [
-  <footer>
-    <LogoContainer>
-      <a href="#main">
-        <Logo>
-          <amp-img
-            width={'3'}
-            height={'3'}
-            src={`${config.media}nausika-gurl.min.svg${config.mediasuffix}`}
-            alt="Gurl you know it's true, uh uh uh, I love you!"
-            attribution="All Rights Reserved"
-            layout="responsive"
-          />
-        </Logo>
-      </a>
-      <a href="#main">
-        <LogoText>
-          <use xlinkHref="#nausika--logotext-use" />
-        </LogoText>
-      </a>
-    </LogoContainer>
-    <Ul>
-      {/* TODO */}
-      {/* <Li>Newsletter</Li> */}
-      {/* <Li>Über uns</Li> */}
-      {/* <Li>FAQ</Li> */}
-      {/* <Li>Werbung</Li> */}
-      <Li>
-        <A href="/impressum/">Impressum</A>
-      </Li>
-      <Li>
-        <A href="/datenschutz/">Datenschutz</A>
-      </Li>
-      <Li>
-        <A href="/agb/">AGB</A>
-      </Li>
-      <Li>
-        <A href="/rss/">RSS</A>
-      </Li>
-      <Li>
-        <A href={`https://www.facebook.com/${config.vanityurl}`}>Facebook</A>
-      </Li>
-      <Li>
-        <A href={`https://www.twitter.com/${config.vanityurl}`}>Twitter</A>
-      </Li>
-    </Ul>
-  </footer>,
-  <amp-user-notification
-    layout="nodisplay"
-    id="amp-user-notification1"
-    dangerouslySetInnerHTML={{
-      __html: oneLine`
+export default ({ config }) => (
+  <Fragment>
+    <footer>
+      <LogoContainer>
+        <a href="#main">
+          <Logo>
+            <amp-img
+              width={'3'}
+              height={'3'}
+              src={`${config.media}nausika-gurl.min.svg${config.mediasuffix}`}
+              alt="Gurl you know it's true, uh uh uh, I love you!"
+              attribution="All Rights Reserved"
+              layout="responsive"
+            />
+          </Logo>
+        </a>
+        <a href="#main">
+          <LogoText>
+            <use xlinkHref="#nausika--logotext-use" />
+          </LogoText>
+        </a>
+      </LogoContainer>
+      <Ul>
+        {/* TODO */}
+        {/* <Li>Newsletter</Li> */}
+        {/* <Li>Über uns</Li> */}
+        {/* <Li>FAQ</Li> */}
+        {/* <Li>Werbung</Li> */}
+        <Li>
+          <A href="/impressum/">Impressum</A>
+        </Li>
+        <Li>
+          <A href="/datenschutz/">Datenschutz</A>
+        </Li>
+        <Li>
+          <A href="/agb/">AGB</A>
+        </Li>
+        <Li>
+          <A href="/rss/">RSS</A>
+        </Li>
+        <Li>
+          <A href={`https://www.facebook.com/${config.vanityurl}`}>Facebook</A>
+        </Li>
+        <Li>
+          <A href={`https://www.twitter.com/${config.vanityurl}`}>Twitter</A>
+        </Li>
+      </Ul>
+    </footer>
+    <amp-user-notification
+      layout="nodisplay"
+      id="amp-user-notification1"
+      dangerouslySetInnerHTML={{
+        __html: oneLine`
     nausika nutzt Cookies in deinem Browser. Wir speichern darin allerlei Daten
     - aber keine Sorge, nichts Wildes. Mehr langweiliges bla bla über Cookies
     kannst du <a href="/datenschutz/">hier lesen...</a>
@@ -113,6 +114,7 @@ export default ({ config }) => [
       Cookies finde ich ganz ok
     </button>
       `,
-    }}
-  />,
-];
+      }}
+    />
+  </Fragment>
+);

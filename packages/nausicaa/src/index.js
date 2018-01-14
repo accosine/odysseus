@@ -7,6 +7,7 @@ import Shortcodes from './util/shortcodes';
 import Head from './components/Head';
 import Publication from './components/Publication';
 import Portal from './components/Portal';
+import Start from './components/Start';
 import ThemeProvider from './util/ThemeProvider';
 import MarkdownComponents from './components/MarkdownComponents';
 import getAmpScripts from './util/getAmpScripts';
@@ -81,6 +82,7 @@ const article = config => (article, frontmatter) => {
 
   return html;
 };
+
 const portal = config => (articles, frontmatter) => {
   const styletron = initializeStyletron();
 
@@ -113,7 +115,35 @@ const portal = config => (articles, frontmatter) => {
   return html;
 };
 
+const start = config => articles => {
+  const styletron = initializeStyletron();
+
+  const body = ReactDOMServer.renderToStaticMarkup(
+    <StyletronProvider styletron={styletron}>
+      <ThemeProvider theme={theme}>
+        <Start styletron={styletron} articles={articles} config={config} />
+      </ThemeProvider>
+    </StyletronProvider>
+  );
+
+  const html =
+    '<!doctype html>' +
+    '<html ⚡ lang="de">' +
+    ReactDOMServer.renderToStaticMarkup(
+      <Layout
+        frontmatter={{ layout: 'start' }}
+        config={config}
+        styles={styletron.getCss()}
+        body={body}
+      />
+    ) +
+    '</html>';
+
+  return html;
+};
+
 export default config => ({
   article: article(config),
   portal: portal(config),
+  start: start(config),
 });

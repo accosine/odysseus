@@ -93,6 +93,7 @@ const theme = {
   mausgrau: '#585252',
   hellgrau: '#C1C1C1',
   dunkelgrau: '#333333',
+  grau: '#969696',
   eierschale: '#F9FAFB',
   black: '#000000',
 

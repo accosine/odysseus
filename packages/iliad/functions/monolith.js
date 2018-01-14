@@ -19,7 +19,25 @@ app.use(cors);
 app.use(cookieParser);
 
 app.get('/', (req, res) => {
-  res.send('Start');
+  Promise.all(
+    Object.keys(collections).map(collectionName =>
+      articles
+        .select('slug', 'headline', 'subline', 'picture', 'attribution', 'alt')
+        .orderBy('slug')
+        .where('collection', '==', collectionName)
+        .limit(5)
+        .get()
+        .then(documentSnapshots => ({
+          articles: documentSnapshots.docs.map(article => article.data()),
+          collection: collectionName,
+        }))
+    )
+  )
+    .then(articles => res.send(theme.start(articles)))
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(err);
+    });
 });
 
 const paginationHandler = collectionName => (req, res) => {

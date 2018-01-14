@@ -61,6 +61,7 @@ const Breadcrumbs = withTheme(
 
 const A = withTheme(
   styled('a', ({ theme, collection }) => ({
+    textDecoration: 'none',
     color: theme.collection(collection).color,
   }))
 );
