@@ -45,7 +45,7 @@ const Portal = ({
       <Main id="main" role="main">
         <AdContainer
           adnetwork={config.ads.adnetwork}
-          adslot={config.ads.adslot}
+          adconfig={{ 'data-slot': config.ads.adslot }}
         />
         <Listing articles={articles} collection={collection} config={config} />
         <Pager

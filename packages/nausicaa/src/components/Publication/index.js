@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from 'styletron-react';
 
@@ -34,7 +34,7 @@ const Article = styled('article', {
 });
 
 const Publication = ({
-  children,
+  article,
   styletron,
   config,
   frontmatter: {
@@ -50,51 +50,53 @@ const Publication = ({
     slug,
     title,
   },
-}) => [
-  <Menu styletron={styletron} config={config} />,
-  <Analytics accountId={config.googleanalytics} />,
-  <Container>
-    <SvgSpritemap styletron={styletron} />
-    <Header styletron={styletron} />
-    <Main id="main" role="main">
-      <Hero
-        config={config}
-        collection={collection}
-        picture={picture}
-        author={author}
-        alt={alt}
-        attribution={attribution}
-        headline={headline}
-        subline={subline}
-        date={date}
-      />
-      <Sharebuttons
-        slug={slug}
-        title={title}
-        collection={collection}
-        config={config}
-      />
-      <AdContainer
-        adnetwork={config.ads.adnetwork}
-        adslot={config.ads.adslot}
-      />
-      <Article>
-        {children}
-      </Article>
-      <Sharebuttons
-        slug={slug}
-        title={title}
-        collection={collection}
-        config={config}
-      />
-    </Main>
-    <aside />
-    <Footer config={config} />
-    {lightbox ? <amp-image-lightbox id="lightbox1" layout="nodisplay" /> : null}
-  </Container>,
-];
+}) => (
+  <Fragment>
+    <Menu styletron={styletron} config={config} />
+    <Analytics accountId={config.googleanalytics} />
+    <Container>
+      <SvgSpritemap styletron={styletron} />
+      <Header styletron={styletron} />
+      <Main id="main" role="main">
+        <Hero
+          config={config}
+          collection={collection}
+          picture={picture}
+          author={author}
+          alt={alt}
+          attribution={attribution}
+          headline={headline}
+          subline={subline}
+          date={date}
+        />
+        <Sharebuttons
+          slug={slug}
+          title={title}
+          collection={collection}
+          config={config}
+        />
+        <AdContainer
+          adnetwork={config.ads.adnetwork}
+          adconfig={{ 'data-slot': config.ads.adslot }}
+        />
+        <Article>{article}</Article>
+        <Sharebuttons
+          slug={slug}
+          title={title}
+          collection={collection}
+          config={config}
+        />
+      </Main>
+      <aside />
+      <Footer config={config} />
+      {lightbox ? (
+        <amp-image-lightbox id="lightbox1" layout="nodisplay" />
+      ) : null}
+    </Container>
+  </Fragment>
+);
 
 Publication.propTypes = {
-  children: PropTypes.node.isRequired,
+  article: PropTypes.node.isRequired,
 };
 export default Publication;

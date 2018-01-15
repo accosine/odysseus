@@ -1,3 +1,41 @@
+export const publicationProps = {
+  frontmatter: {
+    title: 'Article Title',
+    date: '2016-10-25',
+    datemodified: '2016-12-17',
+    slug: 'article-slug',
+    author: 'Hanni Hund',
+    layout: 'publication',
+    collection: 'Musik',
+    headline: 'Article Headline!',
+    subline: 'Test Article...',
+    description: 'This is a test article',
+    picture: 'test-article.jpg',
+    alt: 'test article cover',
+    attribution: 'Jon Doe',
+    type: 'artikel',
+    content: `## 1. Bob Dylan – Knockin’ On Heaven’s Door
+
+First Song
+
+[youtube videoid="UtWhioqshtw"]
+
+
+## 2. Bruce Springsteen – I’m On Fire
+
+Second Song
+
+[youtube videoid="gntO-BadGk8"]
+
+
+## 3. Nirvana – Smells Like Teen Spirit
+
+Third Song
+
+[youtube videoid="hTWKbfoikeg"]`,
+  },
+};
+
 export const portalProps = {
   articles: [
     {

@@ -59,9 +59,8 @@ const article = config => (article, frontmatter) => {
           styletron={styletron}
           frontmatter={frontmatter}
           config={config}
-        >
-          {articleTree}
-        </Publication>
+          article={articleTree}
+        />
       </ThemeProvider>
     </StyletronProvider>
   );

@@ -61,7 +61,7 @@ const Start = ({ styletron, articles, config }) => (
         </div>
         <AdContainer
           adnetwork={config.ads.adnetwork}
-          adslot={config.ads.adslot}
+          adconfig={{ 'data-slot': config.ads.adslot }}
         />
       </Main>
       <aside />

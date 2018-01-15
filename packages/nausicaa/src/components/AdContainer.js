@@ -11,14 +11,20 @@ const Container = styled('div', {
   },
 });
 
-const AdContainer = ({ adnetwork, adslot }) => (
+const AdContainer = ({ adnetwork, adconfig, width, height }) => (
   <Container>
-    <amp-ad width={300} height={250} type={adnetwork} data-slot={adslot} />
+    <amp-ad width={width} height={height} type={adnetwork} {...adconfig} />
   </Container>
 );
 
 AdContainer.propTypes = {
   adnetwork: PropTypes.string.isRequired,
-  adslot: PropTypes.string.isRequired,
+  adconfig: PropTypes.object.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
+};
+AdContainer.defaultProps = {
+  width: 300,
+  height: 250,
 };
 export default AdContainer;
