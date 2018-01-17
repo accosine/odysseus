@@ -1,3 +1,75 @@
+export const config = {
+  domain: 'example.com',
+  vanityurl: 'examplecom',
+  protocol: 'https',
+  googleanalytics: 'UA-12345678-9',
+  images: {
+    large: {
+      suffix: '-l',
+      size: '1280w',
+      width: '1280',
+      height: '960',
+    },
+    medium: {
+      suffix: '-m',
+      size: '640w',
+      width: '640',
+      height: '480',
+    },
+    small: {
+      suffix: '-s',
+      size: '320w',
+      width: '320',
+      height: '240',
+    },
+  },
+  pager: {
+    size: 3,
+  },
+  organization: {
+    name: 'example',
+    altname: 'example website',
+    email: 'hi@example.com',
+    banner: {
+      path: 'example-banner.png',
+      width: '154',
+      height: '60',
+    },
+    logo: {
+      path: 'example-logo.png',
+      width: '800',
+      height: '800',
+    },
+  },
+  authors: {
+    'Jon Doe': {
+      name: 'Jon Doe',
+      email: '',
+      facebook: '',
+      avatar: 'jondoe.jpg',
+    },
+  },
+  collections: {
+    Musik: 'musik',
+  },
+  layouts: {
+    publication: {},
+  },
+  types: {
+    artikel: {},
+    rezension: {},
+    video: {},
+    rezept: {},
+  },
+  ads: {
+    adnetwork: 'doubleclick',
+    adslot: '/12345678/domain.com(Code)',
+  },
+  media:
+    'https://firebasestorage.googleapis.com/v0/b/example-1234a.appspot.com/o/',
+  mediasuffix: '?alt=media',
+};
+
 export const publicationProps = {
   frontmatter: {
     title: 'Article Title',

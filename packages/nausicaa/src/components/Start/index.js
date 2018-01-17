@@ -31,7 +31,18 @@ const Main = styled('main', {
 
 const CollectionA = withTheme(
   styled('a', ({ styleProps: { theme } }) => ({
-    '@media screen and (min-width: 1024px)': {},
+    color: theme.mausgrau,
+    display: 'block',
+    fontSize: '16vw',
+    fontWeight: 500,
+    margin: '10vw 5vw 5vw 5vw',
+    padding: '1.5vw',
+    textAlign: 'center',
+    textDecoration: 'none',
+    '@media screen and (min-width: 1024px)': {
+      fontSize: '8vw',
+      margin: '5vw 0vw 5vw 0vw',
+    },
   }))
 );
 
@@ -48,21 +59,17 @@ const Start = ({ styletron, articles, config }) => (
             <Fragment key={collectionArticles.collection}>
               <CollectionA
                 href={`/${config.collections[collectionArticles.collection]}`}
-                class="category--headline category--headline--fernsehen"
               >
                 {collectionArticles.collection}
               </CollectionA>
               <Articles
                 articles={collectionArticles.articles}
+                collection={collectionArticles.collection}
                 config={config}
               />
             </Fragment>
           ))}
         </div>
-        <AdContainer
-          adnetwork={config.ads.adnetwork}
-          adconfig={{ 'data-slot': config.ads.adslot }}
-        />
       </Main>
       <aside />
       <Footer config={config} />
