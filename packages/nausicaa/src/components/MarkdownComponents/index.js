@@ -3,7 +3,7 @@ import { styled } from 'styletron-react';
 import withTheme from '../../util/withTheme';
 
 const P = withTheme(
-  styled('p', ({ context: { collection }, theme }) => ({
+  styled('p', ({ styleProps: { theme, collection } }) => ({
     margin: '4vw 6vw 4vw 6vw',
     color: '#333',
     ':first-of-type:first-letter': {
@@ -23,7 +23,7 @@ const P = withTheme(
 );
 
 const H2 = withTheme(
-  styled('h2', ({ theme }) => ({
+  styled('h2', ({ styleProps: { theme } }) => ({
     color: theme.mausgrau,
     margin: '5vw 6vw 2vw 6vw',
     '@media screen and (min-width: 1024px)': {
@@ -33,7 +33,7 @@ const H2 = withTheme(
 );
 
 const Block = withTheme(
-  styled('blockquote', ({ collection, theme }) => ({
+  styled('blockquote', ({ styleProps: { theme, collection } }) => ({
     color: 'white',
     border: '3vw solid white',
     paddingTop: '4vw',
@@ -50,7 +50,7 @@ const Block = withTheme(
 );
 
 const BlockP = withTheme(
-  styled('p', ({ theme }) => ({
+  styled('p', ({ styleProps: { theme } }) => ({
     textAlign: 'center',
     fontWeight: 'bold',
     color: theme.eierschale,

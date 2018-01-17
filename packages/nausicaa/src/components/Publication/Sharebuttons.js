@@ -38,19 +38,19 @@ const SocialIconSvg = styled('svg', {
 });
 
 const Facebook = withTheme(
-  styled(SocialIcon, ({ theme }) => ({
+  styled(SocialIcon, ({ styleProps: { theme } }) => ({
     backgroundColor: theme.facebookblau,
   }))
 );
 
 const Twitter = withTheme(
-  styled(SocialIcon, ({ theme }) => ({
+  styled(SocialIcon, ({ styleProps: { theme } }) => ({
     backgroundColor: theme.twitterblau,
   }))
 );
 
 const Whatsapp = withTheme(
-  styled(SocialIcon, ({ theme }) => ({
+  styled(SocialIcon, ({ styleProps: { theme } }) => ({
     backgroundColor: theme.whatsappgruen,
     '@media screen and (min-width: 1024px)': {
       display: 'none',
@@ -59,7 +59,7 @@ const Whatsapp = withTheme(
 );
 
 const SocialIconText = withTheme(
-  styled('span', ({ theme }) => ({
+  styled('span', ({ styleProps: { theme } }) => ({
     color: theme.eierschale,
     fontSize: '5vw',
     padding: '1vw',

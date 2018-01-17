@@ -30,7 +30,7 @@ const Main = styled('main', {
 });
 
 const CollectionA = withTheme(
-  styled('a', ({ theme }) => ({
+  styled('a', ({ styleProps: { theme } }) => ({
     '@media screen and (min-width: 1024px)': {},
   }))
 );

@@ -9,19 +9,19 @@ import addSizeSuffix from '../../util/addSizeSuffix';
 const AmpImg = AmpComponent('amp-img');
 
 const Article = withTheme(
-  styled('div', ({ theme }) => ({
+  styled('div', ({ styleProps: { theme } }) => ({
     '@media screen and (min-width: 1024px)': {},
   }))
 );
 
 const Headline = withTheme(
-  styled('h1', ({ theme }) => ({
+  styled('h1', ({ styleProps: { theme } }) => ({
     '@media screen and (min-width: 1024px)': {},
   }))
 );
 
 const Figcaption = withTheme(
-  styled('figcaption', ({ theme }) => ({
+  styled('figcaption', ({ styleProps: { theme } }) => ({
     '@media screen and (min-width: 1024px)': {},
   }))
 );

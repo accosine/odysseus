@@ -39,7 +39,7 @@ const Container = styled('div', {
 });
 
 const Time = withTheme(
-  styled('time', ({ theme }) => ({
+  styled('time', ({ styleProps: { theme } }) => ({
     display: 'block',
     margin: '0vw 0vw 5vw 0vw',
     color: theme.mausgrau,
@@ -50,7 +50,7 @@ const Time = withTheme(
 );
 
 const Breadcrumbs = withTheme(
-  styled('p', ({ theme, collection }) => ({
+  styled('p', ({ styleProps: { theme, collection } }) => ({
     marginBottom: '5vw',
     color: theme.collection(collection).color,
     '@media screen and (min-width: 1024px)': {
@@ -60,7 +60,7 @@ const Breadcrumbs = withTheme(
 );
 
 const A = withTheme(
-  styled('a', ({ theme, collection }) => ({
+  styled('a', ({ styleProps: { theme, collection } }) => ({
     textDecoration: 'none',
     color: theme.collection(collection).color,
   }))
@@ -88,14 +88,14 @@ const AuthorName = styled('span', {
 });
 
 const AuthorPicture = withTheme(
-  styled(AmpComponent('amp-img'), ({ theme }) => ({
+  styled(AmpComponent('amp-img'), ({ styleProps: { theme } }) => ({
     boxShadow: `0px 2px 7px 0px ${theme.mausgrau}`,
     borderRadius: '100%',
   }))
 );
 
 const Headline = withTheme(
-  styled('h1', ({ theme }) => ({
+  styled('h1', ({ styleProps: { theme } }) => ({
     marginBottom: '5vw',
     color: theme.mausgrau,
     '@media screen and (min-width: 1024px)': {
@@ -105,7 +105,7 @@ const Headline = withTheme(
 );
 
 const Subline = withTheme(
-  styled('h2', ({ theme, collection }) => ({
+  styled('h2', ({ styleProps: { theme, collection } }) => ({
     backgroundColor: theme.collection(collection).subline,
     fontSize: '5vw',
     color: 'white',
@@ -175,9 +175,8 @@ export default ({
         <AuthorPicture
           width={4}
           height={4}
-          src={`${config.media}${config.authors[author].avatar}${
-            config.mediasuffix
-          }`}
+          src={`${config.media}${config.authors[author]
+            .avatar}${config.mediasuffix}`}
           alt={alt}
           attribution={attribution}
           layout="responsive"

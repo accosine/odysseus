@@ -4,7 +4,7 @@ import { styled } from 'styletron-react';
 import withTheme from '../../util/withTheme';
 
 const Container = withTheme(
-  styled('div', ({ theme }) => ({
+  styled('div', ({ styleProps: { theme } }) => ({
     color: theme.mausgrau,
     display: 'block',
     fontWeight: 500,
@@ -22,7 +22,7 @@ const Container = withTheme(
 );
 
 const ButtonActive = withTheme(
-  styled('a', ({ theme }) => ({
+  styled('a', ({ styleProps: { theme } }) => ({
     margin: '2vw',
     textDecoration: 'none',
     color: theme.dunkelgrau,
@@ -33,7 +33,7 @@ const ButtonActive = withTheme(
 );
 
 const ButtonInactive = withTheme(
-  styled('a', ({ theme }) => ({
+  styled('a', ({ styleProps: { theme } }) => ({
     margin: '2vw',
     textDecoration: 'none',
     color: theme.hellgrau,
@@ -60,9 +60,9 @@ const Pager = ({
     )}
     {currentPage > 1 ? (
       <ButtonActive
-        href={`/${config.collections[collection]}${
-          currentPage - 1 > 1 ? '/' + (currentPage - 1) : ''
-        }`}
+        href={`/${config.collections[collection]}${currentPage - 1 > 1
+          ? '/' + (currentPage - 1)
+          : ''}`}
       >
         {'<'}
       </ButtonActive>

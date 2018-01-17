@@ -8,7 +8,12 @@ const withTheme = ComponentToWrap => {
     };
     render() {
       const { theme } = this.context;
-      return <ComponentToWrap {...this.props} theme={theme} />;
+      return (
+        <ComponentToWrap
+          {...this.props}
+          styleProps={{ theme, ...this.props.styleProps }}
+        />
+      );
     }
   }
   C.displayName = `withTheme(${ComponentToWrap.displayName ||

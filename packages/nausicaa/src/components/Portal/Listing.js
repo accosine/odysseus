@@ -9,7 +9,7 @@ import addSizeSuffix from '../../util/addSizeSuffix';
 const AmpImg = AmpComponent('amp-img');
 
 const Headline = withTheme(
-  styled('h1', ({ theme, collection }) => ({
+  styled('h1', ({ styleProps: { theme, collection } }) => ({
     color: theme.eierschale,
     background: theme.collection(collection).color,
     display: 'block',
@@ -28,13 +28,11 @@ const Headline = withTheme(
 );
 
 const Article = withTheme(
-  styled('div', ({ theme }) => ({
+  styled('div', ({ styleProps: { theme } }) => ({
     margin: '0 0 8vw 0',
     position: 'relative',
     '::after': {
-      backgroundImage: `linear-gradient(180deg, ${theme.transparent}, ${
-        theme.black
-      })`,
+      backgroundImage: `linear-gradient(180deg, ${theme.transparent}, ${theme.black})`,
       content: '""',
       height: '50%',
       left: 0,
@@ -49,7 +47,7 @@ const Article = withTheme(
 );
 
 const ArticleHeadline = withTheme(
-  styled('h2', ({ theme }) => ({
+  styled('h2', ({ styleProps: { theme } }) => ({
     top: '36vw',
     color: theme.eierschale,
     fontSize: '7vw',
@@ -68,7 +66,7 @@ const ArticleHeadline = withTheme(
 );
 
 const ArticleSubline = withTheme(
-  styled('h3', ({ theme }) => ({
+  styled('h3', ({ styleProps: { theme } }) => ({
     top: '53vw',
     color: theme.eierschale,
     fontSize: '4vw',
@@ -87,7 +85,7 @@ const ArticleSubline = withTheme(
 );
 
 const Figcaption = withTheme(
-  styled('figcaption', ({ theme }) => ({
+  styled('figcaption', ({ styleProps: { theme } }) => ({
     bottom: '0vw',
     color: theme.eierschale,
     fontSize: '2.5vw',
@@ -108,7 +106,7 @@ const Figure = styled('figure', {
 
 const Listing = ({ articles, collection, config }) => (
   <Fragment>
-    <Headline collection={collection}>{collection}</Headline>
+    <Headline styleProps={{ collection }}>{collection}</Headline>
     <div>
       {articles.map(
         ({ picture, attribution, alt, slug, headline, subline }) => (
