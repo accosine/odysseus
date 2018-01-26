@@ -157,12 +157,12 @@ export default ({
       <PictureAttribution>{attribution}</PictureAttribution>
     </Picture>
     <Container>
-      <Breadcrumbs collection={collection}>
-        <A collection={collection} href="/">
+      <Breadcrumbs styleProps={{ collection }}>
+        <A styleProps={{ collection }} href="/">
           Start
         </A>
         {' > '}
-        <A collection={collection} href={`/${config.collections[collection]}/`}>
+        <A styleProps={{ collection }} href={`/${config.collections[collection]}/`}>
           {collection}
         </A>
       </Breadcrumbs>
@@ -170,13 +170,14 @@ export default ({
         {formatDate(date, 'DD. MMMM YYYY', 'de')}
       </Time>
       <Headline>{headline}</Headline>
-      <Subline collection={collection}>{subline}</Subline>
+      <Subline styleProps={{ collection }}>{subline}</Subline>
       <Author>
         <AuthorPicture
           width={4}
           height={4}
-          src={`${config.media}${config.authors[author]
-            .avatar}${config.mediasuffix}`}
+          src={`${config.media}${config.authors[author].avatar}${
+            config.mediasuffix
+          }`}
           alt={alt}
           attribution={attribution}
           layout="responsive"

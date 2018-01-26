@@ -8,10 +8,11 @@ const withTheme = ComponentToWrap => {
     };
     render() {
       const { theme } = this.context;
+      const { context, ...props } = this.props;
       return (
         <ComponentToWrap
-          {...this.props}
-          styleProps={{ theme, ...this.props.styleProps }}
+          {...props}
+          styleProps={{ theme, ...context, ...this.props.styleProps }}
         />
       );
     }

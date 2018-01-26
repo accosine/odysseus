@@ -39,9 +39,9 @@ const Block = withTheme(
     paddingTop: '4vw',
     margin: 0,
     padding: 0,
-    backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${theme.collection(
-      collection
-    ).verlauf})`,
+    backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${
+      theme.collection(collection).verlauf
+    })`,
     boxShadow: 'inset 0 0 30vw rgb(255, 255, 255)',
     '@media screen and (min-width: 1024px)': {
       border: '1vw solid #fff',
@@ -90,7 +90,7 @@ const BlockP = withTheme(
 );
 
 const Blockquote = ({ context: { collection }, children }) => (
-  <Block collection={collection}>
+  <Block styleProps={{ collection }}>
     <BlockP>{children[1].props.children}</BlockP>
   </Block>
 );
