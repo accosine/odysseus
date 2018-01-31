@@ -1,6 +1,6 @@
 {
   "name": "nausicaa",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "dist/index.js",
   "dependencies": {
@@ -9,8 +9,8 @@
     "moment": "^2.18.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "styletron-react": "^3.0.3",
-    "styletron-server": "^3.0.2"
+    "styletron-react": "^3.0.4",
+    "styletron-server": "^3.0.4"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.9",
@@ -43,13 +43,9 @@
   },
   "jest": {
     "rootDir": "src/",
-    "testPathIgnorePatterns": [
-      "/__tests__/fixtures/"
-    ]
+    "testPathIgnorePatterns": ["/__tests__/fixtures/"]
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "author": "accosine",
   "contributors": [
     "Simon Bugert <simon.bugert@gmail.com>",

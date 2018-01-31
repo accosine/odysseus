@@ -1140,11 +1140,9 @@ Array [
       >
         <p
           className="bi bj bk"
-          collection="Musik"
         >
           <a
             className="bl bj"
-            collection="Musik"
             href="/"
           >
             Start
@@ -1152,7 +1150,6 @@ Array [
            &gt; 
           <a
             className="bl bj"
-            collection="Musik"
             href="/musik/"
           >
             Musik
@@ -1171,7 +1168,6 @@ Array [
         </h1>
         <h2
           className="bq br bs bt bu o bv"
-          collection="Musik"
         >
           Test Article...
         </h2>
@@ -1285,22 +1281,12 @@ Array [
       >
         <h2
           className="bn cm cn"
-          context={
-            Object {
-              "collection": "Musik",
-            }
-          }
           id="1.-bob-dylan-–-knockin’-on-heaven’s-door"
         >
           1. Bob Dylan – Knockin’ On Heaven’s Door
         </h2>
         <p
           className="co j cp cq cr cs ct cu cv cw cx"
-          context={
-            Object {
-              "collection": "Musik",
-            }
-          }
         >
           First Song
         </p>
@@ -1316,22 +1302,12 @@ Array [
         />
         <h2
           className="bn cm cn"
-          context={
-            Object {
-              "collection": "Musik",
-            }
-          }
           id="1.-bob-dylan-–-knockin’-on-heaven’s-door-2.-bruce-springsteen-–-i’m-on-fire"
         >
           2. Bruce Springsteen – I’m On Fire
         </h2>
         <p
           className="co j cp cq cr cs ct cu cv cw cx"
-          context={
-            Object {
-              "collection": "Musik",
-            }
-          }
         >
           Second Song
         </p>
@@ -1347,22 +1323,12 @@ Array [
         />
         <h2
           className="bn cm cn"
-          context={
-            Object {
-              "collection": "Musik",
-            }
-          }
           id="1.-bob-dylan-–-knockin’-on-heaven’s-door-3.-nirvana-–-smells-like-teen-spirit"
         >
           3. Nirvana – Smells Like Teen Spirit
         </h2>
         <p
           className="co j cp cq cr cs ct cu cv cw cx"
-          context={
-            Object {
-              "collection": "Musik",
-            }
-          }
         >
           Third Song
         </p>

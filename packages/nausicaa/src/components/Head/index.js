@@ -46,17 +46,17 @@ const Head = ({
     {layout === 'publication' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${
-          config.collections[collection]
-        }/${slug}`}
+        href={`${config.protocol}://${config.domain}/${config.collections[
+          collection
+        ]}/${slug}`}
       />
     ) : null}
-    {layout === 'collection' ? (
+    {layout === 'portal' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${
-          config.collections[collection]
-        }${pagination.currentPage > 1 ? '/' + pagination.currentPage : ''}`}
+        href={`${config.protocol}://${config.domain}/${config.collections[
+          collection
+        ]}${pagination.currentPage > 1 ? '/' + pagination.currentPage : ''}`}
       />
     ) : null}
     {layout === 'portal' ? (

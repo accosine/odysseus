@@ -8,7 +8,6 @@ import SvgSpritemap from '../SvgSpritemap';
 import Header from '../Header';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import AdContainer from '../AdContainer';
 import Articles from './Articles';
 
 const Container = styled('div', {

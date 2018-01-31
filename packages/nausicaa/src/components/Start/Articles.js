@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { styled } from 'styletron-react';
 import { oneLine } from 'common-tags';
 
@@ -92,7 +91,6 @@ const Articles = ({ articles, collection, config }) => (
           <a href={`/${config.collections[collection]}/${slug}`}>
             <Article styleProps={{ collection }}>
               <Figure>
-                {/* <amp-img class="article--cover{{#if @first}} first-art{{/if}}" */}
                 <Cover
                   width={4}
                   height={3}
@@ -112,9 +110,7 @@ const Articles = ({ articles, collection, config }) => (
                   attribution={attribution}
                   layout="responsive"
                 />
-                {/* <h1 class="article--headline">{headline}</h1> */}
                 <Headline>{headline}</Headline>
-                {/* <figcaption class="article--teaser--caption"> */}
                 <Figcaption>{attribution}</Figcaption>
               </Figure>
             </Article>
