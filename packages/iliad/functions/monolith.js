@@ -18,6 +18,11 @@ const articles = firestore.collection('articles');
 app.use(cors);
 app.use(cookieParser);
 
+app.get('/robots.txt', function(req, res) {
+  res.type('text/plain');
+  res.send('User-agent: *\nDisallow: /');
+});
+
 app.get('/', (req, res) => {
   Promise.all(
     Object.keys(collections).map(collectionName =>
