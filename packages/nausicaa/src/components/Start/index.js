@@ -57,9 +57,10 @@ const Start = ({ styletron, articles, config }) => (
           {articles.map(collectionArticles => (
             <Fragment key={collectionArticles.collection}>
               <CollectionA
-                href={`/${config.collections[collectionArticles.collection]}`}
+                href={`/${config.collections[collectionArticles.collection]
+                  .slug}`}
               >
-                {collectionArticles.collection}
+                {config.collections[collectionArticles.collection].name}
               </CollectionA>
               <Articles
                 articles={collectionArticles.articles}

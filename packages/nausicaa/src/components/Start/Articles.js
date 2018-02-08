@@ -7,20 +7,6 @@ import AmpComponent from '../AmpComponent';
 import addSizeSuffix from '../../util/addSizeSuffix';
 const AmpImg = AmpComponent('amp-img');
 
-const CategoryContainer = withTheme(
-  styled('div', ({ styleProps: { theme, collection } }) => ({
-    '::after': {
-      opacity: 0.3,
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    },
-  }))
-);
-
 const Article = withTheme(
   styled('div', ({ styleProps: { theme, collection } }) => ({
     margin: '0 0 4vw 0',
@@ -84,11 +70,11 @@ const Figure = styled('figure', {
 });
 
 const Articles = ({ articles, collection, config }) => (
-  <CategoryContainer styleProps={{ collection }}>
+  <div>
     {articles.map(
       ({ picture, attribution, alt, slug, headline, subline }, n) => (
         <section key={slug}>
-          <a href={`/${config.collections[collection]}/${slug}`}>
+          <a href={`/${config.collections[collection].slug}/${slug}`}>
             <Article styleProps={{ collection }}>
               <Figure>
                 <Cover
@@ -118,7 +104,7 @@ const Articles = ({ articles, collection, config }) => (
         </section>
       )
     )}
-  </CategoryContainer>
+  </div>
 );
 
 Articles.defaultProps = {};

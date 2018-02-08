@@ -106,12 +106,14 @@ const Figure = styled('figure', {
 
 const Listing = ({ articles, collection, config }) => (
   <Fragment>
-    <Headline styleProps={{ collection }}>{collection}</Headline>
+    <Headline styleProps={{ collection }}>
+      {config.collections[collection].name}
+    </Headline>
     <div>
       {articles.map(
         ({ picture, attribution, alt, slug, headline, subline }) => (
           <section key={slug}>
-            <a href={`/${config.collections[collection]}/${slug}`}>
+            <a href={`/${config.collections[collection].slug}/${slug}`}>
               <Article>
                 <Figure>
                   <AmpImg

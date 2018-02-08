@@ -81,7 +81,7 @@ export default ({
     <Link
       href={`https://facebook.com/sharer/sharer.php?u=${protocol}://${domain}/${collections[
         collection
-      ]}/${slug}&title=${encodeURIComponent(title)}`}
+      ].slug}/${slug}&title=${encodeURIComponent(title)}`}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -95,7 +95,7 @@ export default ({
     <Link
       href={`whatsapp://send?text=${protocol}://${domain}/${collections[
         collection
-      ]}/${slug} ${encodeURIComponent(title)}`}
+      ].slug}/${slug} ${encodeURIComponent(title)}`}
       data-action="share/whatsapp/share"
       target="_blank"
       rel="noopener noreferrer"
@@ -110,7 +110,9 @@ export default ({
     <Link
       href={`https://twitter.com/intent/tweet?url=${protocol}://${domain}/${collections[
         collection
-      ]}/${slug}&text=${encodeURIComponent(title)}&via=${organization.name}`}
+      ].slug}/${slug}&text=${encodeURIComponent(
+        title
+      )}&via=${organization.name}`}
       target="_blank"
       rel="noopener noreferrer"
     >

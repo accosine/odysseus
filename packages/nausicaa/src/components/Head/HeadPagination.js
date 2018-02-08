@@ -11,7 +11,7 @@ export default ({
         rel="prev"
         href={`${config.protocol}://${config.domain}/${config.collections[
           collection
-        ]}${currentPage - 1 > 1 ? '/' + currentPage - 1 : ''}`}
+        ].slug}${currentPage - 1 > 1 ? '/' + currentPage - 1 : ''}`}
       />
     ) : null}
     {currentPage < Math.ceil(articleCount / pagerSize) ? (
@@ -19,7 +19,7 @@ export default ({
         rel="next"
         href={`${config.protocol}://${config.domain}/${config.collections[
           collection
-        ]}/${currentPage + 1}`}
+        ].slug}/${currentPage + 1}`}
       />
     ) : null}
   </Fragment>

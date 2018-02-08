@@ -48,9 +48,8 @@ export default ({
 }) => {
   let schema = {
     '@context': 'http://schema.org/',
-    mainEntityOfPage: `${protocol}://${domain}/${
-      collections[collection]
-    }/${slug}/`,
+    mainEntityOfPage: `${protocol}://${domain}/${collections[collection]
+      .slug}/${slug}/`,
     description: description,
     datePublished: formatDate(date, 'YYYY-MM-DD', 'de'),
     author: {
@@ -141,8 +140,8 @@ export default ({
         '@type': 'ListItem',
         position: 1,
         item: {
-          '@id': `${protocol}://${domain}/${collections[collection]}/`,
-          name: collection,
+          '@id': `${protocol}://${domain}/${collections[collection].slug}/`,
+          name: collections[collection].name,
         },
       },
     ],

@@ -1,4 +1,4 @@
-import React, { createElement } from 'react';
+import React, { createElement, Fragment } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Styletron from 'styletron-server';
 import { StyletronProvider } from 'styletron-react';
@@ -28,16 +28,20 @@ const compile = marksy({
   elements: MarkdownComponents,
 });
 
-const Layout = ({ styles, body, frontmatter, ampScripts, config }) => [
-  <Head
-    path={`${config.collections[frontmatter.collection]}/${frontmatter.slug}`}
-    frontmatter={frontmatter}
-    config={config}
-    styles={styles}
-    ampScripts={ampScripts}
-  />,
-  <body dangerouslySetInnerHTML={{ __html: body }} />,
-];
+const Layout = ({ styles, body, frontmatter, ampScripts, config }) => {
+  console.log(frontmatter.collection);
+  return (
+    <Fragment>
+      <Head
+        frontmatter={frontmatter}
+        config={config}
+        styles={styles}
+        ampScripts={ampScripts}
+      />,
+      <body dangerouslySetInnerHTML={{ __html: body }} />
+    </Fragment>
+  );
+};
 
 const article = config => (article, frontmatter) => {
   const shortcodes = Shortcodes(config);
@@ -130,7 +134,7 @@ const start = config => articles => {
     '<html ⚡ lang="de">' +
     ReactDOMServer.renderToStaticMarkup(
       <Layout
-        frontmatter={{ layout: 'start' }}
+        frontmatter={{ layout: 'start', title: config.organization.altname }}
         config={config}
         styles={styletron.getCss()}
         body={body}

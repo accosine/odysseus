@@ -54,13 +54,13 @@ const Pager = ({
     {currentPage === 1 ? (
       <ButtonInactive>|{'<'}</ButtonInactive>
     ) : (
-      <ButtonActive href={'/' + config.collections[collection]}>
+      <ButtonActive href={'/' + config.collections[collection].slug}>
         |{'<'}
       </ButtonActive>
     )}
     {currentPage > 1 ? (
       <ButtonActive
-        href={`/${config.collections[collection]}${currentPage - 1 > 1
+        href={`/${config.collections[collection].slug}${currentPage - 1 > 1
           ? '/' + (currentPage - 1)
           : ''}`}
       >
@@ -72,7 +72,7 @@ const Pager = ({
     {currentPage} von {Math.ceil(articleCount / pagerSize)}
     {currentPage < Math.ceil(articleCount / pagerSize) ? (
       <ButtonActive
-        href={`/${config.collections[collection]}/${currentPage + 1}`}
+        href={`/${config.collections[collection].slug}/${currentPage + 1}`}
       >
         {'>'}
       </ButtonActive>
@@ -83,7 +83,7 @@ const Pager = ({
       <ButtonInactive>{'>'}|</ButtonInactive>
     ) : (
       <ButtonActive
-        href={`/${config.collections[collection]}/${Math.ceil(
+        href={`/${config.collections[collection].slug}/${Math.ceil(
           articleCount / pagerSize
         )}`}
       >

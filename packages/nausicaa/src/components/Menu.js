@@ -60,13 +60,13 @@ const Menu = ({ styletron, config: { collections } }) => {
             <A href="/">Start</A>
           </Li>
           <hr />
-          {Object.keys(collections).map((collection, index) =>
+          {Object.keys(collections).map((collection, index) => (
             <Li key={index}>
-              <A href={`/${collections[collection]}`}>
-                {collection}
+              <A href={`/${collections[collection].slug}`}>
+                {collections[collection].name}
               </A>
             </Li>
-          )}
+          ))}
         </Ul>
       </nav>
     </Sidebar>

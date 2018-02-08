@@ -162,8 +162,11 @@ export default ({
           Start
         </A>
         {' > '}
-        <A styleProps={{ collection }} href={`/${config.collections[collection]}/`}>
-          {collection}
+        <A
+          styleProps={{ collection }}
+          href={`/${config.collections[collection].slug}/`}
+        >
+          {config.collections[collection].name}
         </A>
       </Breadcrumbs>
       <Time dateTime={formatDate(date, 'YYYY-MM-DD', 'en')}>
@@ -175,9 +178,8 @@ export default ({
         <AuthorPicture
           width={4}
           height={4}
-          src={`${config.media}${config.authors[author].avatar}${
-            config.mediasuffix
-          }`}
+          src={`${config.media}${config.authors[author]
+            .avatar}${config.mediasuffix}`}
           alt={alt}
           attribution={attribution}
           layout="responsive"

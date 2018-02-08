@@ -33,13 +33,12 @@ const Head = ({
   styles,
   body,
   config,
-  path,
   ampScripts,
 }) => (
   <head>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <title>{title || collection}</title>
+    <title>{title || config.collections[collection].name}</title>
     {layout === 'start' ? (
       <link rel="canonical" href={`${config.protocol}://${config.domain}`} />
     ) : null}
@@ -48,7 +47,7 @@ const Head = ({
         rel="canonical"
         href={`${config.protocol}://${config.domain}/${config.collections[
           collection
-        ]}/${slug}`}
+        ].slug}/${slug}`}
       />
     ) : null}
     {layout === 'portal' ? (
@@ -56,7 +55,9 @@ const Head = ({
         rel="canonical"
         href={`${config.protocol}://${config.domain}/${config.collections[
           collection
-        ]}${pagination.currentPage > 1 ? '/' + pagination.currentPage : ''}`}
+        ].slug}${pagination.currentPage > 1
+          ? '/' + pagination.currentPage
+          : ''}`}
       />
     ) : null}
     {layout === 'portal' ? (
@@ -69,7 +70,9 @@ const Head = ({
     {layout === 'basic' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${path}`}
+        href={`${config.protocol}://${config.domain}/${config.collections[
+          collection
+        ].slug}/${slug}`}
       />
     ) : null}
     <meta
@@ -83,11 +86,10 @@ const Head = ({
     <meta name="last-modified" content={formatDate(date, 'YYYY-MM-DD', 'de')} />
     <meta name="description" content={description} />
     <SocialmediaMeta
-      path={path}
       config={config}
-      frontmatter={{ title, picture, layout, description }}
+      frontmatter={{ title, slug, picture, layout, description, collection }}
     />
-    {layout === 'publicatin' ? (
+    {layout === 'publication' ? (
       <Schema {...frontmatter} config={config} />
     ) : null}
     <SchemaSitename config={config} />
