@@ -6,11 +6,11 @@ const cors = require('cors')({ origin: true });
 const app = express();
 const Theme = require('nausicaa').default;
 
-const theme = Theme(functions.config());
+const theme = Theme(functions.config().application);
 
 admin.initializeApp(functions.config().firebase);
 
-const pagerSize = functions.config().pager.size;
+const pagerSize = functions.config().application.pager.size;
 
 const firestore = admin.firestore();
 const articles = firestore.collection('articles');
@@ -25,16 +25,16 @@ app.get('/robots.txt', function(req, res) {
 
 app.get('/', (req, res) => {
   Promise.all(
-    Object.keys(collections).map(collectionName =>
+    Object.keys(collections).map(collection =>
       articles
         .select('slug', 'headline', 'subline', 'picture', 'attribution', 'alt')
         .orderBy('slug')
-        .where('collection', '==', collectionName)
+        .where('collection', '==', collection)
         .limit(5)
         .get()
         .then(documentSnapshots => ({
           articles: documentSnapshots.docs.map(article => article.data()),
-          collection: collectionName,
+          collection: collection,
         }))
     )
   )
@@ -45,17 +45,17 @@ app.get('/', (req, res) => {
     });
 });
 
-const paginationHandler = collectionName => (req, res) => {
+const paginationHandler = collection => (req, res) => {
   const page = req.params.page || 1;
   articles
     .select()
-    .where('collection', '==', collectionName)
+    .where('collection', '==', collection)
     .get()
     .then(emptySelectSnapshot =>
       articles
         .select('slug', 'headline', 'subline', 'picture', 'attribution', 'alt')
         .orderBy('slug')
-        .where('collection', '==', collectionName)
+        .where('collection', '==', collection)
         .offset((page - 1) * pagerSize)
         .limit(pagerSize)
         .get()
@@ -65,7 +65,7 @@ const paginationHandler = collectionName => (req, res) => {
           );
           res.send(
             theme.portal(articles, {
-              collection: collectionName,
+              collection: collection,
               pagination: {
                 currentPage: parseInt(page, 10),
                 pagerSize,
@@ -81,13 +81,13 @@ const paginationHandler = collectionName => (req, res) => {
     });
 };
 
-const collections = functions.config().collections;
-Object.keys(collections).forEach(collectionName => {
-  const collectionPath = collections[collectionName];
+const collections = functions.config().application.collections;
+Object.keys(collections).forEach(collection => {
+  const collectionPath = collections[collection].slug;
 
-  app.get(`/${collectionPath}`, paginationHandler(collectionName));
+  app.get(`/${collectionPath}`, paginationHandler(collection));
 
-  app.get(`/${collectionPath}/:page(\\d+)`, paginationHandler(collectionName));
+  app.get(`/${collectionPath}/:page(\\d+)`, paginationHandler(collection));
 
   app.get(`/${collectionPath}/:slug`, (req, res) => {
     articles
@@ -96,7 +96,7 @@ Object.keys(collections).forEach(collectionName => {
       .then(doc => {
         if (doc.exists) {
           const article = doc.data();
-          if (article.collection !== collectionName) {
+          if (article.collection !== collection) {
             return res.status(404).send('Article Not Found');
           }
           res.send(theme.article(article.content, article));

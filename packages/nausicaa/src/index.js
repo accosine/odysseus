@@ -37,7 +37,7 @@ const Layout = ({ styles, body, frontmatter, ampScripts, config }) => {
         config={config}
         styles={styles}
         ampScripts={ampScripts}
-      />,
+      />
       <body dangerouslySetInnerHTML={{ __html: body }} />
     </Fragment>
   );
