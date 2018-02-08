@@ -65,9 +65,9 @@ class ImageCard extends Component {
             <CardMedia
               className={classes.media}
               image={
-                config.media +
+                config.application.media +
                 addSizeSuffix(image.name, '-s') +
-                config.mediasuffix
+                config.application.mediasuffix
               }
             />
             <CardContent>

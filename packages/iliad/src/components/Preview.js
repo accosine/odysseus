@@ -35,7 +35,7 @@ class Preview extends Component {
 
   componentDidMount() {
     this.updatePreview();
-    this.theme = Theme(config);
+    this.theme = Theme(config.application);
   }
 
   componentDidUpdate() {
@@ -69,7 +69,8 @@ class Preview extends Component {
 
     this.renderTimeout = setTimeout(() => {
       const { text, ...frontmatter } = this.props;
-      const preview = text && frontmatter ? this.theme(text, frontmatter) : '';
+      const preview =
+        text && frontmatter ? this.theme.article(text, frontmatter) : '';
       this.setState({ preview });
     }, this.props.renderDelay);
   };

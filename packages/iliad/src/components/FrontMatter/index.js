@@ -14,6 +14,8 @@ import RecipeFrontMatter from './RecipeFrontMatter';
 import ReviewFrontMatter from './ReviewFrontMatter';
 import VideoFrontMatter from './VideoFrontMatter';
 
+const { authors, collections, layouts, types } = config.application;
+
 const styleSheet = theme => ({
   container: {
     display: 'flex',
@@ -49,9 +51,9 @@ const FrontMatter = ({ itemtype, disableSlug, ...props }) => (
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {Object.keys(config.authors).map(author => (
+        {Object.keys(authors).map(author => (
           <MenuItem key={author} value={author}>
-            {config.authors[author].name}
+            {authors[author].name}
           </MenuItem>
         ))}
       </Select>
@@ -67,9 +69,9 @@ const FrontMatter = ({ itemtype, disableSlug, ...props }) => (
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {Object.keys(config.collections).map(collection => (
+        {Object.keys(collections).map(collection => (
           <MenuItem key={collection} value={collection}>
-            {collection}
+            {collections[collection].name}
           </MenuItem>
         ))}
       </Select>
@@ -86,7 +88,7 @@ const FrontMatter = ({ itemtype, disableSlug, ...props }) => (
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {Object.keys(config.layouts).map(layout => (
+        {Object.keys(layouts).map(layout => (
           <MenuItem key={layout} value={layout}>
             {layout}
           </MenuItem>
@@ -103,7 +105,7 @@ const FrontMatter = ({ itemtype, disableSlug, ...props }) => (
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {Object.keys(config.types).map(type => (
+        {Object.keys(types).map(type => (
           <MenuItem key={type} value={type}>
             {type}
           </MenuItem>

@@ -57,7 +57,7 @@ const paginationHandler = collection => (req, res) => {
         .orderBy('slug')
         .where('collection', '==', collection)
         .offset((page - 1) * pagerSize)
-        .limit(pagerSize)
+        .limit(parseInt(pagerSize, 10))
         .get()
         .then(documentSnapshots => {
           const articles = documentSnapshots.docs.map(article =>
