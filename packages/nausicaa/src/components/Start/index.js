@@ -72,7 +72,7 @@ const Start = ({ styletron, articles, config }) => (
         </div>
       </Main>
       <aside />
-      <Footer config={config} />
+      <Footer styletron={styletron} config={config} />
     </Container>
   </Fragment>
 );

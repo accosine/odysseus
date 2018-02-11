@@ -88,7 +88,7 @@ const Publication = ({
         />
       </Main>
       <aside />
-      <Footer config={config} />
+      <Footer styletron={styletron} config={config} />
       {lightbox ? (
         <amp-image-lightbox id="lightbox1" layout="nodisplay" />
       ) : null}

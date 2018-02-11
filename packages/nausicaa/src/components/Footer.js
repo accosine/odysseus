@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import { styled } from 'styletron-react';
 import { oneLine } from 'common-tags';
+import { injectStyle } from 'styletron-utils';
+import AmpComponent from './AmpComponent';
+import withTheme from '../util/withTheme';
 
 const LogoContainer = styled('div', {
   display: 'flex',
@@ -49,72 +52,98 @@ const Li = styled('li', {
   paddingBottom: '3vw',
 });
 
-const A = styled('a', {
-  textDecoration: 'none',
-  color: '#585252',
-});
-
-export default ({ config }) => (
-  <Fragment>
-    <footer>
-      <LogoContainer>
-        <a href="#main">
-          <Logo>
-            <amp-img
-              width={'3'}
-              height={'3'}
-              src={`${config.media}nausika-gurl.min.svg${config.mediasuffix}`}
-              alt="Gurl you know it's true, uh uh uh, I love you!"
-              attribution="All Rights Reserved"
-              layout="responsive"
-            />
-          </Logo>
-        </a>
-        <a href="#main">
-          <LogoText>
-            <use xlinkHref="#nausika--logotext-use" />
-          </LogoText>
-        </a>
-      </LogoContainer>
-      <Ul>
-        {/* TODO */}
-        {/* <Li>Newsletter</Li> */}
-        {/* <Li>Über uns</Li> */}
-        {/* <Li>FAQ</Li> */}
-        {/* <Li>Werbung</Li> */}
-        <Li>
-          <A href="/impressum/">Impressum</A>
-        </Li>
-        <Li>
-          <A href="/datenschutz/">Datenschutz</A>
-        </Li>
-        <Li>
-          <A href="/agb/">AGB</A>
-        </Li>
-        <Li>
-          <A href="/rss/">RSS</A>
-        </Li>
-        <Li>
-          <A href={`https://www.facebook.com/${config.vanityurl}`}>Facebook</A>
-        </Li>
-        <Li>
-          <A href={`https://www.twitter.com/${config.vanityurl}`}>Twitter</A>
-        </Li>
-      </Ul>
-    </footer>
-    <amp-user-notification
-      layout="nodisplay"
-      id="amp-user-notification1"
-      dangerouslySetInnerHTML={{
-        __html: oneLine`
-    nausika nutzt Cookies in deinem Browser. Wir speichern darin allerlei Daten
-    - aber keine Sorge, nichts Wildes. Mehr langweiliges bla bla über Cookies
-    kannst du <a href="/datenschutz/">hier lesen...</a>
-    <button on="tap:amp-user-notification1.dismiss">
-      Cookies finde ich ganz ok
-    </button>
-      `,
-      }}
-    />
-  </Fragment>
+const A = withTheme(
+  styled('a', ({ styleProps: { theme } }) => ({
+    textDecoration: 'none',
+    color: theme.mausgrau,
+  }))
 );
+
+const AmpUserNotification = withTheme(
+  styled(
+    AmpComponent('amp-user-notification'),
+    ({ styleProps: { theme } }) => ({
+      backgroundColor: theme.nausikamint,
+      textAlign: 'center',
+      padding: '1vw',
+    })
+  )
+);
+
+export default withTheme(({ config, styletron, styleProps }) => {
+  const buttonClasses = injectStyle(styletron, {
+    padding: '1vw',
+    marginTop: '1vw',
+    border: 0,
+    backgroundColor: styleProps.theme.weißtransparent,
+  });
+
+  return (
+    <Fragment>
+      <footer>
+        <LogoContainer>
+          <a href="#main">
+            <Logo>
+              <amp-img
+                width={'3'}
+                height={'3'}
+                src={`${config.media}nausika-gurl.min.svg${config.mediasuffix}`}
+                alt="Gurl you know it's true, uh uh uh, I love you!"
+                attribution="All Rights Reserved"
+                layout="responsive"
+              />
+            </Logo>
+          </a>
+          <a href="#main">
+            <LogoText>
+              <use xlinkHref="#nausika--logotext-use" />
+            </LogoText>
+          </a>
+        </LogoContainer>
+        <Ul>
+          {/* TODO */}
+          {/* <Li>Newsletter</Li> */}
+          {/* <Li>Über uns</Li> */}
+          {/* <Li>FAQ</Li> */}
+          {/* <Li>Werbung</Li> */}
+          <Li>
+            <A href="/impressum/">Impressum</A>
+          </Li>
+          <Li>
+            <A href="/datenschutz/">Datenschutz</A>
+          </Li>
+          <Li>
+            <A href="/agb/">AGB</A>
+          </Li>
+          <Li>
+            <A href="/rss/">RSS</A>
+          </Li>
+          <Li>
+            <A href={`https://www.facebook.com/${config.vanityurl}`}>
+              Facebook
+            </A>
+          </Li>
+          <Li>
+            <A href={`https://www.twitter.com/${config.vanityurl}`}>Twitter</A>
+          </Li>
+        </Ul>
+      </footer>
+      <AmpUserNotification
+        layout="nodisplay"
+        id="amp-user-notification1"
+        dangerouslySetInnerHTML={{
+          __html: oneLine`
+            <p>
+              nausika nutzt Cookies in deinem Browser. Wir speichern darin allerlei
+              Daten - aber keine Sorge, nichts Wildes. Mehr langweiliges bla bla
+              über Cookies kannst du <a href="/datenschutz/">hier lesen...</a>
+            </p>
+            <button class="${buttonClasses}" on="tap:amp-user-notification1.dismiss">
+              Cookies finde ich ganz ok
+            </button>
+            `,
+        }}
+      />
+    </Fragment>
+  );
+});

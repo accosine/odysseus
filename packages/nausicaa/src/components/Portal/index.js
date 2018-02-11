@@ -57,7 +57,7 @@ const Portal = ({
         />
       </Main>
       <aside />
-      <Footer config={config} />
+      <Footer styletron={styletron} config={config} />
     </Container>
   </Fragment>
 );

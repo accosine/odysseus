@@ -99,6 +99,7 @@ const theme = {
 
   /* TRANSPARENZEN */
   transparent: 'rgba(255, 255, 255, 0)',
+  weißtransparent: 'rgba(255,255,255,0.64)',
   dunkelgrautransparent1: 'rgba(0,0,0,0.1)',
   dunkelgrautransparent2: 'rgba(53,47,47,0.1)',
   dunkelgrautransparent3: 'rgba(0,0,0,0.8)',
