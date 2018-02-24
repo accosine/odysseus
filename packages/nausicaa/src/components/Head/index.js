@@ -17,6 +17,7 @@ const Head = ({
   frontmatter: {
     title,
     date,
+    datemodified,
     collection,
     attribution,
     author,
@@ -83,7 +84,10 @@ const Head = ({
     <meta name="copyright" content={config.organization.name} />
     <meta name="email" content={config.organization.email} />
     <meta name="date" content={formatDate(date, 'YYYY-MM-DD', 'de')} />
-    <meta name="last-modified" content={formatDate(date, 'YYYY-MM-DD', 'de')} />
+    <meta
+      name="last-modified"
+      content={formatDate(datemodified, 'YYYY-MM-DD', 'de')}
+    />
     <meta name="description" content={description} />
     <SocialmediaMeta
       config={config}

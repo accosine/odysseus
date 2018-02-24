@@ -61,6 +61,8 @@ class SplitScreen extends Component {
     caretPosition: { start: 0, end: 0 },
     frontmatterExpanded: this.props.match.params.slug ? false : true,
     content: '',
+    date: '',
+    datemodified: '',
     title: '',
     author: '',
     description: '',
@@ -164,6 +166,8 @@ class SplitScreen extends Component {
     this.setState({ content: newText });
   };
 
+  handleFrontmatterChange = change => this.setState(change);
+
   render() {
     const { classes, match: { params: { slug } } } = this.props;
     const {
@@ -192,7 +196,7 @@ class SplitScreen extends Component {
               <FrontMatter
                 {...frontmatter}
                 disableSlug={!!slug}
-                onChange={change => this.setState(change)}
+                onChange={this.handleFrontmatterChange}
               />
             </Collapse>
           </Grid>

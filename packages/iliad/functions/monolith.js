@@ -11,6 +11,8 @@ const theme = Theme(functions.config().application);
 admin.initializeApp(functions.config().firebase);
 
 const pagerSize = functions.config().application.pager.size;
+const collections = functions.config().application.collections;
+const collectionsorder = functions.config().application.collectionsorder;
 
 const firestore = admin.firestore();
 const articles = firestore.collection('articles');
@@ -25,7 +27,7 @@ app.get('/robots.txt', function(req, res) {
 
 app.get('/', (req, res) => {
   Promise.all(
-    Object.keys(collections).map(collection =>
+    collectionsorder.map(collection =>
       articles
         .select('slug', 'headline', 'subline', 'picture', 'attribution', 'alt')
         .orderBy('slug')
@@ -81,7 +83,6 @@ const paginationHandler = collection => (req, res) => {
     });
 };
 
-const collections = functions.config().application.collections;
 Object.keys(collections).forEach(collection => {
   const collectionPath = collections[collection].slug;
 

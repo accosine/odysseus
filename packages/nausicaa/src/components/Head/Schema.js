@@ -79,7 +79,7 @@ export default ({
     },
   };
   if (datemodified) {
-    schema.dateModified = formatDate(date, 'YYYY-MM-DD', 'de');
+    schema.dateModified = formatDate(datemodified, 'YYYY-MM-DD', 'de');
   }
 
   switch (type) {
