@@ -25,7 +25,6 @@ const Head = ({
     alt,
     headline,
     subline,
-    layout,
     lightbox,
     description,
     slug,
@@ -35,45 +34,42 @@ const Head = ({
   body,
   config,
   ampScripts,
+  kind,
 }) => (
   <head>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <title>{title || config.collections[collection].name}</title>
-    {layout === 'start' ? (
+    {kind === 'start' ? (
       <link rel="canonical" href={`${config.protocol}://${config.domain}`} />
     ) : null}
-    {layout === 'publication' ? (
+    {kind === 'publication' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${config.collections[
-          collection
-        ].slug}/${slug}`}
+        href={`${config.protocol}://${config.domain}/${
+          config.collections[collection].slug
+        }/${slug}`}
       />
     ) : null}
-    {layout === 'portal' ? (
+    {kind === 'portal' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${config.collections[
-          collection
-        ].slug}${pagination.currentPage > 1
-          ? '/' + pagination.currentPage
-          : ''}`}
+        href={`${config.protocol}://${config.domain}/${
+          config.collections[collection].slug
+        }${pagination.currentPage > 1 ? '/' + pagination.currentPage : ''}`}
       />
     ) : null}
-    {layout === 'portal' ? (
+    {kind === 'portal' ? (
       <HeadPagination
         pagination={pagination}
         collection={collection}
         config={config}
       />
     ) : null}
-    {layout === 'basic' ? (
+    {kind === 'page' ? (
       <link
         rel="canonical"
-        href={`${config.protocol}://${config.domain}/${config.collections[
-          collection
-        ].slug}/${slug}`}
+        href={`${config.protocol}://${config.domain}/${slug}`}
       />
     ) : null}
     <meta
@@ -91,9 +87,9 @@ const Head = ({
     <meta name="description" content={description} />
     <SocialmediaMeta
       config={config}
-      frontmatter={{ title, slug, picture, layout, description, collection }}
+      frontmatter={{ title, slug, picture, kind, description, collection }}
     />
-    {layout === 'publication' ? (
+    {kind === 'publication' ? (
       <Schema {...frontmatter} config={config} />
     ) : null}
     <SchemaSitename config={config} />

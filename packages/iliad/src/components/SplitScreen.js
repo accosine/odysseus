@@ -96,10 +96,10 @@ class SplitScreen extends Component {
   };
 
   componentDidMount() {
-    const { firebase, match: { params: { slug } } } = this.props;
+    const { firebase, match: { params: { kind, slug } } } = this.props;
     if (slug) {
       this.firestoreUnsubscribe = firebase.firestore
-        .collection('articles')
+        .collection(kind === 'article' ? 'articles' : 'pages')
         .doc(slug)
         .onSnapshot(snapshot =>
           this.setState({
@@ -135,21 +135,29 @@ class SplitScreen extends Component {
       frontmatterExpanded,
       isSaving,
       loading,
-      ...article
+      ...contentState
     } = this.state;
-    const { history, firebase: { firestore } } = this.props;
+    const {
+      history,
+      firebase: { firestore },
+      match: { params: { kind } },
+    } = this.props;
     this.setState(
       {
         isSaving: true,
       },
       () => {
         firestore
-          .collection('articles')
-          .doc(article.slug)
-          .set(article)
+          .collection(kind === 'article' ? 'articles' : 'pages')
+          .doc(contentState.slug)
+          .set(contentState)
           .then(() => {
             this.setState({ isSaving: false });
-            history.replace(`/editor/${article.slug}`);
+            history.replace(
+              `/editor/${kind === 'page' ? 'page/' : 'article/'}${
+                contentState.slug
+              }`
+            );
           });
       }
     );
@@ -169,7 +177,7 @@ class SplitScreen extends Component {
   handleFrontmatterChange = change => this.setState(change);
 
   render() {
-    const { classes, match: { params: { slug } } } = this.props;
+    const { classes, match: { params: { slug, kind } } } = this.props;
     const {
       frontmatterExpanded,
       caretPosition,
@@ -195,6 +203,7 @@ class SplitScreen extends Component {
               <Typography type="headline">Frontmatter</Typography>
               <FrontMatter
                 {...frontmatter}
+                kind={kind}
                 disableSlug={!!slug}
                 onChange={this.handleFrontmatterChange}
               />
@@ -240,7 +249,7 @@ class SplitScreen extends Component {
                 Preview
               </Typography>
               <Divider />
-              <Preview text={content} {...frontmatter} />
+              <Preview text={content} kind={kind} {...frontmatter} />
             </Paper>
           </Grid>
         </Grid>

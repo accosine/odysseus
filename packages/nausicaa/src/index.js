@@ -5,7 +5,7 @@ import { StyletronProvider } from 'styletron-react';
 import marksy from 'marksy';
 import Shortcodes from './util/shortcodes';
 import Head from './components/Head';
-import Publication from './components/Publication';
+import Content from './components/Publication';
 import Portal from './components/Portal';
 import Start from './components/Start';
 import ThemeProvider from './util/ThemeProvider';
@@ -28,8 +28,7 @@ const compile = marksy({
   elements: MarkdownComponents,
 });
 
-const Layout = ({ styles, body, frontmatter, ampScripts, config }) => {
-  console.log(frontmatter.collection);
+const Layout = ({ styles, body, frontmatter, kind, ampScripts, config }) => {
   return (
     <Fragment>
       <Head
@@ -37,6 +36,7 @@ const Layout = ({ styles, body, frontmatter, ampScripts, config }) => {
         config={config}
         styles={styles}
         ampScripts={ampScripts}
+        kind={kind}
       />
       <body dangerouslySetInnerHTML={{ __html: body }} />
     </Fragment>
@@ -59,7 +59,7 @@ const article = config => (article, frontmatter) => {
   const appMarkup = ReactDOMServer.renderToStaticMarkup(
     <StyletronProvider styletron={styletron}>
       <ThemeProvider theme={theme}>
-        <Publication
+        <Content
           styletron={styletron}
           frontmatter={frontmatter}
           config={config}
@@ -79,6 +79,51 @@ const article = config => (article, frontmatter) => {
         styles={styletron.getCss()}
         body={appMarkup}
         ampScripts={ampScripts}
+        kind="article"
+      />
+    ) +
+    '</html>';
+
+  return html;
+};
+
+const page = config => (page, frontmatter) => {
+  const shortcodes = Shortcodes(config);
+
+  const styletron = initializeStyletron();
+  const { text, usedShortcodes } = shortcodes(page, styletron);
+  const { tree: pageTree } = compile(
+    text,
+    { sanitize: false },
+    { collection: frontmatter.collection }
+  );
+
+  const ampScripts = getAmpScripts(usedShortcodes);
+
+  const appMarkup = ReactDOMServer.renderToStaticMarkup(
+    <StyletronProvider styletron={styletron}>
+      <ThemeProvider theme={theme}>
+        <Content
+          styletron={styletron}
+          frontmatter={frontmatter}
+          config={config}
+          page={pageTree}
+        />
+      </ThemeProvider>
+    </StyletronProvider>
+  );
+
+  const html =
+    '<!doctype html>' +
+    '<html ⚡ lang="de">' +
+    ReactDOMServer.renderToStaticMarkup(
+      <Layout
+        frontmatter={frontmatter}
+        config={config}
+        styles={styletron.getCss()}
+        body={appMarkup}
+        ampScripts={ampScripts}
+        kind="page"
       />
     ) +
     '</html>';
@@ -107,10 +152,11 @@ const portal = config => (articles, frontmatter) => {
     '<html ⚡ lang="de">' +
     ReactDOMServer.renderToStaticMarkup(
       <Layout
-        frontmatter={{ layout: 'portal', ...frontmatter }}
+        frontmatter={frontmatter}
         config={config}
         styles={styletron.getCss()}
         body={body}
+        kind="portal"
       />
     ) +
     '</html>';
@@ -149,4 +195,5 @@ export default config => ({
   article: article(config),
   portal: portal(config),
   start: start(config),
+  page: page(config),
 });

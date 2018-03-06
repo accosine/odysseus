@@ -14,13 +14,7 @@ import RecipeFrontMatter from './RecipeFrontMatter';
 import ReviewFrontMatter from './ReviewFrontMatter';
 import VideoFrontMatter from './VideoFrontMatter';
 
-const {
-  authors,
-  collections,
-  collectionsorder,
-  layouts,
-  types,
-} = config.application;
+const { authors, layouts, types } = config.application;
 
 const styleSheet = theme => ({
   container: {
@@ -41,7 +35,17 @@ const styleSheet = theme => ({
 // );
 class FrontMatter extends PureComponent {
   render() {
-    const { itemtype, disableSlug, ...props } = this.props;
+    const { itemtype, disableSlug, kind, ...props } = this.props;
+
+    let collections, collectionsorder;
+    if (kind === 'article') {
+      collections = config.application.collections;
+      collectionsorder = config.application.collectionsorder;
+    } else if (kind === 'page') {
+      collections = config.page.collections;
+      collectionsorder = config.page.collectionsorder;
+    }
+
     return (
       <div className={props.classes.container}>
         <FrontMatterImagePicker
@@ -75,7 +79,8 @@ class FrontMatter extends PureComponent {
           <Select
             value={props.collection}
             onChange={event =>
-              props.onChange({ collection: event.target.value })}
+              props.onChange({ collection: event.target.value })
+            }
             input={<Input id="collection" />}
           >
             <MenuItem value="">

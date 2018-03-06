@@ -68,9 +68,9 @@ class Preview extends Component {
     }
 
     this.renderTimeout = setTimeout(() => {
-      const { text, ...frontmatter } = this.props;
+      const { text, kind, ...frontmatter } = this.props;
       const preview =
-        text && frontmatter ? this.theme.article(text, frontmatter) : '';
+        text && frontmatter ? this.theme[kind](text, frontmatter) : '';
       this.setState({ preview });
     }, this.props.renderDelay);
   };

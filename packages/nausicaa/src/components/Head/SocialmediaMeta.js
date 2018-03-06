@@ -2,7 +2,8 @@ import React from 'react';
 import addSizeSuffix from '../../util/addSizeSuffix';
 export default ({
   config,
-  frontmatter: { title, description, slug, layout, picture, collection },
+  kind,
+  frontmatter: { title, description, slug, picture, collection },
 }) => {
   const always = [
     <meta name="twitter:site" content={'@' + config.vanityurl} />,
@@ -18,7 +19,7 @@ export default ({
     <meta property="og:site_name" content={config.organization.name} />,
   ];
 
-  switch (layout) {
+  switch (kind) {
     case 'publication':
       return [
         [
@@ -37,8 +38,9 @@ export default ({
           <meta property="og:type" content="article" />,
           <meta
             property="og:url"
-            content={`${config.protocol}://${config.domain}/${config
-              .collections[collection].slug}/${slug}/`}
+            content={`${config.protocol}://${config.domain}/${
+              config.collections[collection].slug
+            }/${slug}/`}
           />,
           <meta
             property="og:image"
@@ -56,8 +58,9 @@ export default ({
           <meta name="twitter:card" content="summary" />,
           <meta
             name="twitter:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
           <meta
             name="twitter:description"
@@ -71,14 +74,16 @@ export default ({
           />,
           <meta
             property="og:url"
-            content={`${config.protocol}://${config.domain}/${config
-              .collections[collection].slug}
+            content={`${config.protocol}://${config.domain}/${
+              config.collections[collection].slug
+            }
             }/${slug}/`}
           />,
           <meta
             property="og:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
         ],
         always,
@@ -89,8 +94,9 @@ export default ({
           <meta name="twitter:card" content="summary" />,
           <meta
             name="twitter:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
           <meta
             name="twitter:description"
@@ -108,8 +114,9 @@ export default ({
           />,
           <meta
             property="og:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
         ],
         always,
@@ -120,8 +127,9 @@ export default ({
           <meta name="twitter:card" content="summary" />,
           <meta
             name="twitter:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
           <meta
             name="twitter:description"
@@ -135,14 +143,16 @@ export default ({
           />,
           <meta
             property="og:url"
-            content={`${config.protocol}://${config.domain}/${config
-              .collections[collection].slug}
+            content={`${config.protocol}://${config.domain}/${
+              config.collections[collection].slug
+            }
             }/${slug}/`}
           />,
           <meta
             property="og:image"
-            content={`${config.media}${config.organization.logo
-              .path}${config.mediasuffix}`}
+            content={`${config.media}${config.organization.logo.path}${
+              config.mediasuffix
+            }`}
           />,
         ],
         always,

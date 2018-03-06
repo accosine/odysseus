@@ -11,21 +11,21 @@ const styleSheet = {
   demo: {
     flexDirection: 'column',
   },
-  articlecard: {
+  pagescard: {
     width: '50vw',
   },
 };
 
-class Articles extends Component {
-  state = { articles: [], loading: true };
+class Pages extends Component {
+  state = { pages: [], loading: true };
 
   componentDidMount() {
     // TODO: use select() to get only slug and title
     this.firestoreUnsubscribe = this.props.firebase.firestore
-      .collection('articles')
+      .collection('pages')
       .onSnapshot(snapshot => {
         this.setState({
-          articles: snapshot.docs.map(article => article.data()),
+          pages: snapshot.docs.map(page => page.data()),
           loading: false,
         });
       });
@@ -38,12 +38,12 @@ class Articles extends Component {
 
   render() {
     const { classes } = this.props;
-    const { loading, articles } = this.state;
+    const { loading, pages } = this.state;
 
     return (
       <div>
         <Grid container className={classes.root}>
-          <h2>Articles</h2>
+          <h2>Pages</h2>
           <Grid item xs={12}>
             <Grid
               align={'center'}
@@ -56,13 +56,9 @@ class Articles extends Component {
               {loading ? (
                 <CircularProgress />
               ) : (
-                articles.map(({ slug, title }) => (
-                  <Paper
-                    key={slug}
-                    className={classes.articlecard}
-                    elevation={4}
-                  >
-                    <Link to={`/editor/article/${slug}`}>{title}</Link>
+                pages.map(({ slug, title }) => (
+                  <Paper key={slug} className={classes.pagescard} elevation={4}>
+                    <Link to={`/editor/page/${slug}`}>{title}</Link>
                   </Paper>
                 ))
               )}
@@ -74,8 +70,8 @@ class Articles extends Component {
   }
 }
 
-Articles.propTypes = {
+Pages.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(connectFirebase(Articles));
+export default withStyles(styleSheet)(connectFirebase(Pages));
