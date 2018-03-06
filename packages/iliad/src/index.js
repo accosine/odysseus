@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import * as firebase from 'firebase';
-import 'firebase/firestore';
+import { firebase } from '@firebase/app';
+import '@firebase/storage';
+import '@firebase/firestore';
+import '@firebase/auth';
 import 'typeface-roboto';
 import App from './App';
 import firebaseconfig from './config';
