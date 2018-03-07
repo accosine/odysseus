@@ -11,11 +11,13 @@ const theme = Theme(functions.config().application);
 admin.initializeApp(functions.config().firebase);
 
 const pagerSize = functions.config().application.pager.size;
-const collections = functions.config().application.collections;
-const collectionsorder = functions.config().application.collectionsorder;
+const collections = functions.config().application.article.collections;
+const collectionsorder = functions.config().application.article
+  .collectionsorder;
 
 const firestore = admin.firestore();
 const articles = firestore.collection('articles');
+const pages = firestore.collection('pages');
 
 app.use(cors);
 app.use(cookieParser);
@@ -113,7 +115,21 @@ Object.keys(collections).forEach(collection => {
 });
 
 app.get('/:page', (req, res) => {
-  res.send('page: ' + req.params.page);
+  pages
+    .doc(req.params.page)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        const page = doc.data();
+        res.send(theme.page(page.content, page));
+      } else {
+        res.send('No such document!');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('Something broke!');
+    });
 });
 
 exports.app = app;

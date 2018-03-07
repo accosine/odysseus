@@ -14,7 +14,7 @@ import RecipeFrontMatter from './RecipeFrontMatter';
 import ReviewFrontMatter from './ReviewFrontMatter';
 import VideoFrontMatter from './VideoFrontMatter';
 
-const { authors, layouts, types } = config.application;
+const { authors, layouts, types, article, page } = config.application;
 
 const styleSheet = theme => ({
   container: {
@@ -39,11 +39,11 @@ class FrontMatter extends PureComponent {
 
     let collections, collectionsorder;
     if (kind === 'article') {
-      collections = config.application.collections;
-      collectionsorder = config.application.collectionsorder;
+      collections = article.collections;
+      collectionsorder = article.collectionsorder;
     } else if (kind === 'page') {
-      collections = config.page.collections;
-      collectionsorder = config.page.collectionsorder;
+      collections = page.collections;
+      collectionsorder = page.collectionsorder;
     }
 
     return (

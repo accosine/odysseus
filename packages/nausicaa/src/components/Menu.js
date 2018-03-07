@@ -38,7 +38,7 @@ const A = styled('a', {
   padding: 'inherit',
 });
 
-const Menu = ({ styletron, config: { collections } }) => {
+const Menu = ({ styletron, collections }) => {
   const menuLogo = injectStyle(styletron, {
     height: '19vw',
     width: '35vw',

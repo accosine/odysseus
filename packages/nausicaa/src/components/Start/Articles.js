@@ -19,9 +19,9 @@ const Article = withTheme(
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${theme.collection(
-        collection
-      ).verlauf})`,
+      backgroundImage: `linear-gradient(${theme.drehungverlauf}, ${
+        theme.collection(collection).verlauf
+      })`,
     },
   }))
 );
@@ -69,12 +69,12 @@ const Figure = styled('figure', {
   margin: 0, // REMINDER: Add to CSS reset
 });
 
-const Articles = ({ articles, collection, config }) => (
+const Articles = ({ kind, articles, collection, config }) => (
   <div>
     {articles.map(
       ({ picture, attribution, alt, slug, headline, subline }, n) => (
         <section key={slug}>
-          <a href={`/${config.collections[collection].slug}/${slug}`}>
+          <a href={`/${config.article.collections[collection].slug}/${slug}`}>
             <Article styleProps={{ collection }}>
               <Figure>
                 <Cover

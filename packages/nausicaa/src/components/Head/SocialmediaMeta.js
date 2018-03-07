@@ -9,18 +9,18 @@ export default ({
     <meta name="twitter:site" content={'@' + config.vanityurl} />,
     <meta
       name="twitter:title"
-      content={title || config.collections[collection].name}
+      content={title || config.article.collections[collection].name}
     />,
     <meta
       property="og:title"
-      content={title || config.collections[collection].name}
+      content={title || config.article.collections[collection].name}
     />,
     <meta property="og:locale" content="de_DE" />,
     <meta property="og:site_name" content={config.organization.name} />,
   ];
 
   switch (kind) {
-    case 'publication':
+    case 'article':
       return [
         [
           <meta name="twitter:card" content="summary_large_image" />,
@@ -39,7 +39,7 @@ export default ({
           <meta
             property="og:url"
             content={`${config.protocol}://${config.domain}/${
-              config.collections[collection].slug
+              config[kind].collections[collection].slug
             }/${slug}/`}
           />,
           <meta
@@ -75,7 +75,7 @@ export default ({
           <meta
             property="og:url"
             content={`${config.protocol}://${config.domain}/${
-              config.collections[collection].slug
+              config.article.collections[collection].slug
             }
             }/${slug}/`}
           />,
@@ -121,7 +121,7 @@ export default ({
         ],
         always,
       ];
-    case 'basic':
+    case 'page':
       return [
         [
           <meta name="twitter:card" content="summary" />,
@@ -143,10 +143,7 @@ export default ({
           />,
           <meta
             property="og:url"
-            content={`${config.protocol}://${config.domain}/${
-              config.collections[collection].slug
-            }
-            }/${slug}/`}
+            content={`${config.protocol}://${config.domain}`}
           />,
           <meta
             property="og:image"

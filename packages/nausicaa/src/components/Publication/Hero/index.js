@@ -128,64 +128,76 @@ export default ({
   attribution,
   author,
   alt,
+  kind,
 }) => (
   <Fragment>
-    <Picture>
-      <AmpImg
-        width={4}
-        height={3}
-        src={oneLine`${config.media}${addSizeSuffix(
-          picture,
-          config.images.small.suffix
-        )}${config.mediasuffix}`}
-        srcset={oneLine`${config.media}${addSizeSuffix(
-          picture,
-          config.images.large.suffix
-        )}${config.mediasuffix} ${config.images.large.size},
-                  ${config.media}${addSizeSuffix(
-          picture,
-          config.images.medium.suffix
-        )}${config.mediasuffix} ${config.images.medium.size},
-                  ${config.media}${addSizeSuffix(
-          picture,
-          config.images.small.suffix
-        )}${config.mediasuffix} ${config.images.small.size}`}
-        alt={alt}
-        attribution={attribution}
-        layout="responsive"
-      />
-      <PictureAttribution>{attribution}</PictureAttribution>
-    </Picture>
-    <Container>
-      <Breadcrumbs styleProps={{ collection }}>
-        <A styleProps={{ collection }} href="/">
-          Start
-        </A>
-        {' > '}
-        <A
-          styleProps={{ collection }}
-          href={`/${config.collections[collection].slug}/`}
-        >
-          {config.collections[collection].name}
-        </A>
-      </Breadcrumbs>
-      <Time dateTime={formatDate(date, 'YYYY-MM-DD', 'en')}>
-        {formatDate(date, 'DD. MMMM YYYY', 'de')}
-      </Time>
-      <Headline>{headline}</Headline>
-      <Subline styleProps={{ collection }}>{subline}</Subline>
-      <Author>
-        <AuthorPicture
+    {kind === 'article' && (
+      <Picture>
+        <AmpImg
           width={4}
-          height={4}
-          src={`${config.media}${config.authors[author]
-            .avatar}${config.mediasuffix}`}
+          height={3}
+          src={oneLine`${config.media}${addSizeSuffix(
+            picture,
+            config.images.small.suffix
+          )}${config.mediasuffix}`}
+          srcset={oneLine`${config.media}${addSizeSuffix(
+            picture,
+            config.images.large.suffix
+          )}${config.mediasuffix} ${config.images.large.size},
+                  ${config.media}${addSizeSuffix(
+            picture,
+            config.images.medium.suffix
+          )}${config.mediasuffix} ${config.images.medium.size},
+                  ${config.media}${addSizeSuffix(
+            picture,
+            config.images.small.suffix
+          )}${config.mediasuffix} ${config.images.small.size}`}
           alt={alt}
           attribution={attribution}
           layout="responsive"
         />
-      </Author>
-      <AuthorName>{config.authors[author].name}</AuthorName>
+        <PictureAttribution>{attribution}</PictureAttribution>
+      </Picture>
+    )}
+    <Container>
+      {kind === 'article' && (
+        <Breadcrumbs styleProps={{ collection }}>
+          <A styleProps={{ collection }} href="/">
+            Start
+          </A>
+          {' > '}
+          <A
+            styleProps={{ collection }}
+            href={`/${config[kind].collections[collection].slug}/`}
+          >
+            {config[kind].collections[collection].name}
+          </A>
+        </Breadcrumbs>
+      )}
+      {kind === 'article' && (
+        <Time dateTime={formatDate(date, 'YYYY-MM-DD', 'en')}>
+          {formatDate(date, 'DD. MMMM YYYY', 'de')}
+        </Time>
+      )}
+      <Headline>{headline}</Headline>
+      {subline && <Subline styleProps={{ collection }}>{subline}</Subline>}
+      {kind === 'article' && (
+        <Fragment>
+          <Author>
+            <AuthorPicture
+              width={4}
+              height={4}
+              src={`${config.media}${config.authors[author].avatar}${
+                config.mediasuffix
+              }`}
+              alt={alt}
+              attribution={attribution}
+              layout="responsive"
+            />
+          </Author>
+          <AuthorName>{config.authors[author].name}</AuthorName>
+        </Fragment>
+      )}
     </Container>
   </Fragment>
 );

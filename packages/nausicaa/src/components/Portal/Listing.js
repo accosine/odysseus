@@ -32,7 +32,9 @@ const Article = withTheme(
     margin: '0 0 8vw 0',
     position: 'relative',
     '::after': {
-      backgroundImage: `linear-gradient(180deg, ${theme.transparent}, ${theme.black})`,
+      backgroundImage: `linear-gradient(180deg, ${theme.transparent}, ${
+        theme.black
+      })`,
       content: '""',
       height: '50%',
       left: 0,
@@ -107,13 +109,13 @@ const Figure = styled('figure', {
 const Listing = ({ articles, collection, config }) => (
   <Fragment>
     <Headline styleProps={{ collection }}>
-      {config.collections[collection].name}
+      {config.article.collections[collection].name}
     </Headline>
     <div>
       {articles.map(
         ({ picture, attribution, alt, slug, headline, subline }) => (
           <section key={slug}>
-            <a href={`/${config.collections[collection].slug}/${slug}`}>
+            <a href={`/${config.article.collections[collection].slug}/${slug}`}>
               <Article>
                 <Figure>
                   <AmpImg

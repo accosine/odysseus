@@ -34,9 +34,10 @@ const Article = styled('article', {
 });
 
 const Publication = ({
-  article,
+  content,
   styletron,
   config,
+  kind,
   frontmatter: {
     date,
     collection,
@@ -52,7 +53,7 @@ const Publication = ({
   },
 }) => (
   <Fragment>
-    <Menu styletron={styletron} config={config} />
+    <Menu styletron={styletron} collections={config.article.collections} />
     <Analytics accountId={config.googleanalytics} />
     <Container>
       <SvgSpritemap styletron={styletron} />
@@ -68,24 +69,31 @@ const Publication = ({
           headline={headline}
           subline={subline}
           date={date}
+          kind={kind}
         />
-        <Sharebuttons
-          slug={slug}
-          title={title}
-          collection={collection}
-          config={config}
-        />
+        {kind === 'article' && (
+          <Sharebuttons
+            slug={slug}
+            title={title}
+            collection={collection}
+            config={config}
+            collections={config[kind].collections}
+          />
+        )}
         <AdContainer
           adnetwork={config.ads.adnetwork}
           adconfig={{ 'data-slot': config.ads.adslot }}
         />
-        <Article>{article}</Article>
-        <Sharebuttons
-          slug={slug}
-          title={title}
-          collection={collection}
-          config={config}
-        />
+        <Article>{content}</Article>
+        {kind === 'article' && (
+          <Sharebuttons
+            slug={slug}
+            title={title}
+            collection={collection}
+            config={config}
+            collections={config[kind].collections}
+          />
+        )}
       </Main>
       <aside />
       <Footer styletron={styletron} config={config} />
@@ -97,6 +105,6 @@ const Publication = ({
 );
 
 Publication.propTypes = {
-  article: PropTypes.node.isRequired,
+  content: PropTypes.node.isRequired,
 };
 export default Publication;

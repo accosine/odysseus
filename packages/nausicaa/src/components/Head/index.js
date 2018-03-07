@@ -39,15 +39,15 @@ const Head = ({
   <head>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <title>{title || config.collections[collection].name}</title>
+    <title>{title || config.article.collections[collection].name}</title>
     {kind === 'start' ? (
       <link rel="canonical" href={`${config.protocol}://${config.domain}`} />
     ) : null}
-    {kind === 'publication' ? (
+    {kind === 'article' ? (
       <link
         rel="canonical"
         href={`${config.protocol}://${config.domain}/${
-          config.collections[collection].slug
+          config[kind].collections[collection].slug
         }/${slug}`}
       />
     ) : null}
@@ -55,21 +55,21 @@ const Head = ({
       <link
         rel="canonical"
         href={`${config.protocol}://${config.domain}/${
-          config.collections[collection].slug
+          config.article.collections[collection].slug
         }${pagination.currentPage > 1 ? '/' + pagination.currentPage : ''}`}
-      />
-    ) : null}
-    {kind === 'portal' ? (
-      <HeadPagination
-        pagination={pagination}
-        collection={collection}
-        config={config}
       />
     ) : null}
     {kind === 'page' ? (
       <link
         rel="canonical"
         href={`${config.protocol}://${config.domain}/${slug}`}
+      />
+    ) : null}
+    {kind === 'portal' ? (
+      <HeadPagination
+        pagination={pagination}
+        collection={config.article.collections[collection]}
+        config={config}
       />
     ) : null}
     <meta
@@ -87,7 +87,8 @@ const Head = ({
     <meta name="description" content={description} />
     <SocialmediaMeta
       config={config}
-      frontmatter={{ title, slug, picture, kind, description, collection }}
+      kind={kind}
+      frontmatter={{ title, slug, picture, description, collection }}
     />
     {kind === 'publication' ? (
       <Schema {...frontmatter} config={config} />

@@ -5,7 +5,7 @@ import { StyletronProvider } from 'styletron-react';
 import marksy from 'marksy';
 import Shortcodes from './util/shortcodes';
 import Head from './components/Head';
-import Content from './components/Publication';
+import Text from './components/Publication';
 import Portal from './components/Portal';
 import Start from './components/Start';
 import ThemeProvider from './util/ThemeProvider';
@@ -59,11 +59,12 @@ const article = config => (article, frontmatter) => {
   const appMarkup = ReactDOMServer.renderToStaticMarkup(
     <StyletronProvider styletron={styletron}>
       <ThemeProvider theme={theme}>
-        <Content
+        <Text
           styletron={styletron}
           frontmatter={frontmatter}
           config={config}
-          article={articleTree}
+          content={articleTree}
+          kind="article"
         />
       </ThemeProvider>
     </StyletronProvider>
@@ -103,11 +104,12 @@ const page = config => (page, frontmatter) => {
   const appMarkup = ReactDOMServer.renderToStaticMarkup(
     <StyletronProvider styletron={styletron}>
       <ThemeProvider theme={theme}>
-        <Content
+        <Text
           styletron={styletron}
           frontmatter={frontmatter}
           config={config}
-          page={pageTree}
+          content={pageTree}
+          kind="page"
         />
       </ThemeProvider>
     </StyletronProvider>
@@ -184,6 +186,7 @@ const start = config => articles => {
         config={config}
         styles={styletron.getCss()}
         body={body}
+        kind="start"
       />
     ) +
     '</html>';

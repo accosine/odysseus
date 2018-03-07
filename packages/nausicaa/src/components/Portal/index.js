@@ -37,7 +37,11 @@ const Portal = ({
   frontmatter: { collection, pagination },
 }) => (
   <Fragment>
-    <Menu styletron={styletron} config={config} />
+    <Menu
+      styletron={styletron}
+      config={config}
+      collections={config.article.collections}
+    />
     <Analytics accountId={config.googleanalytics} />
     <Container>
       <SvgSpritemap styletron={styletron} />

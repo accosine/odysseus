@@ -47,7 +47,11 @@ const CollectionA = withTheme(
 
 const Start = ({ styletron, articles, config }) => (
   <Fragment>
-    <Menu styletron={styletron} config={config} />
+    <Menu
+      styletron={styletron}
+      config={config}
+      collections={config.article.collections}
+    />
     <Analytics accountId={config.googleanalytics} />
     <Container>
       <SvgSpritemap styletron={styletron} />
@@ -57,10 +61,11 @@ const Start = ({ styletron, articles, config }) => (
           {articles.map(collectionArticles => (
             <Fragment key={collectionArticles.collection}>
               <CollectionA
-                href={`/${config.collections[collectionArticles.collection]
-                  .slug}`}
+                href={`/${
+                  config.article.collections[collectionArticles.collection].slug
+                }`}
               >
-                {config.collections[collectionArticles.collection].name}
+                {config.article.collections[collectionArticles.collection].name}
               </CollectionA>
               <Articles
                 articles={collectionArticles.articles}

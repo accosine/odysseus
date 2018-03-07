@@ -75,13 +75,15 @@ export default ({
   slug,
   title,
   collection,
-  config: { collections, protocol, domain, organization },
+  collections,
+  config: { protocol, domain, organization },
 }) => (
   <Container>
+    {console.log(collections)}
     <Link
-      href={`https://facebook.com/sharer/sharer.php?u=${protocol}://${domain}/${collections[
-        collection
-      ].slug}/${slug}&title=${encodeURIComponent(title)}`}
+      href={`https://facebook.com/sharer/sharer.php?u=${protocol}://${domain}/${
+        collections[collection].slug
+      }/${slug}&title=${encodeURIComponent(title)}`}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -93,9 +95,9 @@ export default ({
       </Facebook>
     </Link>
     <Link
-      href={`whatsapp://send?text=${protocol}://${domain}/${collections[
-        collection
-      ].slug}/${slug} ${encodeURIComponent(title)}`}
+      href={`whatsapp://send?text=${protocol}://${domain}/${
+        collections[collection].slug
+      }/${slug} ${encodeURIComponent(title)}`}
       data-action="share/whatsapp/share"
       target="_blank"
       rel="noopener noreferrer"
@@ -108,11 +110,9 @@ export default ({
       </Whatsapp>
     </Link>
     <Link
-      href={`https://twitter.com/intent/tweet?url=${protocol}://${domain}/${collections[
-        collection
-      ].slug}/${slug}&text=${encodeURIComponent(
-        title
-      )}&via=${organization.name}`}
+      href={`https://twitter.com/intent/tweet?url=${protocol}://${domain}/${
+        collections[collection].slug
+      }/${slug}&text=${encodeURIComponent(title)}&via=${organization.name}`}
       target="_blank"
       rel="noopener noreferrer"
     >
