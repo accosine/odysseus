@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import FixedButton from './FixedButton';
+import ArticleCard from './ArticleCard';
+import CreateIcon from 'material-ui-icons/Create';
 import connectFirebase from '../util/connect-firebase';
 
-const styleSheet = {
-  demo: {
-    flexDirection: 'column',
+const styleSheet = theme => ({
+  root: {
+    marginTop: 2 * theme.spacing.unit,
   },
-  articlecard: {
-    width: '50vw',
-  },
-};
+});
 
 class Articles extends Component {
   state = { articles: [], loading: true };
@@ -23,6 +22,7 @@ class Articles extends Component {
     // TODO: use select() to get only slug and title
     this.firestoreUnsubscribe = this.props.firebase.firestore
       .collection('articles')
+      // .select('slug', 'title', 'headline', 'description', 'picture')
       .onSnapshot(snapshot => {
         this.setState({
           articles: snapshot.docs.map(article => article.data()),
@@ -37,18 +37,16 @@ class Articles extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { loading, articles } = this.state;
 
     return (
-      <div>
+      <Fragment>
         <Grid container className={classes.root}>
-          <h2>Articles</h2>
           <Grid item xs={12}>
             <Grid
               align={'center'}
               container
-              className={classes.demo}
               direction={'column'}
               justify={'center'}
               spacing={16}
@@ -56,20 +54,21 @@ class Articles extends Component {
               {loading ? (
                 <CircularProgress />
               ) : (
-                articles.map(({ slug, title }) => (
-                  <Paper
+                articles.map(({ slug, ...props }) => (
+                  <ArticleCard
                     key={slug}
-                    className={classes.articlecard}
-                    elevation={4}
-                  >
-                    <Link to={`/editor/article/${slug}`}>{title}</Link>
-                  </Paper>
+                    onClick={() => history.push(`/editor/article/${slug}`)}
+                    {...props}
+                  />
                 ))
               )}
             </Grid>
           </Grid>
         </Grid>
-      </div>
+        <FixedButton component={Link} to="/editor/article" position="right">
+          <CreateIcon />
+        </FixedButton>
+      </Fragment>
     );
   }
 }

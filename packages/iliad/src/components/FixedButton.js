@@ -19,7 +19,7 @@ const styleSheet = theme => ({
   right: { right: 0 },
 });
 
-const FixedButton = ({ children, to, classes, position, top, ...props }) => (
+const FixedButton = ({ children, classes, position, top, ...props }) => (
   <Button
     fab
     color="accent"

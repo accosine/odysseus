@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import FixedButton from './FixedButton';
+import ArticleCard from './ArticleCard';
+import CreateIcon from 'material-ui-icons/Create';
 import connectFirebase from '../util/connect-firebase';
 
-const styleSheet = {
-  demo: {
-    flexDirection: 'column',
+const styleSheet = theme => ({
+  root: {
+    marginTop: 2 * theme.spacing.unit,
   },
-  pagescard: {
-    width: '50vw',
-  },
-};
+});
 
 class Pages extends Component {
   state = { pages: [], loading: true };
@@ -23,9 +22,10 @@ class Pages extends Component {
     // TODO: use select() to get only slug and title
     this.firestoreUnsubscribe = this.props.firebase.firestore
       .collection('pages')
+      // .select('slug', 'title', 'headline', 'description', 'picture')
       .onSnapshot(snapshot => {
         this.setState({
-          pages: snapshot.docs.map(page => page.data()),
+          pages: snapshot.docs.map(article => article.data()),
           loading: false,
         });
       });
@@ -37,18 +37,16 @@ class Pages extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { loading, pages } = this.state;
 
     return (
-      <div>
+      <Fragment>
         <Grid container className={classes.root}>
-          <h2>Pages</h2>
           <Grid item xs={12}>
             <Grid
               align={'center'}
               container
-              className={classes.demo}
               direction={'column'}
               justify={'center'}
               spacing={16}
@@ -56,16 +54,21 @@ class Pages extends Component {
               {loading ? (
                 <CircularProgress />
               ) : (
-                pages.map(({ slug, title }) => (
-                  <Paper key={slug} className={classes.pagescard} elevation={4}>
-                    <Link to={`/editor/page/${slug}`}>{title}</Link>
-                  </Paper>
+                pages.map(({ slug, ...props }) => (
+                  <ArticleCard
+                    key={slug}
+                    onClick={() => history.push(`/editor/page/${slug}`)}
+                    {...props}
+                  />
                 ))
               )}
             </Grid>
           </Grid>
         </Grid>
-      </div>
+        <FixedButton component={Link} to="/editor/article" position="right">
+          <CreateIcon />
+        </FixedButton>
+      </Fragment>
     );
   }
 }

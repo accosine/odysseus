@@ -20,6 +20,14 @@ const articles = firestore.collection('articles');
 const pages = firestore.collection('pages');
 
 app.use(cors);
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+
+  if (req.url !== '/' && req.url.endsWith('/')) {
+    res.redirect(301, req.url.slice(0, -1));
+  }
+  next();
+});
 app.use(cookieParser);
 
 app.get('/robots.txt', function(req, res) {
