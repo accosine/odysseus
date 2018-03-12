@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { withStyles } from 'material-ui/styles';
@@ -45,7 +45,7 @@ const Iphone6 = withStyles({
   </div>
 ));
 
-class SimpleBottomNavigation extends React.Component {
+class DevicePreview extends React.Component {
   state = {
     value: 0,
   };
@@ -58,23 +58,29 @@ class SimpleBottomNavigation extends React.Component {
     const { classes, children, onClose } = this.props;
     const { value } = this.state;
 
-    return [
-      <div key="1" className={classes.root}>
-        <BottomNavigation value={value} onChange={this.handleChange} showLabels>
-          <BottomNavigationButton label="Desktop" />
-          <BottomNavigationButton label="iPhone 6" />
-        </BottomNavigation>
-      </div>,
-      value === 0 ? React.cloneElement(children, { key: '2' }) : null,
-      <div key="3" className={classes.devices}>
-        {value === 1 ? <Iphone6 onHome={onClose}>{children}</Iphone6> : null}
-      </div>,
-    ];
+    return (
+      <Fragment>
+        <div className={classes.root}>
+          <BottomNavigation
+            value={value}
+            onChange={this.handleChange}
+            showLabels
+          >
+            <BottomNavigationButton label="Desktop" />
+            <BottomNavigationButton label="iPhone 6" />
+          </BottomNavigation>
+        </div>
+        {value === 0 ? children : null}
+        <div className={classes.devices}>
+          {value === 1 ? <Iphone6 onHome={onClose}>{children}</Iphone6> : null}
+        </div>
+      </Fragment>
+    );
   }
 }
 
-SimpleBottomNavigation.propTypes = {
+DevicePreview.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleBottomNavigation);
+export default withStyles(styles)(DevicePreview);

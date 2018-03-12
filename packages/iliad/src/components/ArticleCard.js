@@ -13,10 +13,9 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2,
     justifyContent: 'space-between',
     cursor: 'pointer',
+    transition: 'transform 0.1s',
     '&:hover': {
-      position: 'relative',
-      top: 2,
-      left: 2,
+      transform: 'translate(1px, 1px)',
     },
   },
   details: {

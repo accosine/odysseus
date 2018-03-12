@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import FixedButton from './FixedButton';
@@ -25,7 +25,7 @@ const styleSheet = {
   },
 };
 
-class Preview extends Component {
+class Preview extends PureComponent {
   state = {
     fullscreen: false,
     preview: '',
@@ -42,26 +42,6 @@ class Preview extends Component {
     this.updatePreview();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      this.state.preview !== nextState.preview ||
-      this.state.fullscreen !== nextState.fullscreen ||
-      this.props.text !== nextProps.text ||
-      this.props.title !== nextProps.title ||
-      this.props.author !== nextProps.author ||
-      this.props.description !== nextProps.description ||
-      this.props.collection !== nextProps.collection ||
-      this.props.headline !== nextProps.headline ||
-      this.props.subline !== nextProps.subline ||
-      this.props.layout !== nextProps.layout ||
-      this.props.type !== nextProps.type ||
-      this.props.picture !== nextProps.picture ||
-      this.props.attribution !== nextProps.attribution ||
-      this.props.alt !== nextProps.alt ||
-      this.props.slug !== nextProps.slug
-    );
-  }
-
   updatePreview = () => {
     if (this.renderTimeout) {
       clearTimeout(this.renderTimeout);
@@ -75,45 +55,42 @@ class Preview extends Component {
     }, this.props.renderDelay);
   };
 
+  toggleFullscreen = () =>
+    this.setState({ fullscreen: !this.state.fullscreen });
+
   render() {
     const { classes } = this.props;
     const { fullscreen, preview } = this.state;
-    return [
-      <div key="1" className={classes.container}>
+    return (
+      <Fragment>
+        <div className={classes.container}>
+          {fullscreen ? (
+            <FixedButton position="left" onClick={this.toggleFullscreen}>
+              <FullscreenExitIcon />
+            </FixedButton>
+          ) : (
+            <Fragment>
+              <Iframe html={preview} />
+              <FixedButton position="left" onClick={this.toggleFullscreen}>
+                <FullscreenIcon />
+              </FixedButton>
+            </Fragment>
+          )}
+        </div>
         {fullscreen ? (
-          <FixedButton
-            position="left"
-            onClick={() => this.setState({ fullscreen: false })}
+          <Dialog
+            fullScreen
+            open
+            onRequestClose={this.toggleFullscreen}
+            transition={<Slide direction="up" />}
           >
-            <FullscreenExitIcon />
-          </FixedButton>
-        ) : (
-          [
-            <Iframe key="1" html={preview} />,
-            <FixedButton
-              key="2"
-              position="left"
-              onClick={() => this.setState({ fullscreen: true })}
-            >
-              <FullscreenIcon />
-            </FixedButton>,
-          ]
-        )}
-      </div>,
-      fullscreen ? (
-        <Dialog
-          key="2"
-          fullScreen
-          open
-          onRequestClose={() => this.setState({ fullscreen: false })}
-          transition={<Slide direction="up" />}
-        >
-          <DevicePreview onClose={() => this.setState({ fullscreen: false })}>
-            <Iframe html={preview} />
-          </DevicePreview>
-        </Dialog>
-      ) : null,
-    ];
+            <DevicePreview onClose={this.toggleFullscreen}>
+              <Iframe html={preview} />
+            </DevicePreview>
+          </Dialog>
+        ) : null}
+      </Fragment>
+    );
   }
 }
 

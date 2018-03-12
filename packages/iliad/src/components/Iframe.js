@@ -37,7 +37,10 @@ class Iframe extends Component {
 
   createIframe = () => {
     const iframe = document.createElement('iframe');
-    iframe.setAttribute('class', this.props.classes.iframe);
+    iframe.setAttribute(
+      'class',
+      classnames(this.props.classes.iframe, this.props.classes.hidden)
+    );
     iframe.setAttribute('title', 'preview');
     return iframe;
   };
@@ -45,11 +48,6 @@ class Iframe extends Component {
   updateIframe = () => {
     const iframe = this.createIframe();
     this.container.appendChild(iframe);
-
-    iframe.className = classnames(
-      this.props.classes.iframe,
-      this.props.classes.hidden
-    );
 
     const iframeDocument = iframe.contentDocument;
     iframeDocument.open();
@@ -60,7 +58,9 @@ class Iframe extends Component {
       this.setState({ scrollY: event.target.scrollingElement.scrollTop })
     );
     iframe.contentWindow.onload = () => {
-      this.container.removeChild(this.container.firstChild);
+      if (this.container.children.length === 2) {
+        this.container.removeChild(this.container.firstChild);
+      }
       iframe.className = classnames(this.props.classes.iframe);
       iframe.contentWindow.scrollTo(0, this.state.scrollY);
     };
