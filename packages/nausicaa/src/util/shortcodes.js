@@ -10,9 +10,9 @@ export default config => {
   // TODO: make srcset sizes configurable
   const shortcodes = {
     image: (str, params, { styletron }) => {
-      const figText = `${params.caption || ''}${params.attribution
-        ? ' (' + params.attribution + ')'
-        : ''}`;
+      const figText = `${params.caption || ''}${
+        params.attribution ? ' (' + params.attribution + ')' : ''
+      }`;
       const figOpen = params.caption || params.attribution ? '<figure>' : '';
       const figClose =
         params.caption || params.attribution
@@ -22,10 +22,12 @@ export default config => {
         ? 'on="tap:lightbox1" role="button" tabindex="0"'
         : '';
       return `<div>${figOpen}<amp-img
-                  ${params.fill
-                    ? ''
-                    : `width=${params.width || 1}
-                  height=${params.height || 1}`}
+                  ${
+                    params.fill
+                      ? ''
+                      : `width=${params.width || 1}
+                  height=${params.height || 1}`
+                  }
                   src="${storageurl}${addSizeSuffix(
         params.name,
         '-s'
@@ -44,9 +46,9 @@ export default config => {
       )}${storagesuffix} 320w"
                   alt="${params.alttext || ''}"
                   attribution="${params.attribution || ''}" ${lightbox}
-                  layout="${params.fill
-                    ? 'fill'
-                    : 'responsive'}"></amp-img/>${figClose}</div>`;
+                  layout="${
+                    params.fill ? 'fill' : 'responsive'
+                  }"></amp-img/>${figClose}</div>`;
     },
     // video: (str, params) =>
     //   `<div><amp-video
@@ -87,9 +89,9 @@ export default config => {
     soundcloud: (str, params) =>
       oneLine`<div><amp-soundcloud
           height=${params.height || 166}
-          layout="fixed-height" ${params.color && !params.visual
-            ? `data-color="${params.color}"`
-            : ''} data-trackid="${params.id}"
+          layout="fixed-height" ${
+            params.color && !params.visual ? `data-color="${params.color}"` : ''
+          } data-trackid="${params.id}"
           ${params.visual ? 'data-visual="true"' : ''}>
         </amp-soundcloud></div>`,
     carousel: (str, { autoplay, delay, controls, width, height, loop }) =>
@@ -131,6 +133,7 @@ export default config => {
                 data-gfyid="${params.id}"
                 width="${params.width || 4}"
                 height="${params.height || 3}"
+                layout="responsive">
                 ${params.noautoplay ? 'noautoplay' : ''}>
               </amp-gfycat></div>`,
     iframe: (str, params) =>
@@ -158,7 +161,7 @@ export default config => {
               </amp-pinterest></div>`,
     playbuzz: (str, { height, url, iteminfo }) =>
       oneLine`<div><amp-playbuzz
-                src="https://www.playbuzz.com/HistoryUK/10-classic-christmas-movies"
+                src="${url}"
                 height=${height}
                 ${iteminfo ? 'data-item-info="true"' : ''}>
               </amp-playbuzz></div>`,

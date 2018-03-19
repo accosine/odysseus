@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import FixedButton from './FixedButton';
 import Dialog from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
 import FullscreenIcon from 'material-ui-icons/Fullscreen';
 import FullscreenExitIcon from 'material-ui-icons/FullscreenExit';
 import Theme from '../theme';
@@ -22,6 +21,9 @@ const styleSheet = {
     height: '100%',
     border: 0,
     background: 'white',
+  },
+  devicePreview: {
+    zIndex: 1299,
   },
 };
 
@@ -79,10 +81,10 @@ class Preview extends PureComponent {
         </div>
         {fullscreen ? (
           <Dialog
+            className={classes.devicePreview}
             fullScreen
             open
-            onRequestClose={this.toggleFullscreen}
-            transition={<Slide direction="up" />}
+            onClose={this.toggleFullscreen}
           >
             <DevicePreview onClose={this.toggleFullscreen}>
               <Iframe html={preview} />

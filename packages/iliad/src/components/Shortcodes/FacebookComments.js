@@ -44,10 +44,14 @@ class FacebookComments extends Component {
     const { url, width, height, numposts } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Facebook Comments
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{'Insert Facebook Comments shortcode'}</DialogTitle>
           <DialogContent>
             <DialogContentText />
@@ -73,7 +77,8 @@ class FacebookComments extends Component {
               value={numposts}
               type="number"
               onChange={event =>
-                this.setState({ numposts: event.target.value })}
+                this.setState({ numposts: event.target.value })
+              }
             />
           </DialogContent>
           <DialogActions>

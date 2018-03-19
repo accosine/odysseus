@@ -21,7 +21,7 @@ class Dresser extends Component {
         <Drawer
           open={this.props.open}
           onClick={onDrawerClose}
-          onRequestClose={onDrawerClose}
+          onClose={onDrawerClose}
         >
           <div>
             <List className={classes.list} disablePadding>

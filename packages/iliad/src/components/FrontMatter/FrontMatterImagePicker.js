@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
-import Slide from 'material-ui/transitions/Slide';
 import { withStyles } from 'material-ui/styles';
 
 import MediaManager from '../MediaManager';
@@ -34,16 +33,15 @@ class FrontMatterImagePicker extends Component {
     const { classes, onInsert } = this.props;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Img
         </Button>
         {this.state.open ? (
-          <Dialog
-            fullScreen
-            open={this.state.open}
-            onRequestClose={this.closeDialog}
-            transition={<Slide direction="up" />}
-          >
+          <Dialog fullScreen open={this.state.open} onClose={this.closeDialog}>
             <MediaManager
               onInsert={selected => {
                 onInsert(selected);

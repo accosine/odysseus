@@ -9,7 +9,7 @@ const styleSheet = theme => ({
     bottom: 0,
     margin: 3 * theme.spacing.unit,
     position: 'fixed',
-    zIndex: 10000,
+    zIndex: 1300,
   },
   center: {
     left: '50%',
@@ -21,8 +21,7 @@ const styleSheet = theme => ({
 
 const FixedButton = ({ children, classes, position, top, ...props }) => (
   <Button
-    fab
-    color="accent"
+    variant="fab"
     className={classNames(classes.button, classes[position])}
     {...props}
   >

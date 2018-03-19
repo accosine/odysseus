@@ -18,21 +18,11 @@ const styles = theme => ({
       transform: 'translate(1px, 1px)',
     },
   },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
   content: {
     flex: '1 0 auto',
   },
   cover: {
     width: '20%',
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
   },
 });
 
@@ -63,17 +53,17 @@ class MediaControlCard extends Component {
         className={classes.card}
         onClick={onClick}
       >
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography type="headline">{title}</Typography>
-            <Typography type="subheading" color="secondary">
-              {headline}
-            </Typography>
-            <Typography type="caption" color="secondary">
-              {description}
-            </Typography>
-          </CardContent>
-        </div>
+        <CardContent className={classes.content}>
+          <Typography align="left" variant="headline">
+            {title}
+          </Typography>
+          <Typography align="left" variant="subheading">
+            {headline}
+          </Typography>
+          <Typography align="left" variant="caption">
+            {description}
+          </Typography>
+        </CardContent>
         <CardMedia
           className={classes.cover}
           image={

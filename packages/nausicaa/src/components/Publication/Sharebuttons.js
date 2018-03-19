@@ -79,7 +79,6 @@ export default ({
   config: { protocol, domain, organization },
 }) => (
   <Container>
-    {console.log(collections)}
     <Link
       href={`https://facebook.com/sharer/sharer.php?u=${protocol}://${domain}/${
         collections[collection].slug

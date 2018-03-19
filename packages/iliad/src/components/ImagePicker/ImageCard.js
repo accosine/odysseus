@@ -71,7 +71,7 @@ class ImageCard extends Component {
               }
             />
             <CardContent>
-              <Typography type="headline" component="h2">
+              <Typography variant="headline" component="h2">
                 {image.name}
               </Typography>
               <Typography component="p">{image.caption}</Typography>
@@ -80,7 +80,7 @@ class ImageCard extends Component {
             </CardContent>
             <CardActions>
               <Button
-                dense
+                size="small"
                 color="primary"
                 disabled={selected || disabled}
                 onClick={() => this.registerSelection(reference)}

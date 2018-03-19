@@ -22,9 +22,9 @@ const styleSheet = theme => ({
 });
 
 const facebookShortcode = ({ url, width, height, isVideo }) =>
-  `[facebook url="${url}" width=${width} height=${height}${isVideo
-    ? ' video'
-    : ''}]`;
+  `[facebook url="${url}" width=${width} height=${height}${
+    isVideo ? ' video' : ''
+  }]`;
 
 class Facebook extends Component {
   state = { open: false, url: '', width: '', height: '', isVideo: false };
@@ -48,10 +48,14 @@ class Facebook extends Component {
     const { url, width, height, isVideo } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Facebook Post
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{'Insert Facebook shortcode'}</DialogTitle>
           <DialogContent>
             <DialogContentText />

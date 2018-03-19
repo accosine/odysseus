@@ -43,10 +43,14 @@ class Youtube extends Component {
     const { videoid } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           YouTube
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{"Use Google's location service?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>

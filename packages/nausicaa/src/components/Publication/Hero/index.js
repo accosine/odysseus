@@ -168,7 +168,7 @@ export default ({
           {' > '}
           <A
             styleProps={{ collection }}
-            href={`/${config[kind].collections[collection].slug}/`}
+            href={`/${config[kind].collections[collection].slug}`}
           >
             {config[kind].collections[collection].name}
           </A>

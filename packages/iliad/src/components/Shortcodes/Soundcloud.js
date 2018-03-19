@@ -63,10 +63,14 @@ class Soundcloud extends Component {
     const { trackid, isVisual, height, color } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Soundcloud
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{"Use Google's location service?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>

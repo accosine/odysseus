@@ -95,18 +95,23 @@ class SplitScreen extends Component {
     reviewbody: '',
   };
 
+  subscribe = slug => {
+    const { firebase, match: { params: { kind } } } = this.props;
+    this.firestoreUnsubscribe = firebase.firestore
+      .collection(kind === 'article' ? 'articles' : 'pages')
+      .doc(slug)
+      .onSnapshot(snapshot =>
+        this.setState({
+          loading: false,
+          ...(snapshot.exists ? snapshot.data() : {}),
+        })
+      );
+  };
+
   componentDidMount() {
-    const { firebase, match: { params: { kind, slug } } } = this.props;
+    const { match: { params: { slug } } } = this.props;
     if (slug) {
-      this.firestoreUnsubscribe = firebase.firestore
-        .collection(kind === 'article' ? 'articles' : 'pages')
-        .doc(slug)
-        .onSnapshot(snapshot =>
-          this.setState({
-            loading: false,
-            ...(snapshot.exists ? snapshot.data() : {}),
-          })
-        );
+      this.subscribe(slug);
     }
   }
 
@@ -159,6 +164,10 @@ class SplitScreen extends Component {
               }`
             );
           });
+        // subscribe to slug ref if article is new
+        if (!this.firestoreUnsubscribe) {
+          this.subscribe(contentState.slug);
+        }
       }
     );
   };
@@ -199,8 +208,8 @@ class SplitScreen extends Component {
         </IconButton>
         <Grid container className={classes.row} spacing={8}>
           <Grid item xs={12}>
-            <Collapse in={frontmatterExpanded} transitionDuration="auto">
-              <Typography type="headline">Frontmatter</Typography>
+            <Collapse in={frontmatterExpanded}>
+              <Typography variant="headline">Frontmatter</Typography>
               <FrontMatter
                 {...frontmatter}
                 kind={kind}
@@ -225,7 +234,7 @@ class SplitScreen extends Component {
           <Grid item xs={6}>
             <Paper className={classes.paper}>
               <Typography
-                type="headline"
+                variant="headline"
                 className={classes.title}
                 gutterBottom
               >
@@ -242,7 +251,7 @@ class SplitScreen extends Component {
           <Grid item xs={6}>
             <Paper className={classes.paper}>
               <Typography
-                type="headline"
+                variant="headline"
                 gutterBottom
                 className={classes.title}
               >

@@ -47,10 +47,14 @@ class Instagram extends Component {
     const { id, isCaptioned } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Instagram
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{"Use Google's location service?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -67,7 +71,8 @@ class Instagram extends Component {
                 <Switch
                   checked={isCaptioned}
                   onChange={(event, isCaptioned) =>
-                    this.setState({ isCaptioned })}
+                    this.setState({ isCaptioned })
+                  }
                 />
               }
               label="Captioned"

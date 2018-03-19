@@ -22,9 +22,9 @@ const styleSheet = theme => ({
 });
 
 const twitterShortcode = ({ id, width, height, cardsHidden }) =>
-  `[twitter id="${id}" width=${width} height=${height}${cardsHidden
-    ? ' cardshidden'
-    : ''}]`;
+  `[twitter id="${id}" width=${width} height=${height}${
+    cardsHidden ? ' cardshidden' : ''
+  }]`;
 
 class Twitter extends Component {
   state = { open: false, id: '', width: '', height: '', cardsHidden: false };
@@ -48,10 +48,14 @@ class Twitter extends Component {
     const { id, width, height, cardsHidden } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Twitter Post
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{'Insert Twitter shortcode'}</DialogTitle>
           <DialogContent>
             <DialogContentText />
@@ -77,7 +81,8 @@ class Twitter extends Component {
                 <Switch
                   checked={cardsHidden}
                   onChange={(event, cardsHidden) =>
-                    this.setState({ cardsHidden })}
+                    this.setState({ cardsHidden })
+                  }
                 />
               }
               label="Hide photos, videos, and link previews"

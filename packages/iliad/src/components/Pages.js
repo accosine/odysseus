@@ -65,7 +65,7 @@ class Pages extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <FixedButton component={Link} to="/editor/article" position="right">
+        <FixedButton component={Link} to="/editor/page" position="right">
           <CreateIcon />
         </FixedButton>
       </Fragment>

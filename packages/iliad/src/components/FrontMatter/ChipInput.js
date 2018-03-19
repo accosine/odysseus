@@ -35,7 +35,7 @@ class ChipsArray extends React.Component {
             <Chip
               label={data}
               key={data}
-              onRequestDelete={this.handleRequestDelete(data)}
+              onDelete={this.handleRequestDelete(data)}
               className={classes.chip}
             />
           );

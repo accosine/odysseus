@@ -22,6 +22,7 @@ const theme = createMuiTheme({
         backgroundColor: 'transparent',
       },
       fab: {
+        color: 'white',
         backgroundColor: '#92EFE5',
         '&:hover': {
           backgroundColor: '#009374',

@@ -14,7 +14,7 @@ const styleSheet = {
     background: 'white',
   },
   hidden: {
-    visibility: 'hidden',
+    display: 'none',
   },
 };
 

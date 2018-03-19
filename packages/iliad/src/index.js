@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import CssBaseline from 'material-ui/CssBaseline';
 import { firebase } from '@firebase/app';
 import '@firebase/storage';
 import '@firebase/firestore';
@@ -86,6 +87,7 @@ class Main extends Component {
   render() {
     return (
       <ThemeProvider>
+        <CssBaseline />
         <FirebaseProvider firebase={firebaseApi}>
           <App
             {...this.state}

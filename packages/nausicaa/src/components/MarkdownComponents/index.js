@@ -32,6 +32,16 @@ const H2 = withTheme(
   }))
 );
 
+const H3 = withTheme(
+  styled('h3', ({ styleProps: { theme } }) => ({
+    color: theme.mausgrau,
+    margin: '5vw 6vw 2vw 6vw',
+    '@media screen and (min-width: 1024px)': {
+      fontSize: '2vw',
+    },
+  }))
+);
+
 const Block = withTheme(
   styled('blockquote', ({ styleProps: { theme, collection } }) => ({
     color: 'white',
@@ -98,5 +108,6 @@ const Blockquote = ({ context: { collection }, children }) => (
 export default {
   p: P,
   h2: H2,
+  h3: H3,
   blockquote: Blockquote,
 };

@@ -22,9 +22,9 @@ const styleSheet = theme => ({
 });
 
 const gfycatShortcode = ({ id, noAutoplay, width, height }) =>
-  `[gfycat id=${id} width=${width} height=${height}${noAutoplay
-    ? ' noautoplay'
-    : ''}]`;
+  `[gfycat id=${id} width=${width} height=${height}${
+    noAutoplay ? ' noautoplay' : ''
+  }]`;
 
 class Gfycat extends Component {
   state = { open: false, id: '', noAutoplay: false, height: '', width: '' };
@@ -48,10 +48,14 @@ class Gfycat extends Component {
     const { id, noAutoplay, width, height } = this.state;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Gfycat
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.closeDialog}>
+        <Dialog open={this.state.open} onClose={this.closeDialog}>
           <DialogTitle>{'Insert Gfycat shortcode'}</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -82,7 +86,8 @@ class Gfycat extends Component {
                 <Switch
                   checked={noAutoplay}
                   onChange={(event, noAutoplay) =>
-                    this.setState({ noAutoplay })}
+                    this.setState({ noAutoplay })
+                  }
                 />
               }
               label="Disable Autoplay"

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
 
 import MediaManager from '../MediaManager';
 import MediaManagerTabs from '../MediaManager/Tabs';
@@ -19,15 +18,13 @@ const styleSheet = {
 };
 
 const imgShortcode = (img, carousel) =>
-  `[image ${carousel
-    ? 'fill'
-    : `width=${img.width} height=${img.height}`} name='${img.name}']`;
+  `[image ${
+    carousel ? 'fill' : `width=${img.width} height=${img.height}`
+  } name='${img.name}']`;
 const carouselShortcode = (imgs, settings) =>
-  `[carousel${settings.autoplay
-    ? ` autoplay delay=${settings.delay}`
-    : ''}${settings.loop ? ' loop' : ''}${settings.controls
-    ? ' controls'
-    : ''}]\n${imgs
+  `[carousel${settings.autoplay ? ` autoplay delay=${settings.delay}` : ''}${
+    settings.loop ? ' loop' : ''
+  }${settings.controls ? ' controls' : ''}]\n${imgs
     .map(img => imgShortcode(img, true))
     .join('\n')}\n[/carousel]`;
 
@@ -57,16 +54,15 @@ class Img extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <Button dense onClick={this.openDialog} className={classes.button}>
+        <Button
+          size="small"
+          onClick={this.openDialog}
+          className={classes.button}
+        >
           Img
         </Button>
         {this.state.open ? (
-          <Dialog
-            fullScreen
-            open={this.state.open}
-            onRequestClose={this.closeDialog}
-            transition={<Slide direction="up" />}
-          >
+          <Dialog fullScreen open={this.state.open} onClose={this.closeDialog}>
             <MediaManager
               onInsert={this.onInsert}
               onCancel={this.closeDialog}

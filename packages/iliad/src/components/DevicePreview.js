@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import BottomNavigation, {
-  BottomNavigationButton,
+  BottomNavigationAction,
 } from 'material-ui/BottomNavigation';
 
 import './devices.min.css';
@@ -66,8 +66,8 @@ class DevicePreview extends React.Component {
             onChange={this.handleChange}
             showLabels
           >
-            <BottomNavigationButton label="Desktop" />
-            <BottomNavigationButton label="iPhone 6" />
+            <BottomNavigationAction label="Desktop" />
+            <BottomNavigationAction label="iPhone 6" />
           </BottomNavigation>
         </div>
         {value === 0 ? children : null}

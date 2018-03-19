@@ -116,8 +116,7 @@ class ImageUploader extends Component {
             <Button
               disabled={!hasFiles || isUploading}
               onClick={() => this.uploadFiles(droppedFiles)}
-              fab
-              color="accent"
+              variant="fab"
               className={classes.savebutton}
             >
               <SaveIcon />
