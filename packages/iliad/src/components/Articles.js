@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
@@ -12,6 +11,10 @@ import connectFirebase from '../util/connect-firebase';
 const styleSheet = theme => ({
   root: {
     marginTop: 2 * theme.spacing.unit,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -41,34 +44,22 @@ class Articles extends Component {
     const { loading, articles } = this.state;
 
     return (
-      <Fragment>
-        <Grid container className={classes.root}>
-          <Grid item xs={12}>
-            <Grid
-              align={'center'}
-              container
-              direction={'column'}
-              justify={'center'}
-              spacing={16}
-            >
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                articles.map(({ slug, ...props }) => (
-                  <ArticleCard
-                    key={slug}
-                    onClick={() => history.push(`/editor/article/${slug}`)}
-                    {...props}
-                  />
-                ))
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
+      <div className={classes.root}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          articles.map(({ slug, ...props }) => (
+            <ArticleCard
+              key={slug}
+              onClick={() => history.push(`/editor/article/${slug}`)}
+              {...props}
+            />
+          ))
+        )}
         <FixedButton component={Link} to="/editor/article" position="right">
           <CreateIcon />
         </FixedButton>
-      </Fragment>
+      </div>
     );
   }
 }

@@ -6,19 +6,14 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import ImageUploader from '../ImageUploader';
 import ImagePicker from '../ImagePicker';
 
-const styleSheet = {
+const styleSheet = theme => ({
   root: {
     flexGrow: 1,
   },
-};
-
-const TabContainer = props => (
-  <div style={{ padding: 24 }}>{props.children}</div>
-);
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+  tabContainer: {
+    padding: theme.spacing.unit * 3,
+  },
+});
 
 class MediaManagerTabs extends Component {
   static propTypes = {
@@ -58,13 +53,11 @@ class MediaManagerTabs extends Component {
       },
     } = this.context;
 
-    const content =
-      index === 0 ? (
-        <TabContainer>
+    const content = (
+      <div className={classes.tabContainer}>
+        {index === 0 ? (
           <ImageUploader switchTab={handleTabChange} />
-        </TabContainer>
-      ) : index === 1 ? (
-        <TabContainer>
+        ) : index === 1 ? (
           <ImagePicker
             onSelection={onSelection}
             selection={selection}
@@ -72,10 +65,11 @@ class MediaManagerTabs extends Component {
             carouselSettings={carouselSettings}
             multiple={multiple}
           />
-        </TabContainer>
-      ) : (
-        <TabContainer>{'Item Three'}</TabContainer>
-      );
+        ) : (
+          'Item Three'
+        )}
+      </div>
+    );
 
     return (
       <div>
@@ -84,7 +78,6 @@ class MediaManagerTabs extends Component {
             value={index}
             onChange={handleTabChange}
             indicatorColor="primary"
-            textColor="primary"
             centered
           >
             <Tab label="Upload" />

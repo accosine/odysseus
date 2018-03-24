@@ -35,6 +35,8 @@ class FrontMatterImagePicker extends Component {
       <div className={classes.container}>
         <Button
           size="small"
+          color="primary"
+          variant="raised"
           onClick={this.openDialog}
           className={classes.button}
         >

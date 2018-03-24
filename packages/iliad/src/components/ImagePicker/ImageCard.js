@@ -3,32 +3,20 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+import classnames from 'classnames';
 import addSizeSuffix from '../../util/addSizeSuffix';
 import config from '../../config.js';
 
 const styleSheet = theme => ({
   root: {
     padding: theme.spacing.unit * 1,
+    transition: 'transform 0.1s',
+  },
+  selected: {
+    transform: 'translate(3px, 3px)',
   },
   card: {
-    display: 'flex',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    width: '75%',
-    alignSelf: 'center',
-  },
-  image: {
-    width: '100%',
-  },
-  input: {
-    margin: theme.spacing.unit,
+    width: 350,
   },
   headline: {
     textOverflow: 'ellipsis',
@@ -36,16 +24,14 @@ const styleSheet = theme => ({
   media: {
     height: 200,
   },
+  inlineText: {
+    display: 'inline',
+  },
 });
 
 class ImageCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { selected: false };
-  }
-
-  wasSelected = () => {
-    return this.state.selected;
+  state = {
+    selected: false,
   };
 
   registerSelection = key => {
@@ -55,40 +41,60 @@ class ImageCard extends Component {
 
   render() {
     const { classes, reference, image, disabled } = this.props;
-    const selected = this.wasSelected();
-    //TODO: Add class upon click for visual feedback
+    const { selected } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Card className={classes.card}>
-          <div className={classes.details}>
-            <CardMedia
-              className={classes.media}
-              image={
-                config.application.media +
-                addSizeSuffix(image.name, '-s') +
-                config.application.mediasuffix
-              }
-            />
-            <CardContent>
-              <Typography variant="headline" component="h2">
-                {image.name}
+      <div
+        className={classnames(classes.root, { [classes.selected]: selected })}
+      >
+        <Card raised={selected} className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            image={
+              config.application.media +
+              addSizeSuffix(image.name, '-s') +
+              config.application.mediasuffix
+            }
+          />
+          <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+              {image.name}
+            </Typography>
+            {image.caption && (
+              <Typography color="textSecondary">
+                Caption:{' '}
+                <Typography className={classes.inlineText} component="span">
+                  {image.caption}
+                </Typography>
               </Typography>
-              <Typography component="p">{image.caption}</Typography>
-              <Typography component="p">{image.attribution}</Typography>
-              <Typography component="p">{image.alt}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                color="primary"
-                disabled={selected || disabled}
-                onClick={() => this.registerSelection(reference)}
-              >
-                Add
-              </Button>
-            </CardActions>
-          </div>
+            )}
+            {image.attribution && (
+              <Typography color="textSecondary">
+                Attribution:{' '}
+                <Typography className={classes.inlineText} component="span">
+                  {image.attribution}
+                </Typography>
+              </Typography>
+            )}
+            {image.alt && (
+              <Typography color="textSecondary">
+                Alt:{' '}
+                <Typography className={classes.inlineText} component="span">
+                  {image.alt}
+                </Typography>
+              </Typography>
+            )}
+          </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              color="primary"
+              disabled={selected || disabled}
+              onClick={() => this.registerSelection(reference)}
+            >
+              Add
+            </Button>
+          </CardActions>
         </Card>
       </div>
     );

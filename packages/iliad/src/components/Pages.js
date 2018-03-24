@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
@@ -12,6 +11,10 @@ import connectFirebase from '../util/connect-firebase';
 const styleSheet = theme => ({
   root: {
     marginTop: 2 * theme.spacing.unit,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -41,34 +44,22 @@ class Pages extends Component {
     const { loading, pages } = this.state;
 
     return (
-      <Fragment>
-        <Grid container className={classes.root}>
-          <Grid item xs={12}>
-            <Grid
-              align={'center'}
-              container
-              direction={'column'}
-              justify={'center'}
-              spacing={16}
-            >
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                pages.map(({ slug, ...props }) => (
-                  <ArticleCard
-                    key={slug}
-                    onClick={() => history.push(`/editor/page/${slug}`)}
-                    {...props}
-                  />
-                ))
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
+      <div className={classes.root}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          pages.map(({ slug, ...props }) => (
+            <ArticleCard
+              key={slug}
+              onClick={() => history.push(`/editor/page/${slug}`)}
+              {...props}
+            />
+          ))
+        )}
         <FixedButton component={Link} to="/editor/page" position="right">
           <CreateIcon />
         </FixedButton>
-      </Fragment>
+      </div>
     );
   }
 }

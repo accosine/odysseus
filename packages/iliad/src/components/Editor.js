@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
 const styleSheet = {
-  container: {
-    height: '100%',
-  },
   textArea: {
     display: 'block',
     width: '100%',
-    maxWidth: '100%',
-    minHeight: '90%',
+    height: '100%',
     border: 0,
     outline: 'none',
     fontSize: '12pt',
@@ -40,16 +36,14 @@ class Editor extends Component {
     const { classes, text } = this.props;
 
     return (
-      <div className={classes.container}>
-        <textarea
-          autoFocus
-          value={text}
-          className={classes.textArea}
-          onChange={this.handleEdit}
-          onClick={this.handleCaretPosition}
-          onKeyUp={this.handleCaretPosition}
-        />
-      </div>
+      <textarea
+        autoFocus
+        value={text}
+        className={classes.textArea}
+        onChange={this.handleEdit}
+        onClick={this.handleCaretPosition}
+        onKeyUp={this.handleCaretPosition}
+      />
     );
   }
 }

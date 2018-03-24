@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
+import CarouselSettings from '../ImagePicker/CarouselSettings';
 import { withStyles } from 'material-ui/styles';
 
 const styleSheet = {
   container: {
-    paddingRight: '70px',
+    width: '100%',
+    padding: '0 70px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-};
-
-const TabContainer = props => (
-  <div style={{ padding: 24 }}>{props.children}</div>
-);
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 class MediaManagerActions extends Component {
@@ -39,17 +36,35 @@ class MediaManagerActions extends Component {
 
   render() {
     const {
-      mediamanager: { index, selection, onInsert, onCancel },
+      mediamanager: {
+        index,
+        selection,
+        onInsert,
+        onCancel,
+        onCarouselSettings,
+        carouselSettings,
+        multiple,
+      },
     } = this.context;
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        {index > 0 && (
-          <Button disabled={!selection.length} onClick={onInsert}>
-            Insert
-          </Button>
-        )}
-        <Button onClick={onCancel}>Cancel</Button>
+        <div>
+          {index === 1 && multiple && selection.length > 1 ? (
+            <CarouselSettings
+              onCarouselSettings={onCarouselSettings}
+              carouselSettings={carouselSettings}
+            />
+          ) : null}
+        </div>
+        <div>
+          {index === 1 && (
+            <Button disabled={!selection.length} onClick={onInsert}>
+              Insert
+            </Button>
+          )}
+          <Button onClick={onCancel}>Cancel</Button>
+        </div>
       </div>
     );
   }

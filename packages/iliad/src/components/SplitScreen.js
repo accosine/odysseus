@@ -5,9 +5,11 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Divider from 'material-ui/Divider';
-import Collapse from 'material-ui/transitions/Collapse';
-import IconButton from 'material-ui/IconButton';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import ExpansionPanel, {
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+} from 'material-ui/ExpansionPanel';
 import classnames from 'classnames';
 import Editor from './Editor';
 import FixedButton from './FixedButton';
@@ -36,21 +38,22 @@ const styleSheet = theme => ({
     padding: 10,
     color: theme.palette.text.secondary,
     height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
   title: {
     textAlign: 'center',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+    fontSize: theme.typography.pxToRem(15),
   },
   progress: {
     position: 'absolute',
+  },
+  fetching: {
+    alignSelf: 'center',
+  },
+  frontmatter: {
+    margin: `${theme.spacing.unit}px 0 0 0`,
+    padding: 4,
   },
 });
 
@@ -59,7 +62,6 @@ class SplitScreen extends Component {
     loading: false,
     isSaving: false,
     caretPosition: { start: 0, end: 0 },
-    frontmatterExpanded: this.props.match.params.slug ? false : true,
     content: '',
     date: '',
     datemodified: '',
@@ -97,6 +99,7 @@ class SplitScreen extends Component {
 
   subscribe = slug => {
     const { firebase, match: { params: { kind } } } = this.props;
+    this.setState({ loading: true });
     this.firestoreUnsubscribe = firebase.firestore
       .collection(kind === 'article' ? 'articles' : 'pages')
       .doc(slug)
@@ -130,18 +133,8 @@ class SplitScreen extends Component {
     this.setState({ caretPosition });
   };
 
-  onFrontmatterExpand = () => {
-    this.setState({ frontmatterExpanded: !this.state.frontmatterExpanded });
-  };
-
   onSave = () => {
-    const {
-      caretPosition,
-      frontmatterExpanded,
-      isSaving,
-      loading,
-      ...contentState
-    } = this.state;
+    const { caretPosition, isSaving, loading, ...contentState } = this.state;
     const {
       history,
       firebase: { firestore },
@@ -188,7 +181,6 @@ class SplitScreen extends Component {
   render() {
     const { classes, match: { params: { slug, kind } } } = this.props;
     const {
-      frontmatterExpanded,
       caretPosition,
       isSaving,
       loading,
@@ -198,26 +190,23 @@ class SplitScreen extends Component {
 
     return (
       <Grid container spacing={0} direction="column" className={classes.root}>
-        <IconButton
-          className={classnames(classes.expand, {
-            [classes.expandOpen]: frontmatterExpanded,
-          })}
-          onClick={this.onFrontmatterExpand}
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-        <Grid container className={classes.row} spacing={8}>
-          <Grid item xs={12}>
-            <Collapse in={frontmatterExpanded}>
-              <Typography variant="headline">Frontmatter</Typography>
+        <Grid container className={classes.frontmatter} spacing={8}>
+          <ExpansionPanel
+            defaultExpanded={this.props.match.params.slug ? false : true}
+          >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="body1">Frontmatter</Typography>
+            </ExpansionPanelSummary>
+            <Divider />
+            <ExpansionPanelDetails className={classes.details}>
               <FrontMatter
                 {...frontmatter}
                 kind={kind}
                 disableSlug={!!slug}
                 onChange={this.handleFrontmatterChange}
               />
-            </Collapse>
-          </Grid>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </Grid>
         <Grid container className={classes.row} spacing={8}>
           <Grid item xs={12}>
@@ -234,24 +223,29 @@ class SplitScreen extends Component {
           <Grid item xs={6}>
             <Paper className={classes.paper}>
               <Typography
-                variant="headline"
+                variant="body1"
                 className={classes.title}
                 gutterBottom
               >
                 Markdown
               </Typography>
               <Divider />
-              <Editor
-                text={content}
-                onCaretPosition={this.onCaretPosition}
-                onEdit={this.onEdit}
-              />
+
+              {loading ? (
+                <CircularProgress className={classes.fetching} size={60} />
+              ) : (
+                <Editor
+                  text={content}
+                  onCaretPosition={this.onCaretPosition}
+                  onEdit={this.onEdit}
+                />
+              )}
             </Paper>
           </Grid>
           <Grid item xs={6}>
             <Paper className={classes.paper}>
               <Typography
-                variant="headline"
+                variant="body1"
                 gutterBottom
                 className={classes.title}
               >
@@ -262,7 +256,12 @@ class SplitScreen extends Component {
             </Paper>
           </Grid>
         </Grid>
-        <FixedButton onClick={this.onSave} disabled={isSaving} position="right">
+        <FixedButton
+          color="primary"
+          onClick={this.onSave}
+          disabled={isSaving}
+          position="right"
+        >
           <SaveIcon />
           {isSaving && (
             <CircularProgress size={60} className={classes.progress} />

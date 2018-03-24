@@ -2,32 +2,18 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 const theme = createMuiTheme({
-  overrides: {
-    MuiToolbar: {
-      root: {
-        backgroundColor: '#92EFE5',
-      },
+  palette: {
+    primary: {
+      light: '#c6ffff',
+      main: '#92efe5',
+      dark: '#5fbcb3',
+      contrastText: '#000000',
     },
-    MuiButton: {
-      flatPrimary: {
-        color: 'white',
-        backgroundColor: '#92EFE5',
-        borderRadius: 5,
-        '&:hover': {
-          textDecoration: 'none',
-          backgroundColor: 'black',
-        },
-      },
-      disabled: {
-        backgroundColor: 'transparent',
-      },
-      fab: {
-        color: 'white',
-        backgroundColor: '#92EFE5',
-        '&:hover': {
-          backgroundColor: '#009374',
-        },
-      },
+    secondary: {
+      light: '#69d8ff',
+      main: '#00a7ff',
+      dark: '#0079cb',
+      contrastText: '#000000',
     },
   },
 });

@@ -1,16 +1,18 @@
 import React from 'react';
-import { FormControlLabel } from 'material-ui/Form';
+import { FormControlLabel, FormLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
 import TextField from 'material-ui/TextField';
 
 export default ({ carouselSettings, onCarouselSettings }) => (
   <div>
+    <FormLabel component="legend">Carousel settings</FormLabel>
     <FormControlLabel
       control={
         <Switch
           checked={carouselSettings.autoplay}
           onChange={(event, value) =>
-            onCarouselSettings({ ...carouselSettings, autoplay: value })}
+            onCarouselSettings({ ...carouselSettings, autoplay: value })
+          }
         />
       }
       label="Autoplay"
@@ -20,7 +22,9 @@ export default ({ carouselSettings, onCarouselSettings }) => (
         label="Autoplay delay"
         type="number"
         value={carouselSettings.delay}
-        onChange={event => this.setState({ height: event.target.value })}
+        onChange={event =>
+          onCarouselSettings({ ...carouselSettings, delay: event.target.value })
+        }
       />
     ) : null}
     <FormControlLabel
@@ -28,7 +32,8 @@ export default ({ carouselSettings, onCarouselSettings }) => (
         <Switch
           checked={carouselSettings.controls}
           onChange={(event, value) =>
-            onCarouselSettings({ ...carouselSettings, controls: value })}
+            onCarouselSettings({ ...carouselSettings, controls: value })
+          }
         />
       }
       label="Controls"
@@ -38,7 +43,8 @@ export default ({ carouselSettings, onCarouselSettings }) => (
         <Switch
           checked={carouselSettings.loop}
           onChange={(event, value) =>
-            onCarouselSettings({ ...carouselSettings, loop: value })}
+            onCarouselSettings({ ...carouselSettings, loop: value })
+          }
         />
       }
       label="Loop"

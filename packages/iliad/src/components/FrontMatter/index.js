@@ -20,12 +20,12 @@ const styleSheet = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
   },
 });
 

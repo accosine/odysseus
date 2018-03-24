@@ -4,7 +4,6 @@ import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import TargetBox from './TargetBox';
 import FileList from './FileList';
 import { CircularProgress } from 'material-ui/Progress';
-import green from 'material-ui/colors/green';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import SaveIcon from 'material-ui-icons/Save';
@@ -21,7 +20,6 @@ const styleSheet = {
     top: -2,
     left: -2,
     position: 'absolute',
-    color: green[500],
   },
 };
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { CircularProgress } from 'material-ui/Progress';
 
 import ImageCard from './ImageCard';
-import CarouselSettings from './CarouselSettings';
 import { withStyles } from 'material-ui/styles';
 import connectFirebase from '../../util/connect-firebase';
 
@@ -11,6 +10,8 @@ const styleSheet = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   root: {
     padding: theme.spacing.unit * 1,
@@ -61,7 +62,6 @@ class ImagePicker extends Component {
           ),
         });
       });
-    // Object.keys(imagesDump).map(key => this.props.firebase.firestore.collection('images').add(imagesDump[key]))
   }
 
   componentWillUnmount() {
@@ -89,26 +89,18 @@ class ImagePicker extends Component {
 
     return (
       <div className={classes.container}>
-        {this.state.selected.length > 1 && multiple ? (
-          <CarouselSettings
-            onCarouselSettings={onCarouselSettings}
-            carouselSettings={carouselSettings}
-          />
-        ) : null}
-
         {loading ? (
           <CircularProgress />
         ) : Object.keys(images).length ? (
           Object.keys(images).map(id => (
-            <div key={id}>
-              <ImageCard
-                disabled={!multiple && this.state.selected.length >= 1}
-                addSelection={this.addSelection}
-                image={images[id]}
-                reference={id}
-                {...rest}
-              />
-            </div>
+            <ImageCard
+              key={id}
+              disabled={!multiple && this.state.selected.length >= 1}
+              addSelection={this.addSelection}
+              image={images[id]}
+              reference={id}
+              {...rest}
+            />
           ))
         ) : (
           'No images uploaded yet.'

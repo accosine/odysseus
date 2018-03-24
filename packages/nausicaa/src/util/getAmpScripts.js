@@ -1,4 +1,5 @@
 const scripts = {
+  carousel: 'carousel',
   youtube: 'youtube',
   gif: 'anim',
   soundcloud: 'soundcloud',

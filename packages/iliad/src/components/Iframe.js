@@ -11,7 +11,6 @@ const styleSheet = {
     width: '100%',
     height: '100%',
     border: 0,
-    background: 'white',
   },
   hidden: {
     display: 'none',
@@ -51,18 +50,17 @@ class Iframe extends Component {
 
     const iframeDocument = iframe.contentDocument;
     iframeDocument.open();
-    iframeDocument.write('');
     iframeDocument.write(this.props.html);
     iframeDocument.close();
     iframeDocument.addEventListener('scroll', event =>
-      this.setState({ scrollY: event.target.scrollingElement.scrollTop })
+      this.setState({ scrollTop: event.target.scrollingElement.scrollTop })
     );
     iframe.contentWindow.onload = () => {
-      if (this.container.children.length === 2) {
+      if (this.container.children.length > 1) {
         this.container.removeChild(this.container.firstChild);
       }
-      iframe.className = classnames(this.props.classes.iframe);
-      iframe.contentWindow.scrollTo(0, this.state.scrollY);
+      iframe.className = this.props.classes.iframe;
+      iframe.contentWindow.scrollTo(0, this.state.scrollTop);
     };
   };
 

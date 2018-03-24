@@ -1,12 +1,12 @@
 {
   "name": "nausicaa",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "",
   "main": "dist/index.js",
   "dependencies": {
     "common-tags": "^1.4.0",
     "marksy": "^6.0.3",
-    "moment": "^2.18.1",
+    "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "styletron-react": "^3.0.4",

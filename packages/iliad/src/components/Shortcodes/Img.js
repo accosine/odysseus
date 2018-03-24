@@ -82,10 +82,6 @@ class Img extends Component {
   }
 }
 
-Img.defaultProps = {
-  user: { avatar: '' },
-};
-
 Img.propTypes = {
   classes: PropTypes.object.isRequired,
   onShortcode: PropTypes.func.isRequired,
