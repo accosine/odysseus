@@ -80,10 +80,12 @@ const Publication = ({
             collections={config[kind].collections}
           />
         )}
-        <AdContainer
-          adnetwork={config.ads.adnetwork}
-          adconfig={{ 'data-slot': config.ads.adslot }}
-        />
+        {kind === 'article' && (
+          <AdContainer
+            adnetwork={config.ads.adnetwork}
+            adconfig={{ 'data-slot': config.ads.adslot }}
+          />
+        )}
         <Article>{content}</Article>
         {kind === 'article' && (
           <Sharebuttons

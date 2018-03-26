@@ -36,11 +36,26 @@ const H3 = withTheme(
   styled('h3', ({ styleProps: { theme } }) => ({
     color: theme.mausgrau,
     margin: '5vw 6vw 2vw 6vw',
-    '@media screen and (min-width: 1024px)': {
-      fontSize: '2vw',
-    },
+    fontSize: '1.5rem',
   }))
 );
+
+const Hsmall = tag =>
+  withTheme(
+    styled(tag, ({ styleProps: { theme } }) => ({
+      color: theme.mausgrau,
+      margin: '5vw 6vw 2vw 6vw',
+      fontSize: '1rem',
+    }))
+  );
+
+const List = tag =>
+  withTheme(
+    styled(tag, ({ styleProps: { theme } }) => ({
+      color: theme.mausgrau,
+      margin: '0 6vw',
+    }))
+  );
 
 const Block = withTheme(
   styled('blockquote', ({ styleProps: { theme, collection } }) => ({
@@ -109,5 +124,10 @@ export default {
   p: P,
   h2: H2,
   h3: H3,
+  h4: Hsmall('h4'),
+  h5: Hsmall('h5'),
+  h6: Hsmall('h6'),
   blockquote: Blockquote,
+  ul: List('ul'),
+  ol: List('ol'),
 };

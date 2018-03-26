@@ -14,6 +14,7 @@ const pagerSize = functions.config().application.pager.size;
 const collections = functions.config().application.article.collections;
 const collectionsorder = functions.config().application.article
   .collectionsorder;
+const caching = functions.config().application.caching;
 
 const firestore = admin.firestore();
 const articles = firestore.collection('articles');
@@ -21,7 +22,10 @@ const pages = firestore.collection('pages');
 
 app.use(cors);
 app.use((req, res, next) => {
-  res.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+  res.set(
+    'Cache-Control',
+    `public, max-age=${caching.maxage}, s-maxage=${caching.servermaxage}`
+  );
 
   if (req.url !== '/' && req.url.endsWith('/')) {
     res.redirect(301, req.url.slice(0, -1));

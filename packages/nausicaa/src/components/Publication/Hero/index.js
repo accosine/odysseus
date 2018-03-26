@@ -94,10 +94,22 @@ const AuthorPicture = withTheme(
   }))
 );
 
-const Headline = withTheme(
+const ArticleHeadline = withTheme(
   styled('h1', ({ styleProps: { theme } }) => ({
     marginBottom: '5vw',
     color: theme.mausgrau,
+    '@media screen and (min-width: 1024px)': {
+      fontSize: '5vw',
+    },
+  }))
+);
+
+const PageHeadline = withTheme(
+  styled('h1', ({ styleProps: { theme } }) => ({
+    margin: '10vw 0 5vw 0',
+    textAlign: 'center',
+    color: theme.mausgrau,
+    fontSize: '1.8em',
     '@media screen and (min-width: 1024px)': {
       fontSize: '5vw',
     },
@@ -179,7 +191,11 @@ export default ({
           {formatDate(date, 'DD. MMMM YYYY', 'de')}
         </Time>
       )}
-      <Headline>{headline}</Headline>
+      {kind === 'article' ? (
+        <ArticleHeadline>{headline}</ArticleHeadline>
+      ) : (
+        <PageHeadline>{headline}</PageHeadline>
+      )}
       {subline && <Subline styleProps={{ collection }}>{subline}</Subline>}
       {kind === 'article' && (
         <Fragment>

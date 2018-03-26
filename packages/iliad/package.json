@@ -10,7 +10,7 @@
     "common-tags": "^1.7.2",
     "material-ui": "^1.0.0-beta.37",
     "material-ui-icons": "^1.0.0-beta.36",
-    "nausicaa": "0.0.10",
+    "nausicaa": "0.0.11",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dnd": "^2.5.4",

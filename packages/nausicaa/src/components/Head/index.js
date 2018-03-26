@@ -35,6 +35,7 @@ const Head = ({
   config,
   ampScripts,
   kind,
+  theme,
 }) => (
   <head>
     <meta charSet="utf-8" />
@@ -104,7 +105,7 @@ const Head = ({
     <AmpScript name="sidebar" />
     {ampScripts.map((name, index) => <AmpScript key={index} name={name} />)}
     <StylesAmp />
-    <StylesCustom styles={styles} />
+    <StylesCustom styles={styles} theme={theme} />
   </head>
 );
 
