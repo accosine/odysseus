@@ -1,27 +1,8 @@
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for t`he specific language governing permissions and
- * limitations under the License.
- */
 const gcs = require('@google-cloud/storage')();
-const spawn = require('child-process-promise').spawn;
+const functions = require('firebase-functions');
 const path = require('path');
-const os = require('os');
-const fs = require('fs');
-/**
- * When an image is uploaded in the Storage bucket We generate a thumbnail automatically using
- * ImageMagick.
- */
+const sharp = require('sharp');
+const config = functions.config().application.images;
 
 const addSizeSuffix = (name, suffix) => {
   const split = name.split('.');
@@ -33,97 +14,69 @@ const addSizeSuffix = (name, suffix) => {
   );
 };
 
-const imageSizes = [
-  { suffix: '-s', size: '320>' },
-  { suffix: '-m', size: '640>' },
-  { suffix: '-l', size: '1280>' },
-];
+const streamAsPromise = stream =>
+  new Promise((resolve, reject) =>
+    stream.on('finish', resolve).on('error', reject)
+  );
 
-module.exports = event => {
-  const object = event.data; // The Storage object.
-
-  const fileBucket = object.bucket; // The Storage bucket that contains the file.
-  const filePath = object.name; // File path in the bucket.
-  const contentType = object.contentType; // File content type.
-  const resourceState = object.resourceState; // The resourceState is 'exists' or 'not_exists' (for file/folder deletions).
-  const metageneration = object.metageneration; // Number of times metadata has been generated. New objects have a value of 1.
+module.exports = ({
+  metadata: fileMetadata,
+  bucket: fileBucket,
+  name: filePath,
+  contentType,
+}) => {
   // Exit if this is triggered on a file that is not an image.
   if (!contentType.startsWith('image/')) {
     console.log('This is not an image.');
-    return;
+    return null;
   }
 
   // Get the file name.
   const fileName = path.basename(filePath);
 
   // Exit if the image is already a thumbnail.
-  if (object.metadata.isResized) {
+  if (fileMetadata.isResized) {
     console.log('Already resized.');
-    return;
-  }
-
-  // Exit if this is a move or deletion event.
-  if (resourceState === 'not_exists') {
-    console.log('This is a deletion event.');
-    return;
-  }
-
-  // Exit if file exists but is not new and is only being triggered
-  // because of a metadata change.
-  if (resourceState === 'exists' && metageneration > 1) {
-    console.log('This is a metadata change event.');
-    return;
+    return null;
   }
 
   // Download file from bucket.
   const bucket = gcs.bucket(fileBucket);
-  const tempFilePath = path.join(os.tmpdir(), fileName);
-  return bucket
-    .file(filePath)
-    .download({
-      destination: tempFilePath,
-    })
-    .then(() => {
-      console.log('Image downloaded locally to', tempFilePath);
-      // Generate a thumbnail using ImageMagick.
-      return Promise.all(
-        imageSizes.map(size =>
-          spawn('convert', [
-            tempFilePath,
-            '-thumbnail',
-            size.size,
-            addSizeSuffix(tempFilePath, size.suffix),
-          ])
-        )
-      );
-    })
-    .then(() => {
-      return Promise.all(
-        imageSizes.map(size => {
-          console.log(
-            'Thumbnail created at',
-            addSizeSuffix(tempFilePath, size.suffix)
-          );
-          // We add a prefix to thumbnails file name. That's where we'll upload the thumbnail.
-          const thumbFileName = addSizeSuffix(fileName, size.suffix);
-          const thumbFilePath = path.join(
-            path.dirname(filePath),
-            thumbFileName
-          );
 
-          // Uploading the thumbnail.
-          return bucket.upload(addSizeSuffix(tempFilePath, size.suffix), {
-            destination: thumbFilePath,
-            metadata: { metadata: { isResized: true } },
-          });
-        })
+  const metadata = {
+    metadata: {
+      contentType,
+      metadata: {
+        isResized: true,
+      },
+    },
+  };
+
+  const pipeline = sharp();
+  const promises = Promise.all(
+    Object.keys(config).map(key => {
+      const { width, suffix } = config[key];
+      const thumbFilePath = path.join(
+        path.dirname(filePath),
+        addSizeSuffix(fileName, suffix)
       );
-      // Once the thumbnail has been uploaded delete the local file to free up disk space.
+      const uploadStream = bucket
+        .file(thumbFilePath)
+        .createWriteStream(metadata);
+      return streamAsPromise(
+        pipeline
+          .clone()
+          .resize(Number(width))
+          .pipe(uploadStream)
+      );
     })
-    .then(() => {
-      fs.unlinkSync(tempFilePath);
-      imageSizes.map(size =>
-        fs.unlinkSync(addSizeSuffix(tempFilePath, size.suffix))
-      );
-    });
+  );
+
+  // pipe file through pipelines
+  bucket
+    .file(filePath)
+    .createReadStream()
+    .pipe(pipeline);
+
+  return promises;
 };

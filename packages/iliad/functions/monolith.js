@@ -8,13 +8,14 @@ const Theme = require('nausicaa').default;
 
 const theme = Theme(functions.config().application);
 
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp();
 
 const pagerSize = functions.config().application.pager.size;
 const collections = functions.config().application.article.collections;
 const collectionsorder = functions.config().application.article
   .collectionsorder;
 const caching = functions.config().application.caching;
+const noindex = functions.config().application.noindex;
 
 const firestore = admin.firestore();
 const articles = firestore.collection('articles');
@@ -22,21 +23,20 @@ const pages = firestore.collection('pages');
 
 app.use(cors);
 app.use((req, res, next) => {
+  if (req.url !== '/' && req.url.endsWith('/')) {
+    return res.redirect(301, req.url.slice(0, -1));
+  }
   res.set(
     'Cache-Control',
     `public, max-age=${caching.maxage}, s-maxage=${caching.servermaxage}`
   );
-
-  if (req.url !== '/' && req.url.endsWith('/')) {
-    res.redirect(301, req.url.slice(0, -1));
-  }
   next();
 });
 app.use(cookieParser);
 
-app.get('/robots.txt', function(req, res) {
+app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
-  res.send('User-agent: *\nDisallow: /');
+  res.send(`User-agent: *\nDisallow:${noindex === 'true' ? ' /' : ''}`);
 });
 
 app.get('/', (req, res) => {
