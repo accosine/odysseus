@@ -87,8 +87,8 @@ export default withTheme(({ config, styletron, styleProps }) => {
               <amp-img
                 width={'3'}
                 height={'3'}
-                src={`${config.media}nausika-gurl.min.svg${config.mediasuffix}`}
-                alt="Gurl you know it's true, uh uh uh, I love you!"
+                src={`${config.media}${config.logo.src}${config.mediasuffix}`}
+                alt={config.logo.alt}
                 attribution="All Rights Reserved"
                 layout="responsive"
               />
