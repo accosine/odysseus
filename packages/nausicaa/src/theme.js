@@ -81,6 +81,7 @@ const collections = {
   nostalgie: {
     subline: '#332828',
     transparent: 'rgba(51, 40, 40, 0.7)',
+    verlauf: '#333, #000',
   },
 };
 
