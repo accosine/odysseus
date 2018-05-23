@@ -8,9 +8,11 @@ import '@firebase/auth';
 import 'typeface-roboto';
 import App from './App';
 import firebaseconfig from './config';
-import './index.css';
 import ThemeProvider from './util/ThemeProvider';
 import FirebaseProvider from './util/FirebaseProvider';
+
+import plugins from './plugins';
+console.log(plugins);
 
 firebase.initializeApp(firebaseconfig);
 const provider = new firebase.auth.FacebookAuthProvider();

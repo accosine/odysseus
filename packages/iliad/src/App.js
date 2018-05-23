@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import Home from './components/Home';
 import SplitScreen from './components/SplitScreen';
 import Articles from './components/Articles';
 import Pages from './components/Pages';
@@ -60,6 +61,12 @@ class App extends Component {
             onDrawerClose={onDrawerClose}
             isAuthenticated={firebase.isAuthenticated}
             open={open}
+          />
+          <PrivateRoute
+            path="/"
+            exact
+            isAuthenticated={firebase.isAuthenticated}
+            component={Home}
           />
           <PrivateRoute
             path="/editor/:kind(page|article)/:slug?"

@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import ListIcon from 'material-ui-icons/List';
+import HomeIcon from 'material-ui-icons/Home';
 import { Link } from 'react-router-dom';
 
 const styleSheet = {
@@ -25,6 +26,12 @@ class Dresser extends Component {
         >
           <div>
             <List className={classes.list} disablePadding>
+              <ListItem button component={Link} to="/">
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItem>
               <ListItem button component={Link} to="/articles">
                 <ListItemIcon>
                   <ListIcon />

@@ -4,7 +4,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser')();
 const cors = require('cors')({ origin: true });
 const app = express();
-const Theme = require('nausicaa').default;
+console.log(functions.config().application.theme);
+const Theme = require(functions.config().application.theme).default;
 
 const theme = Theme(functions.config().application);
 
