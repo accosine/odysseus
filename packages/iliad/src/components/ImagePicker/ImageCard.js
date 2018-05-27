@@ -9,8 +9,8 @@ import config from '../../config.js';
 
 const styleSheet = theme => ({
   root: {
-    padding: theme.spacing.unit * 1,
-    transition: 'transform 0.1s',
+    margin: theme.spacing.unit * 1,
+    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
   },
   selected: {
     transform: 'translate(3px, 3px)',

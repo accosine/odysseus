@@ -13,7 +13,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2,
     justifyContent: 'space-between',
     cursor: 'pointer',
-    transition: 'transform 0.1s',
+    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
     '&:hover': {
       transform: 'translate(1px, 1px)',
     },
