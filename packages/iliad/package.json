@@ -14,10 +14,10 @@
     "nausicaa": "0.0.13",
     "poltergeist-plugin-ampgist": "^1.0.0",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
+    "react": "^16.4.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "typeface-roboto": "^0.0.22"
   },

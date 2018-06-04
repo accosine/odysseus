@@ -62,12 +62,12 @@ class App extends Component {
             isAuthenticated={firebase.isAuthenticated}
             open={open}
           />
-          <PrivateRoute
-            path="/"
-            exact
-            isAuthenticated={firebase.isAuthenticated}
-            component={Home}
-          />
+          {/* <PrivateRoute */}
+          {/*   path="/" */}
+          {/*   exact */}
+          {/*   isAuthenticated={firebase.isAuthenticated} */}
+          {/*   component={Home} */}
+          {/* /> */}
           <PrivateRoute
             path="/editor/:kind(page|article)/:slug?"
             isAuthenticated={firebase.isAuthenticated}

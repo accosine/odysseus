@@ -4,7 +4,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser')();
 const cors = require('cors')({ origin: true });
 const app = express();
-const fetcher = require('./data-fetcher');
+const fetcher = require(functions.config().application.fetcher).default;
 const Theme = require(functions.config().application.theme).default;
 
 const plugins = functions
@@ -40,6 +40,7 @@ app.get('/robots.txt', (req, res) => {
   res.send(`User-agent: *\nDisallow:${noindex === 'true' ? ' /' : ''}`);
 });
 
+// TODO: make double digits work
 const paginationRegex = ':page([2-9]|[1-9]\\d\\d*)';
 
 app.get(`/(${paginationRegex})?`, (req, res) => {
@@ -58,7 +59,7 @@ Object.keys(collections).forEach(collection => {
   app.get(`/${collectionPath}(/${paginationRegex})?`, (req, res) => {
     fetcher
       .portal(articles, collection, req.params.page || 1)
-      .then(data => res.send(theme.portal(data.articles, data.pagination)))
+      .then(data => res.send(theme.portal(data)))
       .catch(err => {
         console.log(err);
         if (err.message === '404') {
@@ -71,7 +72,7 @@ Object.keys(collections).forEach(collection => {
   app.get(`/${collectionPath}/:slug`, (req, res) => {
     fetcher
       .article(articles, req.params.slug, collection)
-      .then(data => res.send(theme.article(data.content, data)))
+      .then(data => res.send(theme.article(data)))
       .catch(err => {
         console.log(err);
         if (err.message === '404') {
@@ -85,7 +86,7 @@ Object.keys(collections).forEach(collection => {
 app.get('/:page', (req, res) => {
   fetcher
     .page(pages, req.params.page)
-    .then(data => res.send(theme.page(data.content, data)))
+    .then(data => res.send(theme.page(data)))
     .catch(err => {
       console.log(err);
       if (err.message === '404') {

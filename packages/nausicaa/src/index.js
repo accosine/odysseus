@@ -44,11 +44,11 @@ const Layout = ({ styles, body, frontmatter, kind, ampScripts, config }) => {
   );
 };
 
-const article = (config, plugins) => (article, frontmatter) => {
+const article = (config, plugins) => ({ content, ...frontmatter }) => {
   const shortcodes = Shortcodes(config, plugins);
 
   const styletron = initializeStyletron();
-  const { text, usedShortcodes } = shortcodes(article, styletron);
+  const { text, usedShortcodes } = shortcodes(content, styletron);
   const { tree: articleTree } = compile(
     text,
     { sanitize: false },
@@ -89,11 +89,11 @@ const article = (config, plugins) => (article, frontmatter) => {
   return html;
 };
 
-const page = (config, plugins) => (page, frontmatter) => {
+const page = (config, plugins) => ({ content, ...frontmatter }) => {
   const shortcodes = Shortcodes(config, plugins);
 
   const styletron = initializeStyletron();
-  const { text, usedShortcodes } = shortcodes(page, styletron);
+  const { text, usedShortcodes } = shortcodes(content, styletron);
   const { tree: pageTree } = compile(
     text,
     { sanitize: false },
@@ -134,7 +134,7 @@ const page = (config, plugins) => (page, frontmatter) => {
   return html;
 };
 
-const portal = config => (articles, frontmatter) => {
+const portal = config => ({ articles, frontmatter }) => {
   const styletron = initializeStyletron();
 
   const body = ReactDOMServer.renderToStaticMarkup(

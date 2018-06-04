@@ -65,14 +65,16 @@ class MediaControlCard extends Component {
             {description}
           </Typography>
         </CardContent>
-        <CardMedia
-          className={classes.cover}
-          image={
-            config.application.media +
-            addSizeSuffix(picture, '-s') +
-            config.application.mediasuffix
-          }
-        />
+        {picture ? (
+          <CardMedia
+            className={classes.cover}
+            image={
+              config.application.media +
+              addSizeSuffix(picture, '-s') +
+              config.application.mediasuffix
+            }
+          />
+        ) : null}
       </Card>
     );
   }

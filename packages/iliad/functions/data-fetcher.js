@@ -68,7 +68,7 @@ const portal = (articles, collection, page) =>
     }
     return {
       articles: documentSnapshots.docs.map(article => article.data()),
-      pagination: {
+      frontmatter: {
         collection,
         pagination: {
           currentPage: parseInt(page, 10),

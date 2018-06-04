@@ -1,4 +1,5 @@
 import codegen from 'babel-plugin-codegen/macro';
+// asdf
 
 export default codegen`
 const { application: { plugins } } = require('./config.json');

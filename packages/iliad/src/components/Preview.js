@@ -53,7 +53,9 @@ class Preview extends PureComponent {
     this.renderTimeout = setTimeout(() => {
       const { text, kind, ...frontmatter } = this.props;
       const preview =
-        text && frontmatter ? this.theme[kind](text, frontmatter) : '';
+        text && frontmatter
+          ? this.theme[kind]({ ...frontmatter, data: text })
+          : '';
       this.setState({ preview });
     }, this.props.renderDelay);
   };
