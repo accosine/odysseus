@@ -5,6 +5,12 @@ const cookieParser = require('cookie-parser')();
 const cors = require('cors')({ origin: true });
 const app = express();
 const fetcher = require('./data-fetcher');
+const Theme = require(functions.config().application.theme).default;
+
+const plugins = functions
+  .config()
+  .application.plugins.map(plugin => require(plugin));
+const theme = Theme(functions.config().application, plugins);
 
 admin.initializeApp();
 
@@ -34,10 +40,12 @@ app.get('/robots.txt', (req, res) => {
   res.send(`User-agent: *\nDisallow:${noindex === 'true' ? ' /' : ''}`);
 });
 
-app.get('/:page(\\d+)', (req, res) => {
+const paginationRegex = ':page([2-9]|[1-9]\\d\\d*)';
+
+app.get(`/(${paginationRegex})?`, (req, res) => {
   fetcher
     .start(articles, req.params.page || 1)
-    .then(doc => res.send(doc))
+    .then(data => res.send(theme.start(data)))
     .catch(err => {
       console.error(err);
       res.status(500).send(err);
@@ -47,10 +55,10 @@ app.get('/:page(\\d+)', (req, res) => {
 Object.keys(collections).forEach(collection => {
   const collectionPath = collections[collection].slug;
 
-  app.get(`/${collectionPath}(/:page(\\d+))?`, (req, res) => {
+  app.get(`/${collectionPath}(/${paginationRegex})?`, (req, res) => {
     fetcher
       .portal(articles, collection, req.params.page || 1)
-      .then(doc => res.send(doc))
+      .then(data => res.send(theme.portal(data.articles, data.pagination)))
       .catch(err => {
         console.log(err);
         if (err.message === '404') {
@@ -63,11 +71,11 @@ Object.keys(collections).forEach(collection => {
   app.get(`/${collectionPath}/:slug`, (req, res) => {
     fetcher
       .article(articles, req.params.slug, collection)
-      .then(doc => res.send(doc))
+      .then(data => res.send(theme.article(data.content, data)))
       .catch(err => {
         console.log(err);
         if (err.message === '404') {
-          return res.status(404).send('Article not found');
+          return res.status(404).send('Page not found');
         }
         res.status(500).send('Something broke!');
       });
@@ -77,7 +85,7 @@ Object.keys(collections).forEach(collection => {
 app.get('/:page', (req, res) => {
   fetcher
     .page(pages, req.params.page)
-    .then(doc => res.send(doc))
+    .then(data => res.send(theme.page(data.content, data)))
     .catch(err => {
       console.log(err);
       if (err.message === '404') {
