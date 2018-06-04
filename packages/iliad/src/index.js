@@ -11,9 +11,6 @@ import firebaseconfig from './config';
 import ThemeProvider from './util/ThemeProvider';
 import FirebaseProvider from './util/FirebaseProvider';
 
-import plugins from './plugins';
-console.log(plugins);
-
 firebase.initializeApp(firebaseconfig);
 const provider = new firebase.auth.FacebookAuthProvider();
 const auth = firebase.auth();

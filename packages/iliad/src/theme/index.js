@@ -1,6 +1,6 @@
 import codegen from 'babel-plugin-codegen/macro';
 
-export default codegen`
+codegen`
 const config = require('../config.json');
-module.exports = "require('" + config.application.theme + "').default"
+module.exports = "module.exports = require('" + config.application.theme + "').default"
 `;

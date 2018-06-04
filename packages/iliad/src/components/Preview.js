@@ -7,6 +7,7 @@ import FullscreenIcon from 'material-ui-icons/Fullscreen';
 import FullscreenExitIcon from 'material-ui-icons/FullscreenExit';
 import Theme from '../theme';
 import config from '../config.js';
+import plugins from '../plugins';
 
 import DevicePreview from './DevicePreview';
 import Iframe from './Iframe';
@@ -37,7 +38,7 @@ class Preview extends PureComponent {
 
   componentDidMount() {
     this.updatePreview();
-    this.theme = Theme(config.application);
+    this.theme = Theme(config.application, plugins);
   }
 
   componentDidUpdate() {

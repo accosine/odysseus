@@ -44,8 +44,8 @@ const Layout = ({ styles, body, frontmatter, kind, ampScripts, config }) => {
   );
 };
 
-const article = config => (article, frontmatter) => {
-  const shortcodes = Shortcodes(config);
+const article = (config, plugins) => (article, frontmatter) => {
+  const shortcodes = Shortcodes(config, plugins);
 
   const styletron = initializeStyletron();
   const { text, usedShortcodes } = shortcodes(article, styletron);
@@ -55,7 +55,7 @@ const article = config => (article, frontmatter) => {
     { collection: frontmatter.collection }
   );
 
-  const ampScripts = getAmpScripts(usedShortcodes);
+  const ampScripts = getAmpScripts(usedShortcodes, plugins);
 
   const appMarkup = ReactDOMServer.renderToStaticMarkup(
     <StyletronProvider styletron={styletron}>
@@ -89,8 +89,8 @@ const article = config => (article, frontmatter) => {
   return html;
 };
 
-const page = config => (page, frontmatter) => {
-  const shortcodes = Shortcodes(config);
+const page = (config, plugins) => (page, frontmatter) => {
+  const shortcodes = Shortcodes(config, plugins);
 
   const styletron = initializeStyletron();
   const { text, usedShortcodes } = shortcodes(page, styletron);
@@ -100,7 +100,7 @@ const page = config => (page, frontmatter) => {
     { collection: frontmatter.collection }
   );
 
-  const ampScripts = getAmpScripts(usedShortcodes);
+  const ampScripts = getAmpScripts(usedShortcodes, plugins);
 
   const appMarkup = ReactDOMServer.renderToStaticMarkup(
     <StyletronProvider styletron={styletron}>
@@ -195,9 +195,12 @@ const start = config => articles => {
   return html;
 };
 
-export default config => ({
-  article: article(config),
-  portal: portal(config),
-  start: start(config),
-  page: page(config),
-});
+export default (config, plugins) => {
+  console.log(plugins);
+  return {
+    article: article(config, plugins),
+    portal: portal(config),
+    start: start(config),
+    page: page(config, plugins),
+  };
+};
